@@ -11,6 +11,7 @@ This project uses WCF to use the CiviCRM API. It contains a small example.
 I use CiviCRM on Drupal. Create a Drupal user, which has the following permissions:
 
 * CiviCRM: show all contacts
+* CiviCRM: edit all contacts (if you want to be able to do this with the api)
 * CiviCRM: use CiviCRM
 * CiviCRM: use AJAX API
 * CiviCRM: administer CiviCRM

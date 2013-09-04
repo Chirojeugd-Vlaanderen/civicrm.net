@@ -35,5 +35,14 @@ namespace Chiro.Cdf.ServiceHelper
                 return method(proxy);
             }
         }
+
+        public static void CallService<TContract>(Action<TContract> method) where TContract : IDisposable
+        {
+            var factory = new ChannelFactory<TContract>(String.Empty); // endpoints have no names
+            using (var proxy = factory.CreateChannel())
+            {
+                method(proxy);
+            }
+        }
     }
 }

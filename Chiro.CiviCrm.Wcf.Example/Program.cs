@@ -14,6 +14,7 @@
    limitations under the License.
  */
 using System;
+using System.Linq;
 using Chiro.Cdf.ServiceHelper;
 using Chiro.CiviCrm.ServiceContracts;
 using Chiro.CiviCrm.ServiceContracts.DataContracts;
@@ -38,8 +39,21 @@ namespace Chiro.CiviCrm.Wcf.Example
                         svc.ContactFind(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey,
                             externalId));
 
-            Console.WriteLine(result.Contacts[0].FirstName);
+            var contact = result.Contacts.FirstOrDefault();
 
+            if (contact == null)
+            {
+                Console.WriteLine("Contact not found.");
+            }
+            else
+            {
+                Console.WriteLine("Found: {0} {1}", contact.FirstName, contact.LastName);    
+
+                // Change first name
+                ServiceHelper.CallService<ICiviCrmApi>(svc => svc.FirstNameChange(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey, contact.Id, "Jos"));
+            }         
+
+            Console.WriteLine("Press enter.");
             Console.ReadLine();
         }
     }

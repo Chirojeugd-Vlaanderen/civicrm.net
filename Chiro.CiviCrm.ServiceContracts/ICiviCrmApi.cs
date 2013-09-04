@@ -42,5 +42,18 @@ namespace Chiro.CiviCrm.ServiceContracts
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&external_identifier={externalId}"
             )]
         ContactSet ContactFind(string apiKey, string key, int externalId);
+
+        /// <summary>
+        /// This method changes the first name. Which is not very usable, but it is a first
+        /// working attempt to push changes to CiviCRM.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of CiviCRM-instance</param>
+        /// <param name="id">Contact-ID of contact to be changed</param>
+        /// <param name="newFirstName">new first name</param>
+        [OperationContract]
+        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_id={id}&first_name={newFirstName}&contact_type=Individual")]
+        void FirstNameChange(string apiKey, string key, int id, string newFirstName);
     }
 }
