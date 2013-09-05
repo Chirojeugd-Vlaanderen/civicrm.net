@@ -55,5 +55,10 @@ namespace Chiro.CiviCrm.ServiceContracts
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
             "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_id={id}&first_name={newFirstName}&contact_type=Individual")]
         void FirstNameChange(string apiKey, string key, int id, string newFirstName);
+
+        [OperationContract]
+        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type=Individual")]
+        void ContactUpdate(string apiKey, string key, Contact contact);
     }
 }

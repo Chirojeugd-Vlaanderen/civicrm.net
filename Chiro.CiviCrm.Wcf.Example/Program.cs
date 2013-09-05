@@ -48,9 +48,13 @@ namespace Chiro.CiviCrm.Wcf.Example
             else
             {
                 Console.WriteLine("Found: {0} {1}", contact.FirstName, contact.LastName);    
+                contact.FirstName = "Ptrick";
 
                 // Change first name
-                ServiceHelper.CallService<ICiviCrmApi>(svc => svc.FirstNameChange(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey, contact.Id, "Jos"));
+                ServiceHelper.CallService<ICiviCrmApi>(
+                    svc =>
+                        svc.ContactUpdate(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey,
+                            contact));
             }         
 
             Console.WriteLine("Press enter.");
