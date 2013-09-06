@@ -61,9 +61,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chiro.Cdf.ServiceHelper\Chiro.Cdf.ServiceHelper.csproj">
-      <Project>{1BDFADE9-B236-46D2-AF96-5F176C811F3C}</Project>
-      <Name>Chiro.Cdf.ServiceHelper</Name>
+    <ProjectReference Include="..\Chiro.CiviCrm.ClientInterfaces\Chiro.CiviCrm.ClientInterfaces.csproj">
+      <Project>{c51d5b97-3af5-4ad8-9b40-3c04df6fc1c4}</Project>
+      <Name>Chiro.CiviCrm.ClientInterfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Chiro.CiviCrm.Client\Chiro.CiviCrm.Client.csproj">
+      <Project>{b0f99afc-7cd5-4c06-b362-840f0dfb560c}</Project>
+      <Name>Chiro.CiviCrm.Client</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chiro.CiviCrm.ServiceContracts\Chiro.CiviCrm.ServiceContracts.csproj">
       <Project>{C27C0FB3-740A-4705-98DF-3B237984C44F}</Project>

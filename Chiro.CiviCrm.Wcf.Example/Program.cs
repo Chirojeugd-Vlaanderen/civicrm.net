@@ -14,13 +14,14 @@
    limitations under the License.
  */
 using System;
-using System.Linq;
-using Chiro.Cdf.ServiceHelper;
-using Chiro.CiviCrm.ServiceContracts;
-using Chiro.CiviCrm.ServiceContracts.DataContracts;
+using Chiro.CiviCrm.Client;
+using Chiro.CiviCrm.ClientInterfaces;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
+    /// <summary>
+    /// Example for the CiviCrm-API proof of concept
+    /// </summary>
     class Program
     {
         static void Main(string[] args)
@@ -29,17 +30,10 @@ namespace Chiro.CiviCrm.Wcf.Example
 
             const int externalId = 300066;
 
-            // The construction with ServiceHelper avoids that I have to create
-            // a proxy myself. Alternatively, you could inherit one from
-            // ClientBase<ICiviCrmApi>
+            ICiviCrmClient client = new CiviCrmClient(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey);
+            // you could do this with dependency injection.
 
-            var result =
-                ServiceHelper.CallService<ICiviCrmApi, ContactSet>(
-                    svc =>
-                        svc.ContactFind(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey,
-                            externalId));
-
-            var contact = result.Contacts.FirstOrDefault();
+            var contact = client.ContactFind(externalId);
 
             if (contact == null)
             {
@@ -47,14 +41,12 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
             else
             {
-                Console.WriteLine("Found: {0} {1}", contact.FirstName, contact.LastName);    
-                contact.FirstName = "Ptrick";
+                Console.WriteLine("Found: {0} {1}", contact.FirstName, contact.LastName); 
+   
+                // change the name of the contact.
 
-                // Change first name
-                ServiceHelper.CallService<ICiviCrmApi>(
-                    svc =>
-                        svc.ContactUpdate(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey,
-                            contact));
+                contact.FirstName = "Jos";
+                client.ContactSave(contact);
             }         
 
             Console.WriteLine("Press enter.");

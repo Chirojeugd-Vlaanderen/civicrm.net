@@ -14,26 +14,18 @@
    limitations under the License.
  */
 
-using System.Security;
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Chiro.CiviCrm.ServiceContracts.DataContracts
 {
-    public class Contact
+    [DataContract]
+    public enum ContactType
     {
-        [XmlElement("contact_id")]
-        public int Id { get; set; }
-
-        [XmlElement("first_name")]
-        public string FirstName { get; set; }
-
-        [XmlElement("last_name")]
-        public string LastName { get; set; }
-
-        [XmlElement("external_identifier")]
-        public int ExternalId { get; set; }
-
-        [XmlElement("contact_type")]
-        public ContactType ContactType { get; set; }
+        [EnumMember] 
+        Individual = 1,
+        [EnumMember]
+        Organization = 2,
+        [EnumMember]
+        Household = 3
     }
 }

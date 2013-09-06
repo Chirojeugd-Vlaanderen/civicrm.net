@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Chiro.Cdf.ServiceHelper")]
+[assembly: AssemblyTitle("Chiro.CiviCrm.ClientInterfaces")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Chiro.Cdf.ServiceHelper")]
+[assembly: AssemblyProduct("Chiro.CiviCrm.ClientInterfaces")]
 [assembly: AssemblyCopyright("Copyright ©  2013")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("44bb34ca-5e00-4fb1-a7dc-b1820ec708c2")]
+[assembly: Guid("e8a848c6-761e-4f76-9e29-cde6b9884c16")]
 
 // Version information for an assembly consists of the following four values:
 //
