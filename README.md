@@ -1,6 +1,6 @@
 # Chiro.CiviCrm.Wcf
 
-**DISCLAIMER**: I am new to CiviCRM, and I am not sure about the way I call the web service.
+**DISCLAIMER**: I am new to CiviCRM.
 
 This project uses WCF to use the CiviCRM API. It is not a full solution, it is just a proof of concept. It contains a small example.
 
@@ -12,6 +12,7 @@ I use CiviCRM on Drupal. Create a Drupal user, which has the following permissio
 
 * CiviCRM: show all contacts
 * CiviCRM: edit all contacts (if you want to be able to do this with the api)
+* CiviCRM: create new contacts
 * CiviCRM: use CiviCRM
 * CiviCRM: use AJAX API
 * CiviCRM: administer CiviCRM
