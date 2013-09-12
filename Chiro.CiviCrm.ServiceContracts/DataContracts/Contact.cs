@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System;
 using System.Security;
 using System.Xml.Serialization;
 
@@ -35,5 +36,20 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
 
         [XmlElement("contact_type")]
         public ContactType ContactType { get; set; }
+
+        [XmlElement("birth_date")]
+        public DateTime? BirthDate { get; set; }
+
+        [XmlElement("deceased_date")]
+        public DateTime? DeceasedDate { get; set; }
+
+        [XmlElement("is_deceased")]
+        public bool IsDeceased { get; set; }
+
+        [XmlElement("gender")]
+        public Gender Gender { get; set; }
+
+        [XmlElement("gender_id")]
+        public int GenderId { get; set; }
     }
 }

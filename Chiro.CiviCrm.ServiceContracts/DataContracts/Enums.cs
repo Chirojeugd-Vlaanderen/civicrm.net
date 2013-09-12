@@ -28,4 +28,15 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
         [EnumMember]
         Household = 3
     }
+
+    [DataContract]
+    public enum Gender
+    {
+        [EnumMember]
+        Female = 1,
+        [EnumMember]
+        Male = 2,
+        [EnumMember]
+        Transgender = 3
+    }
 }

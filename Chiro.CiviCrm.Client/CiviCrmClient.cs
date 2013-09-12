@@ -66,7 +66,9 @@ namespace Chiro.CiviCrm.Client
         /// given ID will be updated.</remarks>
         public void ContactSave(Contact contact)
         {
-            Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId, contact.ContactType);
+            Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId,
+                contact.ContactType, contact.BirthDate, contact.DeceasedDate, contact.IsDeceased, contact.Gender,
+                contact.GenderId);
         }
     }
 }

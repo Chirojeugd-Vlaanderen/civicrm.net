@@ -28,11 +28,11 @@ Of course, you replace the 12311 by the real contact-ID of the civi contact, and
 In `App.config` of Chiro.CiviCrm.Wcf.Example, you edit this line:
 
     <endpoint 
-      address="http://192.168.2.54/dev/sites/all/modules/civicrm/extern/rest.php" 
+      address="http://192.168.2.55/dev/sites/all/modules/civicrm/extern/rest.php" 
       binding="webHttpBinding" behaviorConfiguration="civiCrm"
       contract="Chiro.CiviCrm.ServiceContracts.ICiviCrmApi" />
 
-Replace `http://192.168.2.54/dev` with the url of your Drupal site.
+Replace `http://192.168.2.55/dev` with the url of your Drupal site.
 
 In the Settings of Chiro.CiviCrm.Client, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
 
@@ -46,8 +46,8 @@ This is not the most beautiful solution. The most ugly part is in `Chiro.CiviCrm
 
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}")]
-        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int externalId, ContactType contactType);
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender={gender}&gender_id={genderId}")]
+        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int externalId, ContactType contactType, DateTime birthDate, DateTime deceasedDate, bool isDeceased, Gender gender, int genderId);
 
 I would have preferred to declare it like this:
 
