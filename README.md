@@ -34,11 +34,11 @@ In `App.config` of Chiro.CiviCrm.Wcf.Example, you edit this line:
 
 Replace `http://192.168.2.54/dev` with the url of your Drupal site.
 
-In the Settings of Chiro.CiviCrm.Wcf.Example, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
+In the Settings of Chiro.CiviCrm.Client, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
 
 In `Program.cs`, replace the value of `externalID` by an existing external ID of your civicrm instance.
 
-Now you should be able to run the example.
+Make sure that Chiro.CiviCrm.Wcf.Example is the solutions startup project. Now you should be able to run the example.
 
 ## Shortcomings
 
