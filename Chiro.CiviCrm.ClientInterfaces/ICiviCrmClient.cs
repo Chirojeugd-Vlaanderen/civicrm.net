@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System;
 using Chiro.CiviCrm.ServiceContracts.DataContracts;
 
 namespace Chiro.CiviCrm.ClientInterfaces
@@ -28,7 +29,7 @@ namespace Chiro.CiviCrm.ClientInterfaces
     /// I tried to customize the WCF Uri Formatter for the WebHttpBinding, but I failed. So
     /// for the moment I work around the problem in the client.
     /// </remarks>
-    public interface ICiviCrmClient
+    public interface ICiviCrmClient: IDisposable
     {
         /// <summary>
         /// Find a contact based on its <paramref name="externalId"/>.
