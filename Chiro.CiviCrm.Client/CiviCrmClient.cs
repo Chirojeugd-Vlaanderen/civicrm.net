@@ -40,12 +40,10 @@ namespace Chiro.CiviCrm.Client
         /// <summary>
         /// Creates a new CiviCRM-client
         /// </summary>
-        /// <param name="apiKey">API-key of the API-user</param>
-        /// <param name="key">key of the CiviCRM-installation</param>
-        public CiviCrmClient(string apiKey, string key)
+        public CiviCrmClient()
         {
-            _apiKey = apiKey;
-            _key = key;
+            _apiKey = Properties.Settings.Default.UserKey;
+            _key = Properties.Settings.Default.SiteKey;
         }
 
         /// <summary>

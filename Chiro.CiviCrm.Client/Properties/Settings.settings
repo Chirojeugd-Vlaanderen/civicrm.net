@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Chiro.CiviCrm.Wcf.Example.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Chiro.CiviCrm.Client.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="UserKey" Type="System.String" Scope="Application">

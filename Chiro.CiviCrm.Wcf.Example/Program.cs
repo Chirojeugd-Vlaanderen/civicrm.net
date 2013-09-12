@@ -30,7 +30,7 @@ namespace Chiro.CiviCrm.Wcf.Example
 
             const int externalId = 300066;
 
-            ICiviCrmClient client = new CiviCrmClient(Properties.Settings.Default.UserKey, Properties.Settings.Default.SiteKey);
+            ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
 
             var contact = client.ContactFind(externalId);
