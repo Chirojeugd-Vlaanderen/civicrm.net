@@ -52,6 +52,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj">
+      <Project>{f39a9e29-95e9-4304-a42d-1266f81b5ecf}</Project>
+      <Name>Chiro.CiviCrm.BehaviorExtension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chiro.CiviCrm.ClientInterfaces\Chiro.CiviCrm.ClientInterfaces.csproj">
       <Project>{c51d5b97-3af5-4ad8-9b40-3c04df6fc1c4}</Project>
       <Name>Chiro.CiviCrm.ClientInterfaces</Name>

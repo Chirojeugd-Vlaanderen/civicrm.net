@@ -40,7 +40,7 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
         [XmlElement("birth_date")]
         public DateTime? BirthDate { get; set; }
 
-        [XmlElement("deceased_date")]
+        //[XmlElement("deceased_date")]
         public DateTime? DeceasedDate { get; set; }
 
         [XmlElement("is_deceased")]
