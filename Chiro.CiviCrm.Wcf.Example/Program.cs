@@ -46,6 +46,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // change the name of the contact.
 
                 contact.FirstName = "Jos";
+                contact.BirthDate = new DateTime(1990,4,3);
+
                 client.ContactSave(contact);
             }         
 

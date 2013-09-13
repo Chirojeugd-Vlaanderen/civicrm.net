@@ -16,12 +16,47 @@
 
 using System;
 using System.Security;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace Chiro.CiviCrm.ServiceContracts.DataContracts
 {
     public class Contact
     {
+        [XmlElement("birth_date")]
+        public string BirthDateString
+        {
+            get
+            {
+                return BirthDate.HasValue
+                    ? XmlConvert.ToString(BirthDate.Value, XmlDateTimeSerializationMode.Unspecified)
+                    : String.Empty;
+            }
+            set
+            {
+                BirthDate = string.IsNullOrEmpty(value)
+                    ? (DateTime?) null
+                    : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
+            }
+        }
+
+        [XmlElement("deceased_date")]
+        public string DeceasedDateString
+        {
+            get
+            {
+                return DeceasedDate.HasValue
+                    ? XmlConvert.ToString(DeceasedDate.Value, XmlDateTimeSerializationMode.Unspecified)
+                    : String.Empty;
+            }
+            set
+            {
+                DeceasedDate = string.IsNullOrEmpty(value)
+                    ? (DateTime?)null
+                    : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
+            }
+        }
+
         [XmlElement("contact_id")]
         public int Id { get; set; }
 
@@ -37,10 +72,8 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
         [XmlElement("contact_type")]
         public ContactType ContactType { get; set; }
 
-        [XmlElement("birth_date")]
         public DateTime? BirthDate { get; set; }
 
-        //[XmlElement("deceased_date")]
         public DateTime? DeceasedDate { get; set; }
 
         [XmlElement("is_deceased")]
