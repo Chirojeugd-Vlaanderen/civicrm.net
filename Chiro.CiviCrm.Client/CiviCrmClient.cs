@@ -83,9 +83,17 @@ namespace Chiro.CiviCrm.Client
 
             if (contact == null)
             {
-                return null;
+                return new List<Address>();
             }
-            return Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Content.Adresses.ToList();
+
+            var result = Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Content;
+
+            if (result == null || result.Adresses == null)
+            {
+                return new List<Address>();
+            }
+
+            return result.Adresses.ToList();
         }
 
         /// <summary>
