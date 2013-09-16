@@ -54,7 +54,7 @@ namespace Chiro.CiviCrm.Client
         /// <returns>The contact with given <paramref name="externalId"/>, or <c>null</c> if it is not found.</returns>
         public Contact ContactFind(int externalId)
         {
-            var result = base.Channel.ContactFind(_apiKey, _key, externalId);
+            var result = base.Channel.ContactFind(_apiKey, _key, externalId).Content;
 
             return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
         }
@@ -79,13 +79,13 @@ namespace Chiro.CiviCrm.Client
         /// <returns>List of addresses</returns>
         public List<Address> AddressesFind(int externalId)
         {
-            var contact = Channel.ContactFind(_apiKey, _key, externalId).Contacts.FirstOrDefault();
+            var contact = Channel.ContactFind(_apiKey, _key, externalId).Content.Contacts.FirstOrDefault();
 
             if (contact == null)
             {
                 return null;
             }
-            return Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Adresses.ToList();
+            return Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Content.Adresses.ToList();
         }
 
         /// <summary>

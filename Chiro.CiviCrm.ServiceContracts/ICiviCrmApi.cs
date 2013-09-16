@@ -23,6 +23,14 @@ namespace Chiro.CiviCrm.ServiceContracts
     /// <summary>
     /// WCF service contract for the CiviCRM API
     /// </summary>
+    /// <remarks>
+    /// I use CiviCrmResponse as the result type, because I had problems with deserializing because the root element
+    /// of every response of the CiviCRM API is ResultSet. WCF threw an exception because it didn't want to deserialize
+    /// the same XML element to different data contracts.
+    /// I used the workaround I found here:
+    /// http://social.msdn.microsoft.com/Forums/vstudio/en-US/bcd031d7-c8a4-4bb0-8c85-bc5d7b46108a/rest-services-identical-xmlroot-attributes-on-different-classes
+    /// but I am not sure whether this solution is OK.
+    /// </remarks>
     [ServiceContract]
     [XmlSerializerFormat]
     public interface ICiviCrmApi: IDisposable
@@ -41,7 +49,7 @@ namespace Chiro.CiviCrm.ServiceContracts
             UriTemplate =
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&external_identifier={externalId}"
             )]
-        ContactSet ContactFind(string apiKey, string key, int externalId);
+        CiviCrmResponse<ContactSet> ContactFind(string apiKey, string key, int externalId);
 
         /// <summary>
         /// Saves a new CiviCRM contact, or updates an existing CiviCRM contact.
@@ -74,7 +82,7 @@ namespace Chiro.CiviCrm.ServiceContracts
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
             UriTemplate =
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&contact_id={contactId}")]
-        AddressSet ContactAddressesFind(string apiKey, string key, int contactId);
+        CiviCrmResponse<AddressSet> ContactAddressesFind(string apiKey, string key, int contactId);
 
 
         [OperationContract]

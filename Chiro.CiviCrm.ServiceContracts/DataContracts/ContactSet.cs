@@ -18,7 +18,7 @@ using System.Xml.Serialization;
 
 namespace Chiro.CiviCrm.ServiceContracts.DataContracts
 {
-    [XmlRoot("ResultSet")]
+    [XmlType("ResultSet")]
     public class ContactSet
     {
         [XmlElement("Result")]

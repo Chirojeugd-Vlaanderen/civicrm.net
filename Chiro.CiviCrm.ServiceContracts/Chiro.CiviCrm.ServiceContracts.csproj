@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\Address.cs" />
+    <Compile Include="DataContracts\CiviCrmResponse.cs" />
     <Compile Include="DataContracts\Contact.cs" />
     <Compile Include="DataContracts\ContactSet.cs" />
     <Compile Include="DataContracts\AddressSet.cs" />
