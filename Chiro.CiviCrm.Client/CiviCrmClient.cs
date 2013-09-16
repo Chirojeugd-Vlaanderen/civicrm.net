@@ -48,6 +48,18 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
+        /// Find a contact based on its <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">contact ID of contact to be found</param>
+        /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
+        public Contact ContactGet(int id)
+        {
+            var result = base.Channel.ContactGet(_apiKey, _key, id).Content;
+
+            return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
+        }
+
+        /// <summary>
         /// Find a contact based on its <paramref name="externalId"/>.
         /// </summary>
         /// <param name="externalId">External ID of contact to be found</param>

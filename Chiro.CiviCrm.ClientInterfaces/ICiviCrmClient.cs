@@ -33,6 +33,13 @@ namespace Chiro.CiviCrm.ClientInterfaces
     public interface ICiviCrmClient: IDisposable
     {
         /// <summary>
+        /// Find a contact based on its <paramref name="id"/>
+        /// </summary>
+        /// <param name="id">contact ID of contact to be found</param>
+        /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
+        Contact ContactGet(int id);
+
+        /// <summary>
         /// Find a contact based on its <paramref name="externalId"/>.
         /// </summary>
         /// <param name="externalId">External ID of contact to be found</param>

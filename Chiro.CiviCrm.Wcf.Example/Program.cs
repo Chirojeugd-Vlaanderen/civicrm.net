@@ -27,14 +27,14 @@ namespace Chiro.CiviCrm.Wcf.Example
     {
         static void Main(string[] args)
         {
-            // Call the service to retrieve a contact base on its external ID
+            // Call the service to retrieve a contact based on its contact_id
 
-            const int externalId = 300066;
+            const int contactId = 10148;
 
             ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
 
-            var contact = client.ContactFind(externalId);
+            var contact = client.ContactGet(contactId);
 
             if (contact == null)
             {

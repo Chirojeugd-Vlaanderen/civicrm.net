@@ -36,13 +36,17 @@ Replace `http://192.168.2.55/dev` with the url of your Drupal site.
 
 In the Settings of Chiro.CiviCrm.Client, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
 
-In `Program.cs`, replace the value of `externalID` by an existing external ID of your civicrm instance.
+In `Program.cs`, replace the value of `contactId` by the ID of an existing contact in your CiviCRM instance.
 
 Make sure that Chiro.CiviCrm.Wcf.Example is the solutions startup project. Now you should be able to run the example.
 
 ## Shortcomings
 
-This is not the most beautiful solution. The most ugly part is in `Chiro.CiviCrm.Serciecontracts.ICiviCrmApi`:
+This is not the most beautiful solution. Some ugly parts:
+
+### Actual data in the query string (URL)
+
+The most ugly part is in `Chiro.CiviCrm.Serciecontracts.ICiviCrmApi`:
 
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
@@ -63,3 +67,7 @@ I tried to extend WCF in such a way that it would append the properties of the c
 Another solution might be tweaking the CiviCRM API code, to make it read the post data as well.
 
 Now I do the mapping manually in `Chiro.CiviCrm.Client.CiviCrmClient`.
+
+### Chiro.CiviCrm.ServiceContracts.DataContracts.CiviCrmResponse
+
+I created this class because I had troubles deserializing the results of the CiviCRM API. The result of an API request is always put in a node of the type ResultSet, no matter what kind of result it contains, and WCF doesn't seem to like this. I found this workaround on [the Visual Studio forums](http://social.msdn.microsoft.com/Forums/vstudio/en-US/bcd031d7-c8a4-4bb0-8c85-bc5d7b46108a/rest-services-identical-xmlroot-attributes-on-different-classes), but if you know anything about WCF, I would be very grateful if you could verify whether this hack is OK.

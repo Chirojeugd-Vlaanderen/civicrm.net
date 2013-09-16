@@ -36,6 +36,22 @@ namespace Chiro.CiviCrm.ServiceContracts
     public interface ICiviCrmApi: IDisposable
     {
         /// <summary>
+        /// Find contact with given <paramref name="id"/>
+        /// </summary>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="id">External ID of contact to be found</param>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <returns>If found, a set with the (unique) contact with 
+        /// given <paramref name="id"/>,
+        /// otherwise <c>null</c>.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate =
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&contact_id={id}"
+            )]
+        CiviCrmResponse<ContactSet> ContactGet(string apiKey, string key, int id);
+
+        /// <summary>
         /// Find contact with given <paramref name="externalId"/>
         /// </summary>
         /// <param name="key">Key of the CiviCRM-instance</param>
@@ -85,6 +101,22 @@ namespace Chiro.CiviCrm.ServiceContracts
         CiviCrmResponse<AddressSet> ContactAddressesFind(string apiKey, string key, int contactId);
 
 
+        /// <summary>
+        /// Saves a new address or updates an existing address.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API user</param>
+        /// <param name="key">Key of the CiviCRM installation</param>
+        /// <param name="id">Id of the address to be updated, or <c>0</c> if it is a new address.</param>
+        /// <param name="contactId">Id of the contact the address applies to</param>
+        /// <param name="locationTypeId">Location type. Should not be <c>0</c></param>
+        /// <param name="isPrimary">Determines whether this address will be the primary address</param>
+        /// <param name="isBilling">Determines whether this address will be the billing address</param>
+        /// <param name="streetAddress">Street, number, suffix</param>
+        /// <param name="city">City</param>
+        /// <param name="stateProvinceId">CiviCRM StateProvindeId</param>
+        /// <param name="postalCode">Postal code</param>
+        /// <param name="postalCodeSuffix">Postal code suffix</param>
+        /// <param name="countryId">CiviCRM country ID</param>
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
             "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&id={Id}&contact_id={contactId}&location_type_id={locationTypeId}&is_primary={isPrimary}&is_billing={isBilling}&street_address={streetAddress}&city={city}&state_province_id={stateProvinceId}&postal_code={postalCode}&postal_code_suffix={postalCodeSuffix}&country_id={CountryId}"
