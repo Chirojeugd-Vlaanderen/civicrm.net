@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
 using Chiro.CiviCrm.ClientInterfaces;
@@ -69,6 +70,33 @@ namespace Chiro.CiviCrm.Client
             Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId,
                 contact.ContactType, contact.BirthDate, contact.DeceasedDate, contact.IsDeceased, contact.Gender,
                 contact.GenderId);
+        }
+
+        /// <summary>
+        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
+        /// </summary>
+        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
+        /// <returns>List of addresses</returns>
+        public List<Address> AddressesFind(int externalId)
+        {
+            var contact = Channel.ContactFind(_apiKey, _key, externalId).Contacts.FirstOrDefault();
+
+            if (contact == null)
+            {
+                return null;
+            }
+            return Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Adresses.ToList();
+        }
+
+        /// <summary>
+        /// Creates a new address, or updates an existing address.
+        /// </summary>
+        /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
+        public void AddressSave(Address address)
+        {
+            Channel.AddressSave(_apiKey, _key, address.Id, address.ContactId, address.LocationTypeId, address.IsPrimary,
+                address.IsBilling, address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
+                address.PostalCodeSuffix, address.CountryId);
         }
     }
 }

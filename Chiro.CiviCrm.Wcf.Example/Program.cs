@@ -16,6 +16,7 @@
 using System;
 using Chiro.CiviCrm.Client;
 using Chiro.CiviCrm.ClientInterfaces;
+using Chiro.CiviCrm.ServiceContracts.DataContracts;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -41,7 +42,14 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
             else
             {
-                Console.WriteLine("Found: {0} {1}", contact.FirstName, contact.LastName); 
+                Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id); 
+
+                // retrieve addresses
+
+                foreach (var address in client.AddressesFind(contact.ExternalId))
+                {
+                    Console.WriteLine("{0}, {1} {2} {3}", address.StreetAddress, address.PostalCode, address.PostalCodeSuffix, address.City);
+                }
    
                 // change the name of the contact.
 
@@ -49,6 +57,20 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact.BirthDate = new DateTime(1990,4,3);
 
                 client.ContactSave(contact);
+
+                // add address
+
+                client.AddressSave(new Address
+                                   {
+                                       Id = 0,
+                                       ContactId = contact.Id,
+                                       StreetAddress = "Kipdorp 130",
+                                       PostalCode = 2000,
+                                       City = "Antwerpen",
+                                       StateProvinceId = 1785,
+                                       CountryId = 1020,
+                                       LocationTypeId = 1
+                                   });
             }         
 
             Console.WriteLine("Press enter.");

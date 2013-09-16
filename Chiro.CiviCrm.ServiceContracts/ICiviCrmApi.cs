@@ -62,5 +62,27 @@ namespace Chiro.CiviCrm.ServiceContracts
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
             "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender={gender}&gender_id={genderId}")]
         void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int externalId, ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, bool isDeceased, Gender gender, int genderId);
+
+        /// <summary>
+        /// Find the adresses of a contact with given <paramref name="contactId"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API user</param>
+        /// <param name="key">Key of the CiviCRM installation</param>
+        /// <param name="contactId">ID of the contact whose addresses are requested</param>
+        /// <returns>List of addresses</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
+            UriTemplate =
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&contact_id={contactId}")]
+        AddressSet ContactAddressesFind(string apiKey, string key, int contactId);
+
+
+        [OperationContract]
+        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&id={Id}&contact_id={contactId}&location_type_id={locationTypeId}&is_primary={isPrimary}&is_billing={isBilling}&street_address={streetAddress}&city={city}&state_province_id={stateProvinceId}&postal_code={postalCode}&postal_code_suffix={postalCodeSuffix}&country_id={CountryId}"
+            )]
+        void AddressSave(string apiKey, string key, int id, int contactId, int locationTypeId, bool isPrimary,
+            bool isBilling, string streetAddress, string city, int stateProvinceId, int postalCode,
+            string postalCodeSuffix, int countryId);
     }
 }

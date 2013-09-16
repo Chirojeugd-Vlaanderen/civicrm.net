@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Security;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -23,6 +22,13 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
 {
     public class Contact
     {
+        #region Ugly hack
+
+        // I need this to handle null DateTimes returned by the CiviCRM API.
+        // Maybe this can be avoided using a client side custom MessageFormatter.
+        // If not, these 'DateStrings' should not be visible to the user of
+        // Chiro.CiviCrm.Client.
+
         [XmlElement("birth_date")]
         public string BirthDateString
         {
@@ -56,6 +62,8 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
                     : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
             }
         }
+
+        #endregion
 
         [XmlElement("contact_id")]
         public int Id { get; set; }

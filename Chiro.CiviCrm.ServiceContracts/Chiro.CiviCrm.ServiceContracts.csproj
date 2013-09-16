@@ -43,8 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\Address.cs" />
     <Compile Include="DataContracts\Contact.cs" />
     <Compile Include="DataContracts\ContactSet.cs" />
+    <Compile Include="DataContracts\AddressSet.cs" />
     <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

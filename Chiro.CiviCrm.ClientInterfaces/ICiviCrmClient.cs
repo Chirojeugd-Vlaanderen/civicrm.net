@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Chiro.CiviCrm.ServiceContracts.DataContracts;
 
 namespace Chiro.CiviCrm.ClientInterfaces
@@ -45,5 +46,18 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <remarks>If the contact's ID is 0, it will be saved. If it differs from 0, the existing contact with the
         /// given ID will be updated.</remarks>
         void ContactSave(Contact contact);
+
+        /// <summary>
+        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
+        /// </summary>
+        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
+        /// <returns>List of addresses</returns>
+        List<Address> AddressesFind(int externalId);
+
+        /// <summary>
+        /// Creates a new address, or updates an existing address.
+        /// </summary>
+        /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
+        void AddressSave(Address address);
     }
 }
