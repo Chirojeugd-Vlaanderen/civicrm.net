@@ -14,8 +14,10 @@
    limitations under the License.
  */
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Caching;
 using System.ServiceModel;
 using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.ServiceContracts;
@@ -38,6 +40,9 @@ namespace Chiro.CiviCrm.Client
         private readonly string _apiKey;
         private readonly string _key;
 
+        private readonly MemoryCache _cache = MemoryCache.Default;
+        private const string ContactIdCacheKey = "CICK{0}"; 
+
         /// <summary>
         /// Creates a new CiviCRM-client
         /// </summary>
@@ -56,6 +61,26 @@ namespace Chiro.CiviCrm.Client
         {
             var result = base.Channel.ContactGet(_apiKey, _key, id).Content;
 
+            if (result.Contacts == null)
+            {
+                return null;
+            }
+
+            var contact = result.Contacts.SingleOrDefault();
+
+            if (contact == null)
+            {
+                return null;
+            }
+
+            // Cache mapping External ID -> Contact ID, because we might need this lots of times
+            // when using an API.
+
+            if (contact.ExternalId != null)
+            {
+                CacheContactId(contact.ExternalId.Value, contact.Id);
+            }
+
             return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
         }
 
@@ -67,6 +92,15 @@ namespace Chiro.CiviCrm.Client
         public Contact ContactFind(int externalId)
         {
             var result = base.Channel.ContactFind(_apiKey, _key, externalId).Content;
+
+            if (result.Contacts == null || result.Contacts.FirstOrDefault() == null)
+            {
+                return null;
+            }
+
+            var contact = result.Contacts.First();
+
+            CacheContactId(externalId, contact.Id);
 
             return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
         }
@@ -85,20 +119,13 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
-        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
+        /// Retrieves the addresses for the contact with given <paramref name="contactId"/>
         /// </summary>
-        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
+        /// <param name="contactId">ID of the contact whose addresses are to be retrieved</param>
         /// <returns>List of addresses</returns>
-        public List<Address> AddressesFind(int externalId)
+        public List<Address> ContactAddressesGet(int contactId)
         {
-            var contact = Channel.ContactFind(_apiKey, _key, externalId).Content.Contacts.FirstOrDefault();
-
-            if (contact == null)
-            {
-                return new List<Address>();
-            }
-
-            var result = Channel.ContactAddressesFind(_apiKey, _key, contact.Id).Content;
+            var result = Channel.ContactAddressesGet(_apiKey, _key, contactId).Content;
 
             if (result == null || result.Adresses == null)
             {
@@ -106,6 +133,68 @@ namespace Chiro.CiviCrm.Client
             }
 
             return result.Adresses.ToList();
+        }
+
+        /// <summary>
+        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
+        /// </summary>
+        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
+        /// <returns>List of addresses</returns>
+        public List<Address> ContactAddressesFind(int externalId)
+        {
+            int? contactId = ExternalIdToContactId(externalId);
+
+            if (contactId == null)
+            {
+                return new List<Address>();
+            }
+
+            var result = Channel.ContactAddressesGet(_apiKey, _key, contactId.Value).Content;
+
+            if (result == null || result.Adresses == null)
+            {
+                return new List<Address>();
+            }
+
+            return result.Adresses.ToList();
+        }
+
+        /// <summary>
+        /// Returns the contact ID of the contact with given <paramref name="externalId" />. Caches.
+        /// </summary>
+        /// <param name="externalId">An external ID of a contact</param>
+        /// <returns>The corresponding contact ID, or <c>null</c> if not found.</returns>
+        private int? ExternalIdToContactId(int externalId)
+        {
+            int? contactId = (int?)_cache.Get(String.Format(ContactIdCacheKey, externalId));
+
+            if (contactId == null)
+            {
+                var contact = ContactFind(externalId);
+                if (contact == null)
+                {
+                    return null;
+                }
+                contactId = contact.Id;
+                CacheContactId(externalId, contactId.Value);
+            }
+
+            return contactId;
+        }
+
+        /// <summary>
+        /// Caches link external ID - contact ID
+        /// </summary>
+        /// <param name="externalId">External ID</param>
+        /// <param name="contactId">Contact ID</param>
+        private void CacheContactId(int externalId, int contactId)
+        {
+            _cache.Add(String.Format(ContactIdCacheKey, externalId), contactId,
+                new CacheItemPolicy
+                {
+                    AbsoluteExpiration = DateTime.Now.AddHours(2),
+                    Priority = CacheItemPriority.Default
+                });
         }
 
         /// <summary>

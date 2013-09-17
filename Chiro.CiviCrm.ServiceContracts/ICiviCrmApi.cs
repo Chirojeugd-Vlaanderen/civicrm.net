@@ -84,8 +84,11 @@ namespace Chiro.CiviCrm.ServiceContracts
         /// <param name="genderId">1, 2 or 3</param>
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender={gender}&gender_id={genderId}")]
-        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int externalId, ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, bool isDeceased, Gender gender, int genderId);
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender={gender}&gender_id={genderId}"
+            )]
+        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int? externalId,
+            ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, bool isDeceased, Gender gender,
+            int genderId);
 
         /// <summary>
         /// Find the adresses of a contact with given <paramref name="contactId"/>.
@@ -98,7 +101,7 @@ namespace Chiro.CiviCrm.ServiceContracts
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
             UriTemplate =
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&contact_id={contactId}")]
-        CiviCrmResponse<AddressSet> ContactAddressesFind(string apiKey, string key, int contactId);
+        CiviCrmResponse<AddressSet> ContactAddressesGet(string apiKey, string key, int contactId);
 
 
         /// <summary>

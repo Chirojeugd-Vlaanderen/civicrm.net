@@ -16,7 +16,6 @@
 using System;
 using Chiro.CiviCrm.Client;
 using Chiro.CiviCrm.ClientInterfaces;
-using Chiro.CiviCrm.ServiceContracts.DataContracts;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -27,14 +26,15 @@ namespace Chiro.CiviCrm.Wcf.Example
     {
         static void Main(string[] args)
         {
-            // Call the service to retrieve a contact based on its contact_id
+            // Call the service to retrieve a contact based on its external identifier
 
-            const int contactId = 10148;
+            const int externalId = 300066;
 
             ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
 
-            var contact = client.ContactGet(contactId);
+            var contact = client.ContactFind(externalId);
+            // If it does not work, check your permissions
 
             if (contact == null)
             {
@@ -46,31 +46,34 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 // retrieve addresses
 
-                foreach (var address in client.AddressesFind(contact.ExternalId))
+                foreach (var address in client.ContactAddressesFind(externalId))
                 {
                     Console.WriteLine("{0}, {1} {2} {3}", address.StreetAddress, address.PostalCode, address.PostalCodeSuffix, address.City);
                 }
+
+                // you might want to do some modifications. You can uncomment the lines below;
+                // that should work.
    
-                // change the name of the contact.
+                //// change the name of the contact.
 
-                contact.FirstName = "Jos";
-                contact.BirthDate = new DateTime(1990,4,3);
+                //contact.FirstName = "Jos";
+                //contact.BirthDate = new DateTime(1990,4,3);
 
-                client.ContactSave(contact);
+                //client.ContactSave(contact);
 
-                // add address
+                //// add address
 
-                client.AddressSave(new Address
-                                   {
-                                       Id = 0,
-                                       ContactId = contact.Id,
-                                       StreetAddress = "Kipdorp 130",
-                                       PostalCode = 2000,
-                                       City = "Antwerpen",
-                                       StateProvinceId = 1785,
-                                       CountryId = 1020,
-                                       LocationTypeId = 1
-                                   });
+                //client.AddressSave(new Address
+                //                   {
+                //                       Id = 0,
+                //                       ContactId = contact.Id,
+                //                       StreetAddress = "Kipdorp 130",
+                //                       PostalCode = 2000,
+                //                       City = "Antwerpen",
+                //                       StateProvinceId = 1785,
+                //                       CountryId = 1020,
+                //                       LocationTypeId = 1
+                //                   });
             }         
 
             Console.WriteLine("Press enter.");

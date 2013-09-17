@@ -55,11 +55,18 @@ namespace Chiro.CiviCrm.ClientInterfaces
         void ContactSave(Contact contact);
 
         /// <summary>
+        /// Retrieves the addresses for the contact with given <paramref name="contactId"/>
+        /// </summary>
+        /// <param name="contactId">ID of the contact whose addresses are to be retrieved</param>
+        /// <returns>List of addresses</returns>
+        List<Address> ContactAddressesGet(int contactId);
+            
+        /// <summary>
         /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
         /// </summary>
         /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
         /// <returns>List of addresses</returns>
-        List<Address> AddressesFind(int externalId);
+        List<Address> ContactAddressesFind(int externalId);
 
         /// <summary>
         /// Creates a new address, or updates an existing address.

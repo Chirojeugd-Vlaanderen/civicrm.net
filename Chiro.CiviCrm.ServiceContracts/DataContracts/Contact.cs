@@ -75,7 +75,7 @@ namespace Chiro.CiviCrm.ServiceContracts.DataContracts
         public string LastName { get; set; }
 
         [XmlElement("external_identifier")]
-        public int ExternalId { get; set; }
+        public int? ExternalId { get; set; }
 
         [XmlElement("contact_type")]
         public ContactType ContactType { get; set; }
