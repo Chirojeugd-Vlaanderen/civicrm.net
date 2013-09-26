@@ -43,6 +43,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             else
             {
                 Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id); 
+                Console.WriteLine("Date of birth: {0}", contact.BirthDate);
 
                 // retrieve addresses
 
@@ -53,11 +54,11 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 // you might want to do some modifications. You can uncomment the lines below;
                 // that should work.
-   
-                //// change the name of the contact.
+
+                //// change the name and birth date of the contact.
 
                 //contact.FirstName = "Jos";
-                //contact.BirthDate = new DateTime(1990,4,3);
+                //contact.BirthDate = new DateTime(1990, 4, 5);
 
                 //client.ContactSave(contact);
 

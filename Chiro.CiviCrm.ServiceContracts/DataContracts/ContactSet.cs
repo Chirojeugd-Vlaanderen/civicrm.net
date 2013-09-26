@@ -23,6 +23,6 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public class ContactSet
     {
         [XmlElement("Result")]
-        public Contact[] Contacts { get; set; }
+        public ApiContact[] Contacts { get; set; }
     }
 }

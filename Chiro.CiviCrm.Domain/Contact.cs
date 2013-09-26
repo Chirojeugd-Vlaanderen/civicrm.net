@@ -22,49 +22,6 @@ namespace Chiro.CiviCrm.Domain
 {
     public class Contact
     {
-        #region Ugly hack
-
-        // I need this to handle null DateTimes returned by the CiviCRM API.
-        // Maybe this can be avoided using a client side custom MessageFormatter.
-        // If not, these 'DateStrings' should not be visible to the user of
-        // Chiro.CiviCrm.Client.
-
-        [XmlElement("birth_date")]
-        public string BirthDateString
-        {
-            get
-            {
-                return BirthDate.HasValue
-                    ? XmlConvert.ToString(BirthDate.Value, XmlDateTimeSerializationMode.Unspecified)
-                    : String.Empty;
-            }
-            set
-            {
-                BirthDate = string.IsNullOrEmpty(value)
-                    ? (DateTime?) null
-                    : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
-            }
-        }
-
-        [XmlElement("deceased_date")]
-        public string DeceasedDateString
-        {
-            get
-            {
-                return DeceasedDate.HasValue
-                    ? XmlConvert.ToString(DeceasedDate.Value, XmlDateTimeSerializationMode.Unspecified)
-                    : String.Empty;
-            }
-            set
-            {
-                DeceasedDate = string.IsNullOrEmpty(value)
-                    ? (DateTime?)null
-                    : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
-            }
-        }
-
-        #endregion
-
         [XmlElement("contact_id")]
         public int Id { get; set; }
 
@@ -79,6 +36,10 @@ namespace Chiro.CiviCrm.Domain
 
         [XmlElement("contact_type")]
         public ContactType ContactType { get; set; }
+
+        // the dates don't have the XmlElement attribute, because deserialization happens via the
+        // datestrings in Chiro.CiviCrm.Api.DataContracts.ApiContact. I probably better move these
+        // arguments away as well.
 
         public DateTime? BirthDate { get; set; }
 

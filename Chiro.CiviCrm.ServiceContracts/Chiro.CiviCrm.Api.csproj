@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\ApiContact.cs" />
     <Compile Include="DataContracts\CiviCrmResponse.cs" />
     <Compile Include="DataContracts\ContactSet.cs" />
     <Compile Include="DataContracts\AddressSet.cs" />
