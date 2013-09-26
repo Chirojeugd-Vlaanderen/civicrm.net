@@ -8,8 +8,8 @@
     <ProjectGuid>{C27C0FB3-740A-4705-98DF-3B237984C44F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chiro.CiviCrm.ServiceContracts</RootNamespace>
-    <AssemblyName>Chiro.CiviCrm.ServiceContracts</AssemblyName>
+    <RootNamespace>Chiro.CiviCrm.Api</RootNamespace>
+    <AssemblyName>Chiro.CiviCrm.Api</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -43,14 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\Address.cs" />
     <Compile Include="DataContracts\CiviCrmResponse.cs" />
-    <Compile Include="DataContracts\Contact.cs" />
     <Compile Include="DataContracts\ContactSet.cs" />
     <Compile Include="DataContracts\AddressSet.cs" />
-    <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Chiro.CiviCrm.Domain\Chiro.CiviCrm.Domain.csproj">
+      <Project>{7c6f2810-20be-4dc8-a7d1-92999be67d61}</Project>
+      <Name>Chiro.CiviCrm.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

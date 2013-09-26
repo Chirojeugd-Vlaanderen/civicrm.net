@@ -16,7 +16,7 @@
 
 using System;
 using System.Collections.Generic;
-using Chiro.CiviCrm.ServiceContracts.DataContracts;
+using Chiro.CiviCrm.Domain;
 
 namespace Chiro.CiviCrm.ClientInterfaces
 {

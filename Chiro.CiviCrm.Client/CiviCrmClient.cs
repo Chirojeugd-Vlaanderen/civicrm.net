@@ -19,9 +19,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 using System.ServiceModel;
+using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.ClientInterfaces;
-using Chiro.CiviCrm.ServiceContracts;
-using Chiro.CiviCrm.ServiceContracts.DataContracts;
+using Chiro.CiviCrm.Domain;
 
 namespace Chiro.CiviCrm.Client
 {

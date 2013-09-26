@@ -16,7 +16,7 @@
 
 using System.Xml.Serialization;
 
-namespace Chiro.CiviCrm.ServiceContracts.DataContracts
+namespace Chiro.CiviCrm.Domain
 {
     public class Address
     {

@@ -16,7 +16,7 @@
 
 using System.Runtime.Serialization;
 
-namespace Chiro.CiviCrm.ServiceContracts.DataContracts
+namespace Chiro.CiviCrm.Domain
 {
     [DataContract]
     public enum ContactType

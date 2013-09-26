@@ -15,8 +15,9 @@
  */
 
 using System.Xml.Serialization;
+using Chiro.CiviCrm.Domain;
 
-namespace Chiro.CiviCrm.ServiceContracts.DataContracts
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     [XmlType("ResultSet")]
     public class ContactSet

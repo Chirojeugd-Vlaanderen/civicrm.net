@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{C51D5B97-3AF5-4AD8-9B40-3C04DF6FC1C4}</ProjectGuid>
+    <ProjectGuid>{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Chiro.CiviCrm.ClientInterfaces</RootNamespace>
-    <AssemblyName>Chiro.CiviCrm.ClientInterfaces</AssemblyName>
+    <RootNamespace>Chiro.CiviCrm.Domain</RootNamespace>
+    <AssemblyName>Chiro.CiviCrm.Domain</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
@@ -33,20 +33,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICiviCrmClient.cs" />
+    <Compile Include="Address.cs" />
+    <Compile Include="Contact.cs" />
+    <Compile Include="Enums.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Chiro.CiviCrm.Domain\Chiro.CiviCrm.Domain.csproj">
-      <Project>{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}</Project>
-      <Name>Chiro.CiviCrm.Domain</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

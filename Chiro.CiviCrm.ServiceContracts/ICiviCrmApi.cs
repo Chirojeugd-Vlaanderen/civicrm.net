@@ -13,12 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Chiro.CiviCrm.ServiceContracts.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Domain;
 
-namespace Chiro.CiviCrm.ServiceContracts
+namespace Chiro.CiviCrm.Api
 {
     /// <summary>
     /// WCF service contract for the CiviCRM API

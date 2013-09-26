@@ -28,11 +28,11 @@ Of course, you replace the 12311 by the real contact-ID of the civi contact, and
 In `App.config` of Chiro.CiviCrm.Wcf.Example, you edit this line:
 
     <endpoint 
-      address="http://192.168.2.55/dev/sites/all/modules/civicrm/extern/rest.php" 
+      address="http://192.168.56.1/dev/sites/all/modules/civicrm/extern/rest.php" 
       binding="webHttpBinding" behaviorConfiguration="civiCrm"
-      contract="Chiro.CiviCrm.ServiceContracts.ICiviCrmApi" />
+      contract="Chiro.CiviCrm.Api.ICiviCrmApi" />
 
-Replace `http://192.168.2.55/dev` with the url of your Drupal site.
+Replace `http://192.168.56.1/dev` with the url of your Drupal site.
 
 In the Settings of Chiro.CiviCrm.Client, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
 
@@ -46,7 +46,7 @@ This is not the most beautiful solution. Some ugly parts:
 
 ### Actual data in the query string (URL)
 
-The most ugly part is in `Chiro.CiviCrm.Serciecontracts.ICiviCrmApi`:
+The most ugly part is in `Chiro.CiviCrm.Api.ICiviCrmApi`:
 
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
