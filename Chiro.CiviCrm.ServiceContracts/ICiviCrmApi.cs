@@ -82,15 +82,13 @@ namespace Chiro.CiviCrm.Api
         /// <param name="birthDate">date of birth</param>
         /// <param name="deceasedDate">date of death</param>
         /// <param name="isDeceased"><c>true</c> if contact is dead, otherwise <c>false</c></param>
-        /// <param name="gender">Female, Male of Transgender</param>
-        /// <param name="genderId">1, 2 or 3</param>
+        /// <param name="genderId">1, 2 or 3 for Female, Male of Transgender</param>
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender={gender}&gender_id={genderId}"
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender_id={genderId}"
             )]
         void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int? externalId,
-            ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, bool isDeceased, Gender gender,
-            int genderId);
+            ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, bool isDeceased, int genderId);
 
         /// <summary>
         /// Find the adresses of a contact with given <paramref name="contactId"/>.

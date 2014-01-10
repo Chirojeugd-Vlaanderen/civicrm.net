@@ -61,5 +61,18 @@ namespace Chiro.CiviCrm.Api.DataContracts
                     : XmlConvert.ToDateTime(value, XmlDateTimeSerializationMode.Unspecified);
             }
         }
+
+        [XmlElement("gender_id")]
+        public int GenderId
+        {
+            get
+            {
+                return (int)Gender;
+            }
+            set
+            {
+                Gender = (Gender)value;
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@
 using System;
 using Chiro.CiviCrm.Client;
 using Chiro.CiviCrm.ClientInterfaces;
+using Chiro.CiviCrm.Domain;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -26,15 +27,18 @@ namespace Chiro.CiviCrm.Wcf.Example
     {
         static void Main(string[] args)
         {
-            // Call the service to retrieve a contact based on its external identifier
+            // Call the service to retrieve a contact based on its Civi-ID
 
-            const int externalId = 300066;
+            const int contactId = 6341;
 
             ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
 
-            var contact = client.ContactFind(externalId);
-            // If it does not work, check your permissions
+            var contact = client.ContactGet(contactId);
+            // If you want to access the CiviCRM-API over https (recommended), you should
+            // change the security mode of the CiviCrmBindingConfiguration from None to Transport
+            // (in App.config)
+            // If it still does not work, check your permissions
 
             if (contact == null)
             {
@@ -44,10 +48,11 @@ namespace Chiro.CiviCrm.Wcf.Example
             {
                 Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id); 
                 Console.WriteLine("Date of birth: {0}", contact.BirthDate);
+                Console.WriteLine("Gender: {0}", contact.Gender);
 
                 // retrieve addresses
 
-                foreach (var address in client.ContactAddressesFind(externalId))
+                foreach (var address in client.ContactAddressesGet(contactId))
                 {
                     Console.WriteLine("{0}, {1} {2} {3}", address.StreetAddress, address.PostalCode, address.PostalCodeSuffix, address.City);
                 }
@@ -55,10 +60,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // you might want to do some modifications. You can uncomment the lines below;
                 // that should work.
 
-                //// change the name and birth date of the contact.
+                //// change the name, gender and birth date of the contact.
 
                 //contact.FirstName = "Jos";
                 //contact.BirthDate = new DateTime(1990, 4, 5);
+                //contact.Gender = Gender.Female;
 
                 //client.ContactSave(contact);
 

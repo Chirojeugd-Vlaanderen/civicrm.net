@@ -38,20 +38,15 @@ namespace Chiro.CiviCrm.Domain
         public ContactType ContactType { get; set; }
 
         // the dates don't have the XmlElement attribute, because deserialization happens via the
-        // datestrings in Chiro.CiviCrm.Api.DataContracts.ApiContact. I probably better move these
-        // arguments away as well.
-
+        // datestrings in Chiro.CiviCrm.Api.DataContracts.ApiContact.
         public DateTime? BirthDate { get; set; }
 
         public DateTime? DeceasedDate { get; set; }
 
-        [XmlElement("is_deceased")]
-        public bool IsDeceased { get; set; }
-
-        [XmlElement("gender")]
+        // Similarly, the Gender will be derived based on GenderId.
         public Gender Gender { get; set; }
 
-        [XmlElement("gender_id")]
-        public int GenderId { get; set; }
+        [XmlElement("is_deceased")]
+        public bool IsDeceased { get; set; }
     }
 }

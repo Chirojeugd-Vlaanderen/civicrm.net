@@ -114,8 +114,7 @@ namespace Chiro.CiviCrm.Client
         public void ContactSave(Contact contact)
         {
             Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId,
-                contact.ContactType, contact.BirthDate, contact.DeceasedDate, contact.IsDeceased, contact.Gender,
-                contact.GenderId);
+                contact.ContactType, contact.BirthDate, contact.DeceasedDate, contact.IsDeceased, (int)(contact.Gender));
         }
 
         /// <summary>
