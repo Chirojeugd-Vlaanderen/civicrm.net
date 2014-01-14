@@ -204,7 +204,7 @@ namespace Chiro.CiviCrm.Client
         {
             Channel.AddressSave(_apiKey, _key, address.Id, address.ContactId, address.LocationTypeId, Convert.ToInt32(address.IsPrimary),
                 Convert.ToInt32(address.IsBilling), address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
-                address.PostalCodeSuffix, address.CountryId);
+                address.PostalCodeSuffix, address.Country);
         }
     }
 }

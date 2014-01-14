@@ -50,7 +50,7 @@ namespace Chiro.CiviCrm.Domain
         [XmlElement("postal_code_suffix")]
         public string PostalCodeSuffix { get; set; }
 
-        [XmlElement("country_id")]
-        public int CountryId { get; set; }
+        [XmlElement("country")]
+        public string Country { get; set; }
     }
 }

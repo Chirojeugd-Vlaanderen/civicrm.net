@@ -119,13 +119,13 @@ namespace Chiro.CiviCrm.Api
         /// <param name="stateProvinceId">CiviCRM StateProvindeId</param>
         /// <param name="postalCode">Postal code</param>
         /// <param name="postalCodeSuffix">Postal code suffix</param>
-        /// <param name="countryId">CiviCRM country ID</param>
+        /// <param name="country">Country or ISO-Code of country</param>
         [OperationContract]
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&id={Id}&contact_id={contactId}&location_type_id={locationTypeId}&is_primary={isPrimary}&is_billing={isBilling}&street_address={streetAddress}&city={city}&state_province_id={stateProvinceId}&postal_code={postalCode}&postal_code_suffix={postalCodeSuffix}&country_id={CountryId}"
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&id={Id}&contact_id={contactId}&location_type_id={locationTypeId}&is_primary={isPrimary}&is_billing={isBilling}&street_address={streetAddress}&city={city}&state_province_id={stateProvinceId}&postal_code={postalCode}&postal_code_suffix={postalCodeSuffix}&country={country}"
             )]
         void AddressSave(string apiKey, string key, int id, int contactId, int locationTypeId, int isPrimary,
             int isBilling, string streetAddress, string city, int stateProvinceId, int postalCode,
-            string postalCodeSuffix, int countryId);
+            string postalCodeSuffix, string country);
     }
 }

@@ -29,7 +29,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             // Call the service to retrieve a contact based on its Civi-ID
 
-            const int contactId = 6341;
+            const int contactId = 4403;
 
             ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
@@ -54,7 +54,16 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 foreach (var address in client.ContactAddressesGet(contactId))
                 {
-                    Console.WriteLine("{0}, {1} {2} {3}", address.StreetAddress, address.PostalCode, address.PostalCodeSuffix, address.City);
+                    Console.WriteLine(
+                        "{0}, {1} {2} {3} - Country-ID {4} P:{5} B:{6}", 
+                        address.StreetAddress, 
+                        address.PostalCode, 
+                        address.PostalCodeSuffix, 
+                        address.City, 
+                        address.Country,
+                        address.IsPrimary,
+                        address.IsBilling
+                        );
                 }
 
                 // you might want to do some modifications. You can uncomment the lines below;
@@ -66,8 +75,6 @@ namespace Chiro.CiviCrm.Wcf.Example
                 //contact.BirthDate = new DateTime(1990, 4, 5);
                 //contact.Gender = Gender.Female;
 
-                //client.ContactSave(contact);
-
                 //// add address
 
                 //client.AddressSave(new Address
@@ -78,8 +85,10 @@ namespace Chiro.CiviCrm.Wcf.Example
                 //                       PostalCode = 2000,
                 //                       City = "Antwerpen",
                 //                       StateProvinceId = 1785,
-                //                       CountryId = 1020,
-                //                       LocationTypeId = 1
+                //                       Country = "BE",
+                //                       LocationTypeId = 1,
+                //                       IsPrimary = true,
+                //                       IsBilling = true,
                 //                   });
             }         
 
