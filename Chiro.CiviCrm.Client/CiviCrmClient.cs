@@ -114,7 +114,7 @@ namespace Chiro.CiviCrm.Client
         public void ContactSave(Contact contact)
         {
             Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId,
-                contact.ContactType, contact.BirthDate, contact.DeceasedDate, contact.IsDeceased, (int)(contact.Gender));
+                contact.ContactType, contact.BirthDate, contact.DeceasedDate, Convert.ToInt32(contact.IsDeceased), (int)(contact.Gender));
         }
 
         /// <summary>
@@ -202,8 +202,8 @@ namespace Chiro.CiviCrm.Client
         /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
         public void AddressSave(Address address)
         {
-            Channel.AddressSave(_apiKey, _key, address.Id, address.ContactId, address.LocationTypeId, address.IsPrimary,
-                address.IsBilling, address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
+            Channel.AddressSave(_apiKey, _key, address.Id, address.ContactId, address.LocationTypeId, Convert.ToInt32(address.IsPrimary),
+                Convert.ToInt32(address.IsBilling), address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
                 address.PostalCodeSuffix, address.CountryId);
         }
     }
