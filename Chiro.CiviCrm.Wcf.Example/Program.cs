@@ -55,14 +55,15 @@ namespace Chiro.CiviCrm.Wcf.Example
                 foreach (var address in client.ContactAddressesGet(contactId))
                 {
                     Console.WriteLine(
-                        "{0}, {1} {2} {3} - Country-ID {4} P:{5} B:{6}", 
+                        "(7) {0}, {1} {2} {3} - Country-ID {4} P:{5} B:{6}", 
                         address.StreetAddress, 
                         address.PostalCode, 
                         address.PostalCodeSuffix, 
                         address.City, 
                         address.Country,
                         address.IsPrimary,
-                        address.IsBilling
+                        address.IsBilling,
+                        address.Id
                         );
                 }
 

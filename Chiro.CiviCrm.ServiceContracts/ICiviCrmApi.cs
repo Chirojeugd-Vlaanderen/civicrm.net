@@ -127,5 +127,17 @@ namespace Chiro.CiviCrm.Api
         void AddressSave(string apiKey, string key, int id, int contactId, int locationTypeId, int isPrimary,
             int isBilling, string streetAddress, string city, int stateProvinceId, int postalCode,
             string postalCodeSuffix, string country);
+
+        /// <summary>
+        /// Deletes the address with given <paramref name="addressId"/>
+        /// </summary>
+        /// <param name="apiKey">API-key of the API user</param>
+        /// <param name="key">Key of the CiviCRM installation</param>
+        /// <param name="addressId"></param>
+        [OperationContract]
+        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
+            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&id={addressId}"
+            )]
+        void AddressDelete(string apiKey, string key, int addressId);
     }
 }

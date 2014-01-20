@@ -206,5 +206,14 @@ namespace Chiro.CiviCrm.Client
                 Convert.ToInt32(address.IsBilling), address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
                 address.PostalCodeSuffix, address.Country);
         }
+
+        /// <summary>
+        /// Delete the address with given <paramref name="addressId"/>.
+        /// </summary>
+        /// <param name="addressId">ID of the address to be deleted.</param>
+        public void AddressDelete(int addressId)
+        {
+            Channel.AddressDelete(_apiKey, _key, addressId);
+        }
     }
 }

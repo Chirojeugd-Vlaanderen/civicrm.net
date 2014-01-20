@@ -73,5 +73,11 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// </summary>
         /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
         void AddressSave(Address address);
+
+        /// <summary>
+        /// Delete the address with given <paramref name="addressId"/>.
+        /// </summary>
+        /// <param name="addressId">ID of the address to be deleted.</param>
+        void AddressDelete(int addressId);
     }
 }
