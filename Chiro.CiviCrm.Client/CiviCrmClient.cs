@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -22,6 +22,7 @@ using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.Domain;
+using System.Diagnostics;
 
 namespace Chiro.CiviCrm.Client
 {
@@ -76,9 +77,9 @@ namespace Chiro.CiviCrm.Client
             // Cache mapping External ID -> Contact ID, because we might need this lots of times
             // when using an API.
 
-            if (contact.ExternalId != null)
+            if (!string.IsNullOrEmpty(contact.ExternalId))
             {
-                CacheContactId(contact.ExternalId.Value, contact.Id);
+                CacheContactId(contact.ExternalId, contact.Id);
             }
 
             return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
@@ -89,7 +90,7 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         /// <param name="externalId">External ID of contact to be found</param>
         /// <returns>The contact with given <paramref name="externalId"/>, or <c>null</c> if it is not found.</returns>
-        public Contact ContactFind(int externalId)
+        public Contact ContactFind(string externalId)
         {
             var result = base.Channel.ContactFind(_apiKey, _key, externalId).Content;
 
@@ -139,7 +140,7 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
         /// <returns>List of addresses</returns>
-        public List<Address> ContactAddressesFind(int externalId)
+        public List<Address> ContactAddressesFind(string externalId)
         {
             int? contactId = ExternalIdToContactId(externalId);
 
@@ -163,8 +164,9 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         /// <param name="externalId">An external ID of a contact</param>
         /// <returns>The corresponding contact ID, or <c>null</c> if not found.</returns>
-        private int? ExternalIdToContactId(int externalId)
+        private int? ExternalIdToContactId(string externalId)
         {
+            Debug.Assert(!String.IsNullOrEmpty(externalId));
             int? contactId = (int?)_cache.Get(String.Format(ContactIdCacheKey, externalId));
 
             if (contactId == null)
@@ -186,8 +188,9 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         /// <param name="externalId">External ID</param>
         /// <param name="contactId">Contact ID</param>
-        private void CacheContactId(int externalId, int contactId)
+        private void CacheContactId(string externalId, int contactId)
         {
+            Debug.Assert(!string.IsNullOrEmpty(externalId));
             _cache.Add(String.Format(ContactIdCacheKey, externalId), contactId,
                 new CacheItemPolicy
                 {

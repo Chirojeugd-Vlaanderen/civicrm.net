@@ -1,6 +1,6 @@
 Chiro.CiviCrm.Wcf
 
-Copyright 2013 Chirojeugd-Vlaanderen vzw
+Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
 Authors for Chirojeugd-Vlaanderen vzw:
   * Johan Vervloet

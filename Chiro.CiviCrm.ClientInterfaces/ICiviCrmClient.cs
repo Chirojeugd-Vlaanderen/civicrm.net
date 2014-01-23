@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -44,7 +44,7 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// </summary>
         /// <param name="externalId">External ID of contact to be found</param>
         /// <returns>The contact with given <paramref name="externalId"/>, or <c>null</c> if it is not found.</returns>
-        Contact ContactFind(int externalId);
+        Contact ContactFind(string externalId);
 
         /// <summary>
         /// Saves a new contact, or updates an existing contact
@@ -66,7 +66,7 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// </summary>
         /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
         /// <returns>List of addresses</returns>
-        List<Address> ContactAddressesFind(int externalId);
+        List<Address> ContactAddressesFind(string externalId);
 
         /// <summary>
         /// Creates a new address, or updates an existing address.

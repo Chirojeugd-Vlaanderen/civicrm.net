@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             // Call the service to retrieve a contact based on its Civi-ID
 
-            const int contactId = 4403;
+            const int contactId = 5;
 
             ICiviCrmClient client = new CiviCrmClient();
             // you could do this with dependency injection.
@@ -49,6 +49,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id); 
                 Console.WriteLine("Date of birth: {0}", contact.BirthDate);
                 Console.WriteLine("Gender: {0}", contact.Gender);
+                Console.WriteLine("External ID: {0}", contact.ExternalId);
 
                 // retrieve addresses
 

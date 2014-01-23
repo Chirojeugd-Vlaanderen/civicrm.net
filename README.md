@@ -15,7 +15,6 @@ I use CiviCRM on Drupal. Create a Drupal user, which has the following permissio
 * CiviCRM: create new contacts
 * CiviCRM: use CiviCRM
 * CiviCRM: use AJAX API
-* CiviCRM: administer CiviCRM
 
 This user is automatically a contact in CiviCRM. You have to assign an API key to the user. This has to be done by a query on the database:
 

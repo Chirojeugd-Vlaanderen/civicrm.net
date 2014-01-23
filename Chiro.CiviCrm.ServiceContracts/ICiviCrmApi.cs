@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -67,7 +67,7 @@ namespace Chiro.CiviCrm.Api
             UriTemplate =
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&external_identifier={externalId}"
             )]
-        CiviCrmResponse<ContactSet> ContactFind(string apiKey, string key, int externalId);
+        CiviCrmResponse<ContactSet> ContactFind(string apiKey, string key, string externalId);
 
         /// <summary>
         /// Saves a new CiviCRM contact, or updates an existing CiviCRM contact.
@@ -87,7 +87,7 @@ namespace Chiro.CiviCrm.Api
         [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
             "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender_id={genderId}"
             )]
-        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, int? externalId,
+        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, string externalId,
             ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, int isDeceased, int genderId);
 
         /// <summary>
