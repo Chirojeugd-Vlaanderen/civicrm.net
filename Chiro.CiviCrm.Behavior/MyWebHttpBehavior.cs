@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013,2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -13,21 +13,16 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-using System;
-using System.ServiceModel.Configuration;
+using System.ServiceModel.Description;
+using System.ServiceModel.Dispatcher;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
-    public class NullableWebHttpBehaviorExtensionElement: BehaviorExtensionElement
+    public class MyWebHttpBehavior: WebHttpBehavior
     {
-        protected override object CreateBehavior()
+        protected override QueryStringConverter GetQueryStringConverter(OperationDescription operationDescription)
         {
-            return new NullableWebHttpBehavior();
-        }
-
-        public override Type BehaviorType
-        {
-            get { return typeof(NullableWebHttpBehavior); }
+            return new MyQueryStringConverter();
         }
     }
 }

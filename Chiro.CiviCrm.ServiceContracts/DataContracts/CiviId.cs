@@ -19,7 +19,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
         public override string ToString()
         {
-            return String.Format("{{'sequential':1, id:{0}}}", Id);
+            return String.Format("{{\"sequential\":1, \"id\":{0}}}", Id);
         }
     }
 }

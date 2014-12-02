@@ -42,9 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="NullableQueryStringConverter.cs" />
-    <Compile Include="NullableWebHttpBehavior.cs" />
-    <Compile Include="NullableWebHttpBehaviorExtensionElement.cs" />
+    <Compile Include="MyQueryStringConverter.cs" />
+    <Compile Include="MyWebHttpBehavior.cs" />
+    <Compile Include="MyWebHttpBehaviorExtensionElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
