@@ -60,127 +60,17 @@ namespace Chiro.CiviCrm.Client
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         public Contact ContactGet(int id)
         {
-            var result = base.Channel.ContactGet(_apiKey, _key, id).Content;
-
-            if (result.Contacts == null)
-            {
-                return null;
-            }
-
-            var contact = result.Contacts.SingleOrDefault();
-
-            if (contact == null)
-            {
-                return null;
-            }
+            var contact = base.Channel.ContactGet(_apiKey, _key, id);
 
             // Cache mapping External ID -> Contact ID, because we might need this lots of times
             // when using an API.
 
-            if (!string.IsNullOrEmpty(contact.ExternalId))
+            if (contact != null && !string.IsNullOrEmpty(contact.external_identifier))
             {
-                CacheContactId(contact.ExternalId, contact.Id);
+                CacheContactId(contact.external_identifier, contact.contact_id);
             }
 
-            return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Find a contact based on its <paramref name="externalId"/>.
-        /// </summary>
-        /// <param name="externalId">External ID of contact to be found</param>
-        /// <returns>The contact with given <paramref name="externalId"/>, or <c>null</c> if it is not found.</returns>
-        public Contact ContactFind(string externalId)
-        {
-            var result = base.Channel.ContactFind(_apiKey, _key, externalId).Content;
-
-            if (result.Contacts == null || result.Contacts.FirstOrDefault() == null)
-            {
-                return null;
-            }
-
-            var contact = result.Contacts.First();
-
-            CacheContactId(externalId, contact.Id);
-
-            return result.Contacts == null ? null : result.Contacts.FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Saves a new contact, or updates an existing contact
-        /// </summary>
-        /// <param name="contact">Contact to be saved or updated</param>
-        /// <remarks>If the contact's ID is 0, it will be saved. If it differs from 0, the existing contact with the
-        /// given ID will be updated.</remarks>
-        public void ContactSave(Contact contact)
-        {
-            Channel.ContactSave(_apiKey, _key, contact.Id, contact.FirstName, contact.LastName, contact.ExternalId,
-                contact.ContactType, contact.BirthDate, contact.DeceasedDate, Convert.ToInt32(contact.IsDeceased), (int)(contact.Gender));
-        }
-
-        /// <summary>
-        /// Retrieves the addresses for the contact with given <paramref name="contactId"/>
-        /// </summary>
-        /// <param name="contactId">ID of the contact whose addresses are to be retrieved</param>
-        /// <returns>List of addresses</returns>
-        public List<Address> ContactAddressesGet(int contactId)
-        {
-            var result = Channel.ContactAddressesGet(_apiKey, _key, contactId).Content;
-
-            if (result == null || result.Adresses == null)
-            {
-                return new List<Address>();
-            }
-
-            return result.Adresses.ToList();
-        }
-
-        /// <summary>
-        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
-        /// </summary>
-        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
-        /// <returns>List of addresses</returns>
-        public List<Address> ContactAddressesFind(string externalId)
-        {
-            int? contactId = ExternalIdToContactId(externalId);
-
-            if (contactId == null)
-            {
-                return new List<Address>();
-            }
-
-            var result = Channel.ContactAddressesGet(_apiKey, _key, contactId.Value).Content;
-
-            if (result == null || result.Adresses == null)
-            {
-                return new List<Address>();
-            }
-
-            return result.Adresses.ToList();
-        }
-
-        /// <summary>
-        /// Returns the contact ID of the contact with given <paramref name="externalId" />. Caches.
-        /// </summary>
-        /// <param name="externalId">An external ID of a contact</param>
-        /// <returns>The corresponding contact ID, or <c>null</c> if not found.</returns>
-        private int? ExternalIdToContactId(string externalId)
-        {
-            Debug.Assert(!String.IsNullOrEmpty(externalId));
-            int? contactId = (int?)_cache.Get(String.Format(ContactIdCacheKey, externalId));
-
-            if (contactId == null)
-            {
-                var contact = ContactFind(externalId);
-                if (contact == null)
-                {
-                    return null;
-                }
-                contactId = contact.Id;
-                CacheContactId(externalId, contactId.Value);
-            }
-
-            return contactId;
+            return contact;
         }
 
         /// <summary>
@@ -197,26 +87,6 @@ namespace Chiro.CiviCrm.Client
                     AbsoluteExpiration = DateTime.Now.AddHours(2),
                     Priority = CacheItemPriority.Default
                 });
-        }
-
-        /// <summary>
-        /// Creates a new address, or updates an existing address.
-        /// </summary>
-        /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
-        public void AddressSave(Address address)
-        {
-            Channel.AddressSave(_apiKey, _key, address.Id, address.ContactId, address.LocationTypeId, Convert.ToInt32(address.IsPrimary),
-                Convert.ToInt32(address.IsBilling), address.StreetAddress, address.City, address.StateProvinceId, address.PostalCode,
-                address.PostalCodeSuffix, address.Country);
-        }
-
-        /// <summary>
-        /// Delete the address with given <paramref name="addressId"/>.
-        /// </summary>
-        /// <param name="addressId">ID of the address to be deleted.</param>
-        public void AddressDelete(int addressId)
-        {
-            Channel.AddressDelete(_apiKey, _key, addressId);
         }
     }
 }

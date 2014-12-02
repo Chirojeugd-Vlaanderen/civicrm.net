@@ -38,46 +38,5 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <param name="id">contact ID of contact to be found</param>
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         Contact ContactGet(int id);
-
-        /// <summary>
-        /// Find a contact based on its <paramref name="externalId"/>.
-        /// </summary>
-        /// <param name="externalId">External ID of contact to be found</param>
-        /// <returns>The contact with given <paramref name="externalId"/>, or <c>null</c> if it is not found.</returns>
-        Contact ContactFind(string externalId);
-
-        /// <summary>
-        /// Saves a new contact, or updates an existing contact
-        /// </summary>
-        /// <param name="contact">Contact to be saved or updated</param>
-        /// <remarks>If the contact's ID is 0, it will be saved. If it differs from 0, the existing contact with the
-        /// given ID will be updated.</remarks>
-        void ContactSave(Contact contact);
-
-        /// <summary>
-        /// Retrieves the addresses for the contact with given <paramref name="contactId"/>
-        /// </summary>
-        /// <param name="contactId">ID of the contact whose addresses are to be retrieved</param>
-        /// <returns>List of addresses</returns>
-        List<Address> ContactAddressesGet(int contactId);
-            
-        /// <summary>
-        /// Retrieves the addresses for the contact with given <paramref name="externalId"/>.
-        /// </summary>
-        /// <param name="externalId">EXTERNAL ID of the contact whose addresses are to be retrieved</param>
-        /// <returns>List of addresses</returns>
-        List<Address> ContactAddressesFind(string externalId);
-
-        /// <summary>
-        /// Creates a new address, or updates an existing address.
-        /// </summary>
-        /// <param name="address">Address to be updated (when Id != 0) or saved (when Id == 0).</param>
-        void AddressSave(Address address);
-
-        /// <summary>
-        /// Delete the address with given <paramref name="addressId"/>.
-        /// </summary>
-        /// <param name="addressId">ID of the address to be deleted.</param>
-        void AddressDelete(int addressId);
     }
 }

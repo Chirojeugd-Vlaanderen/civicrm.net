@@ -17,7 +17,6 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Domain;
 
 namespace Chiro.CiviCrm.Api
@@ -34,8 +33,7 @@ namespace Chiro.CiviCrm.Api
     /// but I am not sure whether this solution is OK.
     /// </remarks>
     [ServiceContract]
-    [XmlSerializerFormat]
-    public interface ICiviCrmApi: IDisposable
+    public interface ICiviCrmApi
     {
         /// <summary>
         /// Find contact with given <paramref name="id"/>
@@ -46,98 +44,15 @@ namespace Chiro.CiviCrm.Api
         /// <returns>If found, a set with the (unique) contact with 
         /// given <paramref name="id"/>,
         /// otherwise <c>null</c>.</returns>
+        /// <remarks>To avoid problems with the query string formatter, I try
+        /// id={id}&json=1 first. If I can get it to work, I will use the
+        /// syntax that is provided by the API explorer later on:
+        /// json={id:{id}}. (Which will obviously require more tweaking.)</remarks>
         [OperationContract]
-        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&contact_id={id}"
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&id={id}&json=1"
             )]
-        CiviCrmResponse<ContactSet> ContactGet(string apiKey, string key, int id);
-
-        /// <summary>
-        /// Find contact with given <paramref name="externalId"/>
-        /// </summary>
-        /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="externalId">External ID of contact to be found</param>
-        /// <param name="apiKey">API-key of the API-user</param>
-        /// <returns>If found, a set with the (unique) contact with 
-        /// given <paramref name="externalId"/>,
-        /// otherwise <c>null</c>.</returns>
-        [OperationContract]
-        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&external_identifier={externalId}"
-            )]
-        CiviCrmResponse<ContactSet> ContactFind(string apiKey, string key, string externalId);
-
-        /// <summary>
-        /// Saves a new CiviCRM contact, or updates an existing CiviCRM contact.
-        /// </summary>
-        /// <param name="apiKey">API-key of the API-user</param>
-        /// <param name="key">Key of  the CiviCRM-installation</param>
-        /// <param name="id">ID of the contact to be updated, or 0 for a new contact</param>
-        /// <param name="firstName">new first name</param>
-        /// <param name="lastName">new last name</param>
-        /// <param name="externalId">new external id</param>
-        /// <param name="contactType">new ContacType</param>
-        /// <param name="birthDate">date of birth</param>
-        /// <param name="deceasedDate">date of death</param>
-        /// <param name="isDeceased"><c>true</c> if contact is dead, otherwise <c>false</c></param>
-        /// <param name="genderId">1, 2 or 3 for Female, Male of Transgender</param>
-        [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&contact_type={contactType}&contact_id={id}&first_name={firstName}&last_name={lastName}&external_identifier={externalID}&birth_date={birthDate}&deceased_date={deceasedDate}&is_deceased={isDeceased}&gender_id={genderId}"
-            )]
-        void ContactSave(string apiKey, string key, int id, string firstName, string lastName, string externalId,
-            ContactType contactType, DateTime? birthDate, DateTime? deceasedDate, int isDeceased, int genderId);
-
-        /// <summary>
-        /// Find the adresses of a contact with given <paramref name="contactId"/>.
-        /// </summary>
-        /// <param name="apiKey">API-key of the API user</param>
-        /// <param name="key">Key of the CiviCRM installation</param>
-        /// <param name="contactId">ID of the contact whose addresses are requested</param>
-        /// <returns>List of addresses</returns>
-        [OperationContract]
-        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Xml,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&contact_id={contactId}")]
-        CiviCrmResponse<AddressSet> ContactAddressesGet(string apiKey, string key, int contactId);
-
-
-        /// <summary>
-        /// Saves a new address or updates an existing address.
-        /// </summary>
-        /// <param name="apiKey">API-key of the API user</param>
-        /// <param name="key">Key of the CiviCRM installation</param>
-        /// <param name="id">Id of the address to be updated, or <c>0</c> if it is a new address.</param>
-        /// <param name="contactId">Id of the contact the address applies to</param>
-        /// <param name="locationTypeId">Location type. Should not be <c>0</c></param>
-        /// <param name="isPrimary">Determines whether this address will be the primary address</param>
-        /// <param name="isBilling">Determines whether this address will be the billing address</param>
-        /// <param name="streetAddress">Street, number, suffix</param>
-        /// <param name="city">City</param>
-        /// <param name="stateProvinceId">CiviCRM StateProvindeId</param>
-        /// <param name="postalCode">Postal code</param>
-        /// <param name="postalCodeSuffix">Postal code suffix</param>
-        /// <param name="country">Country or ISO-Code of country</param>
-        [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&id={Id}&contact_id={contactId}&location_type_id={locationTypeId}&is_primary={isPrimary}&is_billing={isBilling}&street_address={streetAddress}&city={city}&state_province_id={stateProvinceId}&postal_code={postalCode}&postal_code_suffix={postalCodeSuffix}&country={country}"
-            )]
-        void AddressSave(string apiKey, string key, int id, int contactId, int locationTypeId, int isPrimary,
-            int isBilling, string streetAddress, string city, int stateProvinceId, int postalCode,
-            string postalCodeSuffix, string country);
-
-        /// <summary>
-        /// Deletes the address with given <paramref name="addressId"/>
-        /// </summary>
-        /// <param name="apiKey">API-key of the API user</param>
-        /// <param name="key">Key of the CiviCRM installation</param>
-        /// <param name="addressId"></param>
-        [OperationContract]
-        [WebInvoke(RequestFormat = WebMessageFormat.Xml, BodyStyle = WebMessageBodyStyle.Bare, UriTemplate =
-            "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&id={addressId}"
-            )]
-        void AddressDelete(string apiKey, string key, int addressId);
+        Contact ContactGet(string apiKey, string key, int id);
     }
 }

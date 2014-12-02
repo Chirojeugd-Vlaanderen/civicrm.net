@@ -15,38 +15,25 @@
  */
 
 using System;
+using System.Runtime.Serialization;
 using System.Xml;
 using System.Xml.Serialization;
 
 namespace Chiro.CiviCrm.Domain
 {
+    [DataContract]
     public class Contact
     {
-        [XmlElement("contact_id")]
-        public int Id { get; set; }
+        [DataMember]
+        public int contact_id { get; set; }
 
-        [XmlElement("first_name")]
-        public string FirstName { get; set; }
+        [DataMember]
+        public string first_name { get; set; }
 
-        [XmlElement("last_name")]
-        public string LastName { get; set; }
+        [DataMember]
+        public string last_name { get; set; }
 
-        [XmlElement("external_identifier")]
-        public string ExternalId { get; set; }
-
-        [XmlElement("contact_type")]
-        public ContactType ContactType { get; set; }
-
-        // the dates don't have the XmlElement attribute, because deserialization happens via the
-        // datestrings in Chiro.CiviCrm.Api.DataContracts.ApiContact.
-        public DateTime? BirthDate { get; set; }
-
-        public DateTime? DeceasedDate { get; set; }
-
-        // Similarly, the Gender will be derived based on GenderId.
-        public Gender Gender { get; set; }
-
-        [XmlElement("is_deceased")]
-        public bool IsDeceased { get; set; }
+        [DataMember]
+        public string external_identifier { get; set; }
     }
 }
