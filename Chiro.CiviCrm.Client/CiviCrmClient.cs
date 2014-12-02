@@ -23,6 +23,7 @@ using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.Domain;
 using System.Diagnostics;
+using Chiro.CiviCrm.Api.DataContracts;
 
 namespace Chiro.CiviCrm.Client
 {
@@ -60,7 +61,7 @@ namespace Chiro.CiviCrm.Client
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         public Contact ContactGet(int id)
         {
-            var contact = base.Channel.ContactGet(_apiKey, _key, id);
+            var contact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
 
             // Cache mapping External ID -> Contact ID, because we might need this lots of times
             // when using an API.
