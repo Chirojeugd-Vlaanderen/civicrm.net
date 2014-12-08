@@ -23,13 +23,6 @@ namespace Chiro.CiviCrm.ClientInterfaces
     /// <summary>
     /// Interface for the CiviCRM-client.
     /// </summary>
-    /// <remarks>
-    /// In an ideal world, the client interface should look more like the service interface.
-    /// But if I use classes in the service interface, WCF sends the data as the body of the post
-    /// request, and the CiviCRM API cannot handle this.
-    /// I tried to customize the WCF Uri Formatter for the WebHttpBinding, but I failed. So
-    /// for the moment I work around the problem in the client.
-    /// </remarks>
     public interface ICiviCrmClient: IDisposable
     {
         /// <summary>

@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Caching;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.ClientInterfaces;
@@ -30,20 +29,10 @@ namespace Chiro.CiviCrm.Client
     /// <summary>
     /// Interface for the CiviCRM-client.
     /// </summary>
-    /// <remarks>
-    /// In an ideal world, the client interface should look more like the service interface.
-    /// But if I use classes in the service interface, WCF sends the data as the body of the post
-    /// request, and the CiviCRM API cannot handle this.
-    /// I tried to customize the WCF Uri Formatter for the WebHttpBinding, but I failed. So
-    /// for the moment I work around the problem in the client.
-    /// </remarks>
     public class CiviCrmClient: ClientBase<ICiviCrmApi>, ICiviCrmClient
     {
         private readonly string _apiKey;
         private readonly string _key;
-
-        private readonly MemoryCache _cache = MemoryCache.Default;
-        private const string ContactIdCacheKey = "CICK{0}"; 
 
         /// <summary>
         /// Creates a new CiviCRM-client
@@ -61,33 +50,7 @@ namespace Chiro.CiviCrm.Client
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         public Contact ContactGet(int id)
         {
-            var contact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
-
-            // Cache mapping External ID -> Contact ID, because we might need this lots of times
-            // when using an API.
-
-            if (contact != null && !string.IsNullOrEmpty(contact.external_identifier))
-            {
-                CacheContactId(contact.external_identifier, contact.contact_id);
-            }
-
-            return contact;
-        }
-
-        /// <summary>
-        /// Caches link external ID - contact ID
-        /// </summary>
-        /// <param name="externalId">External ID</param>
-        /// <param name="contactId">Contact ID</param>
-        private void CacheContactId(string externalId, int contactId)
-        {
-            Debug.Assert(!string.IsNullOrEmpty(externalId));
-            _cache.Add(String.Format(ContactIdCacheKey, externalId), contactId,
-                new CacheItemPolicy
-                {
-                    AbsoluteExpiration = DateTime.Now.AddHours(2),
-                    Priority = CacheItemPriority.Default
-                });
+            return base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
         }
     }
 }

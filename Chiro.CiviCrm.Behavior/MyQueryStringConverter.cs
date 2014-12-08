@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
     {
         public override bool CanConvert(Type type)
         {
-            // I will convert everything :-)
+            // I will convert anything :-)
             return true;
         }
 
