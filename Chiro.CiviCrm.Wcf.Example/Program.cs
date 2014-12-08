@@ -29,7 +29,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = new CiviCrmClient())
             {
-                var contact = client.ContactFind(1111111);
+                var contact = client.ContactFind("1111111");
                 // If you want to access the CiviCRM-API over https (recommended), you should
                 // change the security mode of the CiviCrmBindingConfiguration from None to Transport
                 // (in App.config)

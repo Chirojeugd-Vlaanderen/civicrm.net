@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Microsoft.Security.Application;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,16 +27,18 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// </summary>
     public class CiviExternalIdentifier
     {
-        public int ExternalIdentifier { get; set; }
+        public string ExternalIdentifier { get; set; }
 
-        public CiviExternalIdentifier(int externalIdentifier)
+        public CiviExternalIdentifier(string externalIdentifier)
         {
             ExternalIdentifier = externalIdentifier;
         }
 
         public override string ToString()
         {
-            return String.Format("{{\"sequential\":1, \"external_identifier\":{0}}}", ExternalIdentifier);
+            return String.Format(
+                "{{\"sequential\":1, \"external_identifier\":{0}}}", 
+                Microsoft.Security.Application.Encoder.JavaScriptEncode(ExternalIdentifier, false));
         }
     }
 }

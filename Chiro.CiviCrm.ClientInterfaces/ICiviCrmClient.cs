@@ -38,6 +38,6 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <param name="externalIdentifier">External identifier of requested contact.</param>
         /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
         /// <c>null</c> otherwise.</returns>
-        Contact ContactFind(int externalIdentifier);
+        Contact ContactFind(string externalIdentifier);
     }
 }
