@@ -31,5 +31,13 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <param name="id">contact ID of contact to be found</param>
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         Contact ContactGet(int id);
+
+        /// <summary>
+        /// Find a contact with given <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="externalIdentifier">External identifier of requested contact.</param>
+        /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
+        /// <c>null</c> otherwise.</returns>
+        Contact ContactFind(int externalIdentifier);
     }
 }

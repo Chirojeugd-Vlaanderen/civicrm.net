@@ -59,5 +59,17 @@ namespace Chiro.CiviCrm.Client
             var civiContact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
             return Mapper.Map<Contact>(civiContact);
         }
+
+        /// <summary>
+        /// Find a contact with given <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="externalIdentifier">External identifier of requested contact.</param>
+        /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
+        /// <c>null</c> otherwise.</returns>
+        public Contact ContactFind(int externalIdentifier)
+        {
+            var civiContact = base.Channel.ContactFind(_apiKey, _key, new CiviExternalIdentifier(externalIdentifier));
+            return Mapper.Map<Contact>(civiContact);
+        }
     }
 }

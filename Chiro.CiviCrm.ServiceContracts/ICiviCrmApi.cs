@@ -30,11 +30,10 @@ namespace Chiro.CiviCrm.Api
         /// <summary>
         /// Find contact with given <paramref name="id"/>
         /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
         /// <param name="id">(CiviCRM) ID of contact to be found</param>
-        /// <param name="apiKey">API-key of the API-user</param>
-        /// <returns>If found, a set with the (unique) contact with 
-        /// given <paramref name="id"/>,
+        /// <returns>If found, the (unique) contact with given <paramref name="id"/>,
         /// otherwise <c>null</c>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
@@ -42,5 +41,20 @@ namespace Chiro.CiviCrm.Api
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={id}"
             )]
         CiviContact ContactGet(string apiKey, string key, CiviId id);
+
+        /// <summary>
+        /// Find contact with given <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="externalIdentifier">External identifier of contact to find.</param>
+        /// <returns>If found, then (unique) contact with given
+        /// <paramref name="externalIdentifier"/>, otherwise <c>null</c>.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate =
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={externalIdentifier}"
+            )]
+        CiviContact ContactFind(string apiKey, string key, CiviExternalIdentifier externalIdentifier);
     }
 }

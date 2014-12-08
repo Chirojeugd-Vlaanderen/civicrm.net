@@ -32,12 +32,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\CiviExternalIdentifier.cs" />
     <Compile Include="DataContracts\CiviId.cs" />
     <Compile Include="DataContracts\CiviContact.cs" />
     <Compile Include="ICiviCrmApi.cs" />

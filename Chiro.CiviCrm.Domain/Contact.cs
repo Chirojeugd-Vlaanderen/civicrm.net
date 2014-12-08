@@ -20,7 +20,7 @@ namespace Chiro.CiviCrm.Domain
 {
     public class Contact
     {
-        public int ContactID { get; set; }
+        public int ContactId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string ExternalIdentifier { get; set; }
