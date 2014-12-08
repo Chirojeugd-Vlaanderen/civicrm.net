@@ -24,14 +24,6 @@ namespace Chiro.CiviCrm.Api
     /// <summary>
     /// WCF service contract for the CiviCRM API
     /// </summary>
-    /// <remarks>
-    /// I use CiviCrmResponse as the result type, because I had problems with deserializing because the root element
-    /// of every response of the CiviCRM API is ResultSet. WCF threw an exception because it didn't want to deserialize
-    /// the same XML element to different data contracts.
-    /// I used the workaround I found here:
-    /// http://social.msdn.microsoft.com/Forums/vstudio/en-US/bcd031d7-c8a4-4bb0-8c85-bc5d7b46108a/rest-services-identical-xmlroot-attributes-on-different-classes
-    /// but I am not sure whether this solution is OK.
-    /// </remarks>
     [ServiceContract]
     public interface ICiviCrmApi
     {
@@ -39,15 +31,11 @@ namespace Chiro.CiviCrm.Api
         /// Find contact with given <paramref name="id"/>
         /// </summary>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="id">External ID of contact to be found</param>
+        /// <param name="id">(CiviCRM) ID of contact to be found</param>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <returns>If found, a set with the (unique) contact with 
         /// given <paramref name="id"/>,
         /// otherwise <c>null</c>.</returns>
-        /// <remarks>To avoid problems with the query string formatter, I try
-        /// id={id}&json=1 first. If I can get it to work, I will use the
-        /// syntax that is provided by the API explorer later on:
-        /// json={id:{id}}. (Which will obviously require more tweaking.)</remarks>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate =
