@@ -15,28 +15,41 @@
  */
 using System;
 using System.ServiceModel.Dispatcher;
+using System.Web.Script.Serialization;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
     /// <summary>
-    /// QueryStringConverter that uses 'ToString' when it cannot convert.
+    /// QueryStringConverter able to convert to Json.
     /// </summary>
-    public class MyQueryStringConverter: QueryStringConverter
+    public class JsonQueryStringConverter: QueryStringConverter
     {
         public override bool CanConvert(Type type)
         {
-            // I will convert anything :-)
-            return true;
+            return (Attribute.GetCustomAttribute(type, typeof(JsonConvertibleAttribute)) != null)
+                || base.CanConvert(type);
         }
 
         public override object ConvertStringToValue(string parameter, Type parameterType)
         {
-            return base.CanConvert(parameterType) ? base.ConvertStringToValue(parameter, parameterType) : null;
+            if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
+            {
+                // We don't need this client side. So I won't bother.
+                throw new NotImplementedException();
+            }
+            return base.ConvertStringToValue(parameter, parameterType);
         }
 
         public override string ConvertValueToString(object parameter, Type parameterType)
         {
-            return base.CanConvert(parameterType) ? base.ConvertValueToString(parameter, parameterType) : parameter.ToString();
+            if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
+            {
+                return new JavaScriptSerializer().Serialize(parameter);
+            }
+            else
+            {
+                return base.ConvertValueToString(parameter, parameterType);
+            }
         }
     }
 }

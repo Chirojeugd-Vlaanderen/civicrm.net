@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.BehaviorExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,18 +25,14 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// <summary>
     /// Some class that basically converts an ID to the json-part of the request url.
     /// </summary>
+    [JsonConvertible]
     public class CiviId
     {
-        public int Id { get; set; }
+        public int id { get; set; }
 
         public CiviId(int id)
         {
-            Id = id;
-        }
-
-        public override string ToString()
-        {
-            return String.Format("{{\"sequential\":1, \"id\":{0}}}", Id);
+            this.id = id;
         }
     }
 }

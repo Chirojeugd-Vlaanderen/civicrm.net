@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.BehaviorExtension;
 using Microsoft.Security.Application;
 using System;
 using System.Collections.Generic;
@@ -25,20 +26,21 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// <summary>
     /// Some class that basically converts an external identifier to the json-part of the request url.
     /// </summary>
+    [JsonConvertible]
     public class CiviExternalIdentifier
     {
-        public string ExternalIdentifier { get; set; }
+        public string external_identifier { get; set; }
 
         public CiviExternalIdentifier(string externalIdentifier)
         {
-            ExternalIdentifier = externalIdentifier;
+            external_identifier = externalIdentifier;
         }
 
         public override string ToString()
         {
             return String.Format(
                 "{{\"sequential\":1, \"external_identifier\":{0}}}", 
-                Microsoft.Security.Application.Encoder.JavaScriptEncode(ExternalIdentifier, false));
+                Microsoft.Security.Application.Encoder.JavaScriptEncode(external_identifier, false));
         }
     }
 }

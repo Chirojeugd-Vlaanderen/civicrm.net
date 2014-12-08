@@ -22,7 +22,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
     {
         protected override QueryStringConverter GetQueryStringConverter(OperationDescription operationDescription)
         {
-            return new MyQueryStringConverter();
+            return new JsonQueryStringConverter();
         }
     }
 }

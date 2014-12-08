@@ -34,13 +34,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyQueryStringConverter.cs" />
+    <Compile Include="JsonConvertibleAttribute.cs" />
+    <Compile Include="JsonQueryStringConverter.cs" />
     <Compile Include="MyWebHttpBehavior.cs" />
     <Compile Include="MyWebHttpBehaviorExtensionElement.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
