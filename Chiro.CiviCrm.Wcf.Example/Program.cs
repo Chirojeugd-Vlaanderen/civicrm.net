@@ -45,8 +45,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                 }
                 else
                 {
-                    Console.WriteLine("Found: {0} {1}; id: {2}", contact.first_name, contact.last_name, contact.contact_id);
-                    Console.WriteLine("External ID: {0}", contact.external_identifier);
+                    Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.ContactID);
+                    Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
                 }
             }
 

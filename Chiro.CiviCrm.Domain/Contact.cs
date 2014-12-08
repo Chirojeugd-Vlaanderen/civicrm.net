@@ -15,24 +15,14 @@
  */
 
 using System;
-using System.Runtime.Serialization;
-using System.Xml;
 
 namespace Chiro.CiviCrm.Domain
 {
-    [DataContract]
     public class Contact
     {
-        [DataMember]
-        public int contact_id { get; set; }
-
-        [DataMember]
-        public string first_name { get; set; }
-
-        [DataMember]
-        public string last_name { get; set; }
-
-        [DataMember]
-        public string external_identifier { get; set; }
+        public int ContactID { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string ExternalIdentifier { get; set; }
     }
 }

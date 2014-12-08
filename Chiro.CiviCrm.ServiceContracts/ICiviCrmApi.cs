@@ -17,7 +17,6 @@
 using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
-using Chiro.CiviCrm.Domain;
 using Chiro.CiviCrm.Api.DataContracts;
 
 namespace Chiro.CiviCrm.Api
@@ -54,6 +53,6 @@ namespace Chiro.CiviCrm.Api
             UriTemplate =
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={id}"
             )]
-        Contact ContactGet(string apiKey, string key, CiviId id);
+        CiviContact ContactGet(string apiKey, string key, CiviId id);
     }
 }

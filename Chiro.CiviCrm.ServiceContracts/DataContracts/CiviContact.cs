@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,27 +15,24 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Runtime.Serialization;
+using System.Xml;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    /// <summary>
-    /// Some class that basically converts an ID to the json-part of the request url.
-    /// </summary>
-    public class CiviId
+    [DataContract]
+    public class CiviContact
     {
-        public int Id { get; set; }
+        [DataMember]
+        public int contact_id { get; set; }
 
-        public CiviId(int id)
-        {
-            Id = id;
-        }
+        [DataMember]
+        public string first_name { get; set; }
 
-        public override string ToString()
-        {
-            return String.Format("{{\"sequential\":1, \"id\":{0}}}", Id);
-        }
+        [DataMember]
+        public string last_name { get; set; }
+
+        [DataMember]
+        public string external_identifier { get; set; }
     }
 }

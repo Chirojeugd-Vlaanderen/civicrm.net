@@ -23,6 +23,7 @@ using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.Domain;
 using System.Diagnostics;
 using Chiro.CiviCrm.Api.DataContracts;
+using AutoMapper;
 
 namespace Chiro.CiviCrm.Client
 {
@@ -41,6 +42,11 @@ namespace Chiro.CiviCrm.Client
         {
             _apiKey = Properties.Settings.Default.UserKey;
             _key = Properties.Settings.Default.SiteKey;
+
+            Mapper.Initialize(cfg => { 
+                cfg.SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
+                cfg.CreateMap<CiviContact, Contact>();
+            });
         }
 
         /// <summary>
@@ -50,7 +56,8 @@ namespace Chiro.CiviCrm.Client
         /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
         public Contact ContactGet(int id)
         {
-            return base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
+            var civiContact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
+            return Mapper.Map<Contact>(civiContact);
         }
     }
 }
