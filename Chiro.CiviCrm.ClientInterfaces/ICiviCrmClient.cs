@@ -39,5 +39,13 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
         /// <c>null</c> otherwise.</returns>
         Contact ContactFind(string externalIdentifier);
+
+        /// <summary>
+        /// Creates or updates the <paramref name="contact"/>.
+        /// </summary>
+        /// <param name="contact">Contact to be saved. If it has an ID, the existing contat will be overwritten.
+        /// Otherwise a new contact is created.</param>
+        /// <returns>The saved contact, with ID.</returns>
+        Contact ContactSave(Contact contact);
     }
 }

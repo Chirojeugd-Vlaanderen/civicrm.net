@@ -56,5 +56,20 @@ namespace Chiro.CiviCrm.Api
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={externalIdentifier}"
             )]
         CiviContact ContactFind(string apiKey, string key, CiviExternalIdentifier externalIdentifier);
+
+        /// <summary>
+        /// Savers or updates the given <paramref name="contact"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="contact">Contact to be saved. If the contact has an ID, the existing contact
+        /// will be overwritten. If it hasn't, a new contact is created.</param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate =
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&json={contact}"
+            )]
+        CiviResult<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
     }
 }

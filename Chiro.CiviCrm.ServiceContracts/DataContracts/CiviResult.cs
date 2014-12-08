@@ -14,27 +14,21 @@
    limitations under the License.
  */
 
-using Chiro.CiviCrm.BehaviorExtension;
 using System;
-using System.Runtime.Serialization;
-using System.Xml;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    [DataContract]
-    [JsonConvertible]
-    public class CiviContact
+    public class CiviResult<T>
     {
-        [DataMember]
-        public int? id { get; set; }
-
-        [DataMember]
-        public string first_name { get; set; }
-
-        [DataMember]
-        public string last_name { get; set; }
-
-        [DataMember]
-        public string external_identifier { get; set; }
+        public int is_error { get; set; }
+        public int version { get; set; }
+        public int count { get; set; }
+        public int id { get; set; }
+        public string error_message { get; set; }
+        public IEnumerable<T> values { get; set; }
     }
 }

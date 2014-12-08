@@ -29,7 +29,8 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = new CiviCrmClient())
             {
-                var contact = client.ContactFind("1111111");
+                //var contact = client.ContactFind("1111111");
+                var contact = client.ContactGet(11890);
                 // If you want to access the CiviCRM-API over https (recommended), you should
                 // change the security mode of the CiviCrmBindingConfiguration from None to Transport
                 // (in App.config)
@@ -41,8 +42,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                 }
                 else
                 {
-                    Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.ContactId);
+                    Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id);
                     Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
+
+                    contact.FirstName = "Franky";
+                    client.ContactSave(contact);
                 }
             }
 

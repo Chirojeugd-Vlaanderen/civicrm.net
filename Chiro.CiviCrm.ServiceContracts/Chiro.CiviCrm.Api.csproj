@@ -53,6 +53,7 @@
     <Compile Include="DataContracts\CiviExternalIdentifier.cs" />
     <Compile Include="DataContracts\CiviId.cs" />
     <Compile Include="DataContracts\CiviContact.cs" />
+    <Compile Include="DataContracts\CiviResult.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

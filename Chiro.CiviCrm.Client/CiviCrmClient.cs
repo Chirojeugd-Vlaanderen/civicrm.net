@@ -43,9 +43,10 @@ namespace Chiro.CiviCrm.Client
             _apiKey = Properties.Settings.Default.UserKey;
             _key = Properties.Settings.Default.SiteKey;
 
-            Mapper.Initialize(cfg => { 
-                cfg.SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
-                cfg.CreateMap<CiviContact, Contact>();
+            Mapper.Initialize(cfg =>
+            {
+                cfg.AddProfile<CiviToNetProfile>();
+                cfg.AddProfile<NetToCiviProfile>();
             });
         }
 
@@ -70,6 +71,24 @@ namespace Chiro.CiviCrm.Client
         {
             var civiContact = base.Channel.ContactFind(_apiKey, _key, new CiviExternalIdentifier(externalIdentifier));
             return Mapper.Map<Contact>(civiContact);
+        }
+
+
+        /// <summary>
+        /// Creates or updates the <paramref name="contact"/>.
+        /// </summary>
+        /// <param name="contact">Contact to be saved. If it has an ID, the existing contat will be overwritten.
+        /// Otherwise a new contact is created.</param>
+        /// <returns>The saved contact, with ID.</returns>
+        public Contact ContactSave(Contact contact)
+        {
+            var civiContact = Mapper.Map<CiviContact>(contact);
+            var result = base.Channel.ContactSave(_apiKey, _key, civiContact);
+            if (result.is_error > 0)
+            {
+                throw new InvalidOperationException(result.error_message);
+            }
+            return Mapper.Map<Contact>(result.values.FirstOrDefault());
         }
     }
 }
