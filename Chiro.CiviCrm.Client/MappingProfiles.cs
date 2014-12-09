@@ -34,7 +34,10 @@ namespace Chiro.CiviCrm.Client
         {
             SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
-            CreateMap<CiviContact, Contact>();
+            CreateMap<CiviContact, Contact>()
+                .ForMember(
+                    dst => dst.OnHold, 
+                    opt => opt.MapFrom(src => !String.IsNullOrEmpty(src.on_hold) && (Convert.ToInt32(src.on_hold) != 0)));
             CreateMap<CiviAddress, Address>();
         }
     };
@@ -48,7 +51,9 @@ namespace Chiro.CiviCrm.Client
         {
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new LowerUnderscoreNamingConvention();
-            CreateMap<Contact, CiviContact>();
+            CreateMap<Contact, CiviContact>()
+                .ForMember(dst => dst.birth_date, opt => opt.MapFrom(src => src.BirthDate == null ? null : src.BirthDate.Value.ToString("yyyy-MM-dd")))
+                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => src.DeceasedDate == null ? null : src.DeceasedDate.Value.ToString("yyyy-MM-dd")));
             CreateMap<Address, CiviAddress>();
         }
     }

@@ -24,18 +24,24 @@ namespace Chiro.CiviCrm.Wcf.Example
     /// <summary>
     /// Example for the CiviCrm-API proof of concept
     /// </summary>
+    /// <remarks>
+    /// Please check your configuration!
+    /// 
+    /// The settings of Chiro.CiviCrm.Client should contain your CiviCRM site key
+    /// and the key of your CiviCRM-API-user.
+    /// 
+    /// The url of the CiviCRM API is in the App.Config of this project.
+    /// </remarks>
     class Program
     {
         static void Main(string[] args)
         {
             using (var client = new CiviCrmClient())
             {
-                var contact = client.ContactFind("1111111");
-                //var contact = client.ContactGet(11890);
-                // If you want to access the CiviCRM-API over https (recommended), you should
-                // change the security mode of the CiviCrmBindingConfiguration from None to Transport
-                // (in App.config)
-                // If it still does not work, check your permissions
+                // This example works on the contact with contactId 2.
+                const int contactId = 2;
+
+                var contact = client.ContactGet(contactId);
 
                 if (contact == null)
                 {
@@ -43,14 +49,19 @@ namespace Chiro.CiviCrm.Wcf.Example
                 }
                 else
                 {
-                    Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id);
+                    Console.WriteLine("Found: {0} {1} ({4}); id: {2}; {3}", contact.FirstName, contact.LastName, contact.Id, contact.ContactType, contact.GenderId);
+                    Console.WriteLine("Birth date: {0}", contact.BirthDate);
+                    Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
                     Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
 
-                    contact.FirstName = "Donny";
-                    client.ContactSave(contact);
+                    //// Change first name:
+                    //contact.FirstName = "Jean";
+                    //client.ContactSave(contact);
                 }
 
                 ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+
+                // Add an address. Delete it again.
 
                 var newAddress = new Address
                 {
@@ -62,11 +73,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                 };
 
                 newAddress = client.AddressSave(newAddress);
-
                 ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
-
                 client.AddressDelete(newAddress.Id.Value);
-
                 ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
             }
 

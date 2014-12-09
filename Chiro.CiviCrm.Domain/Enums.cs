@@ -18,9 +18,25 @@ namespace Chiro.CiviCrm.Domain
 {
     public enum ContactType
     {
-        Individual = 1,
-        Organization = 2,
-        Household = 3
+        Individual,
+        Organization,
+        Household
+    }
+
+    public enum CommunicationMethod
+    {
+        Phone = 1,
+        Email = 2,
+        PostalMail = 3,
+        Sms = 4,
+        Fax = 5
+    }
+
+    public enum MailFormat
+    {
+        Both,
+        HTML,
+        Text
     }
 
     public enum Gender
@@ -28,5 +44,32 @@ namespace Chiro.CiviCrm.Domain
         Female = 1,
         Male = 2,
         Transgender = 3
+    }
+
+    public enum CommunicationStyle
+    {
+        Formal = 1,
+        Familiar = 2
+    }
+
+    public enum PhoneType
+    {
+        Phone = 1,
+        Mobile = 2,
+        Fax = 3,
+        Pager = 4,
+        Voicemail = 5
+    }
+
+    // Remember the nillies :-)
+
+    public enum Provider
+    {
+        Yahoo = 1,
+        MSN = 2,
+        AIM = 3,
+        GTalk = 4,
+        Jabber = 5,
+        Facebook = 6
     }
 }

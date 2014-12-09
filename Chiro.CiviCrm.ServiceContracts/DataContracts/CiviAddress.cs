@@ -31,7 +31,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember]
         public int? id { get; set; }
         [DataMember]
-        public int contact_id { get; set; }
+        public string contact_id { get; set; }
         [DataMember]
         public int location_type_id { get; set; }
         [DataMember]

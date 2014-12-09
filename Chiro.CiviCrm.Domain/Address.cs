@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Domain
     public class Address
     {
         public int? Id { get; set; }
-        public int ContactId { get; set; }
+        public int? ContactId { get; set; }
         public int LocationTypeId { get; set; }
         public bool IsPrimary { get; set; }
         public bool IsBilling { get; set; }
