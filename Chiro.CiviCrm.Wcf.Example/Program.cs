@@ -45,8 +45,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                     Console.WriteLine("Found: {0} {1}; id: {2}", contact.FirstName, contact.LastName, contact.Id);
                     Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
 
-                    //contact.FirstName = "Davy";
-                    //client.ContactSave(contact);
+                    contact.FirstName = "Donny";
+                    client.ContactSave(contact);
                 }
 
                 foreach (var a in client.ContactAddressesGet(contact.Id.Value))

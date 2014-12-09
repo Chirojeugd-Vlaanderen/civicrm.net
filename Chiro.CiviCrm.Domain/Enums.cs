@@ -14,29 +14,19 @@
    limitations under the License.
  */
 
-using System.Runtime.Serialization;
-
 namespace Chiro.CiviCrm.Domain
 {
-    [DataContract]
     public enum ContactType
     {
-        [EnumMember] 
         Individual = 1,
-        [EnumMember]
         Organization = 2,
-        [EnumMember]
         Household = 3
     }
 
-    [DataContract]
     public enum Gender
     {
-        [EnumMember]
         Female = 1,
-        [EnumMember]
         Male = 2,
-        [EnumMember]
         Transgender = 3
     }
 }

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -28,13 +28,23 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class CiviAddress
     {
+        [DataMember]
         public int id { get; set; }
+        [DataMember]
         public int contact_id { get; set; }
+        [DataMember]
         public int location_type_id { get; set; }
-        public int is_primary { get; set; }
-        public int is_billing { get; set; }
+        [DataMember]
+        public bool is_primary { get; set; }
+        [DataMember]
+        public bool is_billing { get; set; }
+        [DataMember]
         public string street_address { get; set; }
+        [DataMember]
         public string city { get; set; }
+        [DataMember]
         public string postal_code { get; set; }
+        [DataMember]
+        public int country_id { get; set; }
     }
 }

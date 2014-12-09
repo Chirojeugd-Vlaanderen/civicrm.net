@@ -17,18 +17,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
+    [DataContract]
     public class CiviResult<T>
     {
+        [DataMember]
         public int is_error { get; set; }
+        [DataMember]
         public int version { get; set; }
+        [DataMember]
         public int count { get; set; }
+        [DataMember]
         public int? id { get; set; }
+        [DataMember]
         public string error_message { get; set; }
+        [DataMember]
         public IEnumerable<T> values { get; set; }
     }
 }
