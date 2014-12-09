@@ -2,11 +2,11 @@
 
 This project uses WCF to use the CiviCRM API. It is not a full solution, it is just a proof of concept. It contains a small example.
 
-## Warning: Refactoring
+## You need to patch CiviCRM
 
-I am trying to use Json to communicate with the CiviCRM API (see #13).
 For this to work, you need to patch CiviCRM:
 https://github.com/civicrm/civicrm-core/pull/4641
+(No worries, it is a small patch.)
 
 ## How to get the example to work
 
