@@ -68,7 +68,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&json={contact}"
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}"
             )]
         CiviResult<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
 
