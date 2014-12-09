@@ -50,10 +50,12 @@
     <Reference Include="System.ServiceModel.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\CiviAddress.cs" />
+    <Compile Include="DataContracts\CiviContactId.cs" />
+    <Compile Include="DataContracts\CiviResult.cs" />
     <Compile Include="DataContracts\CiviExternalIdentifier.cs" />
     <Compile Include="DataContracts\CiviId.cs" />
     <Compile Include="DataContracts\CiviContact.cs" />
-    <Compile Include="DataContracts\CiviResult.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

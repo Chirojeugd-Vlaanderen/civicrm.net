@@ -35,6 +35,7 @@ namespace Chiro.CiviCrm.Client
             SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
             CreateMap<CiviContact, Contact>();
+            CreateMap<CiviAddress, Address>();
         }
     };
 
@@ -48,6 +49,7 @@ namespace Chiro.CiviCrm.Client
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new LowerUnderscoreNamingConvention();
             CreateMap<Contact, CiviContact>();
+            CreateMap<Address, CiviAddress>();
         }
     }
 }

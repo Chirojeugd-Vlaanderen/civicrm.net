@@ -29,10 +29,12 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public class CiviId
     {
         public int id { get; set; }
+        public int sequential { get; set; }
 
         public CiviId(int id)
         {
             this.id = id;
+            this.sequential = 1;
         }
     }
 }

@@ -71,5 +71,19 @@ namespace Chiro.CiviCrm.Api
                 "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&json={contact}"
             )]
         CiviResult<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
+
+        /// <summary>
+        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="contactId">ContactId of the adresses you are looking for.</param>
+        /// <returns>A CiviResult containing the adresses of the contact with given <paramref name="ContactId"/>.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate =
+                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={contactId}"
+            )]
+        CiviResult<CiviAddress> ContactAdressesGet(string apiKey, string key, CiviContactId contactId);
     }
 }

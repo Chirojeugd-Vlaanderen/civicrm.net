@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.BehaviorExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,13 +23,20 @@ using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    public class CiviResult<T>
+    /// <summary>
+    /// Some class that basically converts an ID to Json
+    /// suitable for the CiviCRM-API.
+    /// </summary>
+    [JsonConvertible]
+    public class CiviContactId
     {
-        public int is_error { get; set; }
-        public int version { get; set; }
-        public int count { get; set; }
-        public int? id { get; set; }
-        public string error_message { get; set; }
-        public IEnumerable<T> values { get; set; }
+        public int contact_id { get; set; }
+        public int sequential { get; set; }
+
+        public CiviContactId(int contactId)
+        {
+            this.contact_id = contactId;
+            this.sequential = 1;
+        }
     }
 }

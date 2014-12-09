@@ -47,5 +47,12 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// Otherwise a new contact is created.</param>
         /// <returns>The saved contact, with ID.</returns>
         Contact ContactSave(Contact contact);
+
+        /// <summary>
+        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
+        /// </summary>
+        /// <param name="contactId">ID of the contact whose adresses you are requesting.</param>
+        /// <returns>Adresses of the contact with given <paramref name="contactId"/></returns>
+        Address[] ContactAddressesGet(int contactId);
     }
 }

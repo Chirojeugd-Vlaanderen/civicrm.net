@@ -84,11 +84,35 @@ namespace Chiro.CiviCrm.Client
         {
             var civiContact = Mapper.Map<CiviContact>(contact);
             var result = base.Channel.ContactSave(_apiKey, _key, civiContact);
+            AssertValid(result);
+            return Mapper.Map<Contact>(result.values.FirstOrDefault());
+        }
+
+        /// <summary>
+        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
+        /// </summary>
+        /// <param name="contactId">ID of the contact whose adresses you are requesting.</param>
+        /// <returns>Adresses of the contact with given <paramref name="contactId"/></returns>
+        public Address[] ContactAddressesGet(int contactId)
+        {
+            var result = base.Channel.ContactAdressesGet(_apiKey, _key, new CiviContactId(contactId));
+            AssertValid(result);
+            return Mapper.Map<Address[]>(result.values);
+        }
+
+        /// <summary>
+        /// Throws an exception of the <paramref name="result"/> of a CiviCRM API call
+        /// is an error.
+        /// </summary>
+        /// <typeparam name="T">Type of the entities in <paramref name="result"/>.value</typeparam>
+        /// <param name="result">The CiviCRM API result to check.</param>
+        private static void AssertValid<T>(CiviResult<T> result)
+        {
             if (result.is_error > 0)
             {
                 throw new InvalidOperationException(result.error_message);
             }
-            return Mapper.Map<Contact>(result.values.FirstOrDefault());
         }
+
     }
 }

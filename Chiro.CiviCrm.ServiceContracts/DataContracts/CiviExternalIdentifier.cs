@@ -30,17 +30,12 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public class CiviExternalIdentifier
     {
         public string external_identifier { get; set; }
+        public int sequential { get; set; }
 
         public CiviExternalIdentifier(string externalIdentifier)
         {
             external_identifier = externalIdentifier;
-        }
-
-        public override string ToString()
-        {
-            return String.Format(
-                "{{\"sequential\":1, \"external_identifier\":{0}}}", 
-                Microsoft.Security.Application.Encoder.JavaScriptEncode(external_identifier, false));
+            sequential = 1;
         }
     }
 }

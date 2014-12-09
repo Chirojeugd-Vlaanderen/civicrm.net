@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -18,17 +18,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.Domain
 {
-    public class CiviResult<T>
+    public class Address
     {
-        public int is_error { get; set; }
-        public int version { get; set; }
-        public int count { get; set; }
-        public int? id { get; set; }
-        public string error_message { get; set; }
-        public IEnumerable<T> values { get; set; }
+        public int Id { get; set; }
+        public int ContactId { get; set; }
+        public int LocationTypeId { get; set; }
+        public bool IsPrimary { get; set; }
+        public bool IsBilling { get; set; }
+        public string StreetAddress { get; set; }
+        public string City { get; set; }
+        public string PostalCode { get; set; }
     }
 }

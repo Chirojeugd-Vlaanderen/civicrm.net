@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,21 +14,27 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.BehaviorExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    public class CiviResult<T>
+    [DataContract]
+    [JsonConvertible]
+    public class CiviAddress
     {
-        public int is_error { get; set; }
-        public int version { get; set; }
-        public int count { get; set; }
-        public int? id { get; set; }
-        public string error_message { get; set; }
-        public IEnumerable<T> values { get; set; }
+        public int id { get; set; }
+        public int contact_id { get; set; }
+        public int location_type_id { get; set; }
+        public int is_primary { get; set; }
+        public int is_billing { get; set; }
+        public string street_address { get; set; }
+        public string city { get; set; }
+        public string postal_code { get; set; }
     }
 }
