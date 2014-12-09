@@ -115,12 +115,22 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
+        /// Deletes the address with given <paramref name="addressId"/>.
+        /// </summary>
+        /// <param name="addressId">AddressId of address to be deleted.</param>
+        public void AddressDelete(int addressId)
+        {
+            var result = base.Channel.AddressDelete(_apiKey, _key, new CiviId(addressId));
+            AssertValid(result);
+        }
+
+        /// <summary>
         /// Throws an exception of the <paramref name="result"/> of a CiviCRM API call
         /// is an error.
         /// </summary>
         /// <typeparam name="T">Type of the entities in <paramref name="result"/>.value</typeparam>
         /// <param name="result">The CiviCRM API result to check.</param>
-        private static void AssertValid<T>(CiviResult<T> result)
+        private static void AssertValid(CiviResult result)
         {
             if (result.is_error > 0)
             {

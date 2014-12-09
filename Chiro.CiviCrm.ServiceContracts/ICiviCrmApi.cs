@@ -64,7 +64,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}")]
-        CiviResult<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
+        CiviResultValues<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
 
         /// <summary>
         /// Returns the adresses of the contact with given <paramref name="contactId"/>.
@@ -76,7 +76,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={contactId}")]
-        CiviResult<CiviAddress> ContactAdressesGet(string apiKey, string key, CiviContactId contactId);
+        CiviResultValues<CiviAddress> ContactAdressesGet(string apiKey, string key, CiviContactId contactId);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
@@ -84,10 +84,22 @@ namespace Chiro.CiviCrm.Api
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
         /// <param name="address">Address to be saved</param>
-        /// <returns>The saved address.</returns>
+        /// <returns>A CiviResult containing the saved address.</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&sequential=1&json={address}")]
-        CiviResult<CiviAddress> AddressSave(string apiKey, string key, CiviAddress address);
+        CiviResultValues<CiviAddress> AddressSave(string apiKey, string key, CiviAddress address);
+
+        /// <summary>
+        /// Deletes an address with given <paramref name="addressId"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="addressId">ID of the address to be deleted</param>
+        /// <returns>A CiviResult</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&sequential=1&json={addressId}")]
+        CiviResult AddressDelete(string apiKey, string key, CiviId addressId);
     }
 }

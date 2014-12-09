@@ -61,7 +61,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                     CountryId = 1020
                 };
 
-                client.AddressSave(newAddress);
+                newAddress = client.AddressSave(newAddress);
+
+                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+
+                client.AddressDelete(newAddress.Id.Value);
 
                 ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
             }
@@ -72,9 +76,10 @@ namespace Chiro.CiviCrm.Wcf.Example
 
         private static void ShowAddresses(IEnumerable<Address> adresses)
         {
+            Console.WriteLine("\nAddresses:");
             foreach (var a in adresses)
             {
-                Console.WriteLine("Address {0}: {1}, {2} {3}", a.Id, a.StreetAddress, a.PostalCode, a.City);
+                Console.WriteLine("  Address {0}: {1}, {2} {3}", a.Id, a.StreetAddress, a.PostalCode, a.City);
             }
         }
     }

@@ -61,5 +61,11 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// <param name="address">Address to be saved.</param>
         /// <returns>The saved address.</returns>
         Address AddressSave(Address address);
+
+        /// <summary>
+        /// Deletes the address with given <paramref name="addressId"/>.
+        /// </summary>
+        /// <param name="addressId">AddressId of address to be deleted.</param>
+        void AddressDelete(int addressId);
     }
 }
