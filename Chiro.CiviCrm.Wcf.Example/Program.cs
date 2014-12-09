@@ -17,6 +17,7 @@ using System;
 using Chiro.CiviCrm.Client;
 using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.Domain;
+using System.Collections.Generic;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -49,14 +50,32 @@ namespace Chiro.CiviCrm.Wcf.Example
                     client.ContactSave(contact);
                 }
 
-                foreach (var a in client.ContactAddressesGet(contact.Id.Value))
+                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+
+                var newAddress = new Address
                 {
-                    Console.WriteLine("Address {0}: {1}, {2} {3}", a.Id, a.StreetAddress, a.PostalCode, a.City);
-                }
+                    ContactId = contact.Id.Value,
+                    StreetAddress = "Hoefslagstraatje 2",
+                    PostalCode = "9000",
+                    City = "Gent",
+                    CountryId = 1020
+                };
+
+                client.AddressSave(newAddress);
+
+                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
             }
 
             Console.WriteLine("Press enter.");
             Console.ReadLine();
+        }
+
+        private static void ShowAddresses(IEnumerable<Address> adresses)
+        {
+            foreach (var a in adresses)
+            {
+                Console.WriteLine("Address {0}: {1}, {2} {3}", a.Id, a.StreetAddress, a.PostalCode, a.City);
+            }
         }
     }
 }

@@ -37,9 +37,7 @@ namespace Chiro.CiviCrm.Api
         /// otherwise <c>null</c>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={id}"
-            )]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={id}")]
         CiviContact ContactGet(string apiKey, string key, CiviId id);
 
         /// <summary>
@@ -52,9 +50,7 @@ namespace Chiro.CiviCrm.Api
         /// <paramref name="externalIdentifier"/>, otherwise <c>null</c>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={externalIdentifier}"
-            )]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={externalIdentifier}")]
         CiviContact ContactFind(string apiKey, string key, CiviExternalIdentifier externalIdentifier);
 
         /// <summary>
@@ -67,9 +63,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}"
-            )]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}")]
         CiviResult<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
 
         /// <summary>
@@ -81,9 +75,19 @@ namespace Chiro.CiviCrm.Api
         /// <returns>A CiviResult containing the adresses of the contact with given <paramref name="ContactId"/>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate =
-                "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={contactId}"
-            )]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={contactId}")]
         CiviResult<CiviAddress> ContactAdressesGet(string apiKey, string key, CiviContactId contactId);
+
+        /// <summary>
+        /// Creates or updates the given <paramref name="address"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="address">Address to be saved</param>
+        /// <returns>The saved address.</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&sequential=1&json={address}")]
+        CiviResult<CiviAddress> AddressSave(string apiKey, string key, CiviAddress address);
     }
 }

@@ -101,6 +101,20 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
+        /// Creates or updates the given <paramref name="address"/>.
+        /// </summary>
+        /// <param name="address">Address to be saved.</param>
+        /// <returns>The saved address.</returns>
+        public Address AddressSave(Address address)
+        {
+            var civiAddress = Mapper.Map<CiviAddress>(address);
+
+            var result = base.Channel.AddressSave(_apiKey, _key, civiAddress);
+            AssertValid(result);
+            return Mapper.Map<Address>(result.values.FirstOrDefault());
+        }
+
+        /// <summary>
         /// Throws an exception of the <paramref name="result"/> of a CiviCRM API call
         /// is an error.
         /// </summary>
@@ -113,6 +127,5 @@ namespace Chiro.CiviCrm.Client
                 throw new InvalidOperationException(result.error_message);
             }
         }
-
     }
 }

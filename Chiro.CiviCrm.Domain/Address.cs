@@ -23,7 +23,7 @@ namespace Chiro.CiviCrm.Domain
 {
     public class Address
     {
-        public int Id { get; set; }
+        public int? Id { get; set; }
         public int ContactId { get; set; }
         public int LocationTypeId { get; set; }
         public bool IsPrimary { get; set; }
@@ -31,5 +31,6 @@ namespace Chiro.CiviCrm.Domain
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
+        public int CountryId { get; set; }
     }
 }

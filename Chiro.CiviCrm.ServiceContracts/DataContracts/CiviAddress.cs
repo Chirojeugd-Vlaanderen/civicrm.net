@@ -29,7 +29,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public class CiviAddress
     {
         [DataMember]
-        public int id { get; set; }
+        public int? id { get; set; }
         [DataMember]
         public int contact_id { get; set; }
         [DataMember]
