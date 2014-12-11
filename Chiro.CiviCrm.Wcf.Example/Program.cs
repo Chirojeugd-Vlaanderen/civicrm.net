@@ -69,7 +69,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     StreetAddress = "Hoefslagstraatje 2",
                     PostalCode = "9000",
                     City = "Gent",
-                    CountryId = 1020
+                    Country = "BE",
                 };
 
                 newAddress = client.AddressSave(newAddress);
@@ -87,7 +87,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             Console.WriteLine("\nAddresses:");
             foreach (var a in adresses)
             {
-                Console.WriteLine("  Address {0}: {1}, {2} {3}", a.Id, a.StreetAddress, a.PostalCode, a.City);
+                Console.WriteLine("  Address {0}: {1}, {2} {3} - {4}", a.Id, a.StreetAddress, a.PostalCode, a.City, a.CountryId);
             }
         }
     }

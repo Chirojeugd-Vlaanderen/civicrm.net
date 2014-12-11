@@ -45,6 +45,15 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember]
         public string postal_code { get; set; }
         [DataMember]
-        public int country_id { get; set; }
+        public string country_id { get; set; }
+        /// <summary>
+        /// Name of country, or ISO-code
+        /// </summary>
+        /// <remarks>
+        /// You can use this to create/update the country of an address.
+        /// The CiviCRM address API doesn't seem to fetch the country.
+        /// </remarks>
+        [DataMember]
+        public string country { get; set; }
     }
 }

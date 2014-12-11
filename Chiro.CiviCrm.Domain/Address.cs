@@ -31,6 +31,14 @@ namespace Chiro.CiviCrm.Domain
         public string StreetAddress { get; set; }
         public string City { get; set; }
         public string PostalCode { get; set; }
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
+        /// <summary>
+        /// Name of country, or ISO-code
+        /// </summary>
+        /// <remarks>
+        /// You can use this to create/update the country of an address.
+        /// The CiviCRM address API doesn't seem to fetch the country.
+        /// </remarks>
+        public string Country { get;  set; }
     }
 }
