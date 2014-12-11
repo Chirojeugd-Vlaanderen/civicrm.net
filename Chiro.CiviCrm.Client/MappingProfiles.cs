@@ -36,8 +36,14 @@ namespace Chiro.CiviCrm.Client
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
             CreateMap<CiviContact, Contact>()
                 .ForMember(
-                    dst => dst.OnHold, 
-                    opt => opt.MapFrom(src => !String.IsNullOrEmpty(src.on_hold) && (Convert.ToInt32(src.on_hold) != 0)));
+                    dst => dst.OnHold,
+                    opt => opt.MapFrom(src => !String.IsNullOrEmpty(src.on_hold) && (Convert.ToInt32(src.on_hold) != 0)))
+                .ForMember(
+                    dst => dst.BirthDate,
+                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.birth_date)))
+                .ForMember(
+                    dst => dst.DeceasedDate,
+                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.deceased_date)));
             CreateMap<CiviAddress, Address>();
         }
     };
@@ -52,9 +58,28 @@ namespace Chiro.CiviCrm.Client
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new LowerUnderscoreNamingConvention();
             CreateMap<Contact, CiviContact>()
-                .ForMember(dst => dst.birth_date, opt => opt.MapFrom(src => src.BirthDate == null ? null : src.BirthDate.Value.ToString("yyyy-MM-dd")))
-                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => src.DeceasedDate == null ? null : src.DeceasedDate.Value.ToString("yyyy-MM-dd")));
+                .ForMember(dst => dst.birth_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.BirthDate)))
+                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.DeceasedDate)));
             CreateMap<Address, CiviAddress>();
+        }
+    }
+
+    /// <summary>
+    /// Some extension methods to make the mappings more readable
+    /// </summary>
+    internal static class MappingHelpers
+    {
+        public static DateTime? CiviDateToDateTime(string civiDate)
+        {
+            return String.IsNullOrEmpty(civiDate) ? (DateTime?)null : DateTime.ParseExact(
+                        civiDate,
+                        "yyyy-MM-dd",
+                        System.Globalization.CultureInfo.InvariantCulture);
+        }
+
+        public static string DateTimeToCiviDate(DateTime? dateTime)
+        {
+            return dateTime == null ? null : dateTime.Value.ToString("yyyy-MM-dd");
         }
     }
 }
