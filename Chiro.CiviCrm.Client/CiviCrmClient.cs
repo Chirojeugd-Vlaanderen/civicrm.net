@@ -58,6 +58,10 @@ namespace Chiro.CiviCrm.Client
         public Contact ContactGet(int id)
         {
             var civiContact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
+
+            // If you get a mapping exception here, regarding AddressId, just clean the solution,
+            // and build it again.
+
             return Mapper.Map<Contact>(civiContact);
         }
 
@@ -83,6 +87,10 @@ namespace Chiro.CiviCrm.Client
         public Contact ContactSave(Contact contact)
         {
             var civiContact = Mapper.Map<CiviContact>(contact);
+
+            // If you get a mapping exception here regarding mapping empty strings too booleans,
+            // you are probably saving a contact that has an invalid contact id.
+
             var result = base.Channel.ContactSave(_apiKey, _key, civiContact);
             AssertValid(result);
             return Mapper.Map<Contact>(result.values.FirstOrDefault());
