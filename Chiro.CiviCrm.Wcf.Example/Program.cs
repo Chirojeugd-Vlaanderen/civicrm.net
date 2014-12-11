@@ -87,7 +87,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             Console.WriteLine("\nAddresses:");
             foreach (var a in adresses)
             {
-                Console.WriteLine("  Address {0}: {1}, {2} {3} - {4}", a.Id, a.StreetAddress, a.PostalCode, a.City, a.CountryId);
+                Console.WriteLine("  Address {0}: {1}, {2} {5} {3} - {4}", a.Id, a.StreetAddress, a.PostalCode, a.City, a.CountryId, a.PostalCodeSuffix);
             }
         }
     }
