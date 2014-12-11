@@ -1,4 +1,5 @@
-﻿/*
+﻿using Newtonsoft.Json;
+/*
    Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +45,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
         {
             if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
             {
-                var result = new JavaScriptSerializer().Serialize(parameter);
+                var result = JsonConvert.SerializeObject(parameter);
                 return result;
             }
             else

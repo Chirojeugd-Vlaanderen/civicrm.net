@@ -15,32 +15,21 @@
  */
 
 using Chiro.CiviCrm.BehaviorExtension;
-using Microsoft.Security.Application;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    /// <summary>
-    /// Some class that basically converts an external identifier to the json-part of the request url.
-    /// </summary>
     [JsonConvertible]
-    public class CiviExternalIdentifier
+    public class CiviAddressRequest: CiviExternalIdentifier
     {
-        public string external_identifier { get; set; }
-        public int sequential { get; set; }
-
-        public CiviExternalIdentifier() 
-        {
-            sequential = 1;
-        }
-
-        public CiviExternalIdentifier(string externalIdentifier)
-        {
-            external_identifier = externalIdentifier;
-            sequential = 1;
-        }
+        [JsonProperty("return")]
+        public string return_fields { get; set; }
+        [JsonProperty("api.Address.get")]
+        public EmptyClass api_address_get { get; set; }
     }
 }

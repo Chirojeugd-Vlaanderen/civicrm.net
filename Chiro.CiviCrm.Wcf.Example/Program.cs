@@ -59,7 +59,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     //client.ContactSave(contact);
                 }
 
-                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+                ShowAddresses(client.ContactAddressesFind(contact.ExternalIdentifier.ToString()));
 
                 // Add an address. Delete it again.
 

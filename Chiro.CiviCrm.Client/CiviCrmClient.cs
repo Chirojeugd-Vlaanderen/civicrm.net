@@ -133,6 +133,20 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
+        /// Finds the addresses of the contact with given <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="externalIdentifier">An external identifier</param>
+        /// <returns>Addresses of the contact with given <paramref name="externalIdentifier"/>.</returns>
+        public Address[] ContactAddressesFind(string externalIdentifier)
+        {
+            var result = base.Channel.ContactFind(_apiKey, _key, new CiviAddressRequest { 
+                external_identifier = externalIdentifier.ToString(), 
+                api_address_get = new EmptyClass(), 
+                return_fields = "contact_ïd" });
+            return Mapper.Map<Address[]>(result.chained_addresses.values);
+        }
+
+        /// <summary>
         /// Throws an exception of the <paramref name="result"/> of a CiviCRM API call
         /// is an error.
         /// </summary>

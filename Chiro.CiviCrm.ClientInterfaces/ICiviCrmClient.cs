@@ -56,6 +56,13 @@ namespace Chiro.CiviCrm.ClientInterfaces
         Address[] ContactAddressesGet(int contactId);
 
         /// <summary>
+        /// Finds the addresses of the contact with given <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="externalIdentifier">An external identifier</param>
+        /// <returns>Addresses of the contact with given <paramref name="externalIdentifier"/>.</returns>
+        Address[] ContactAddressesFind(string externalIdentifier);
+
+        /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
         /// </summary>
         /// <param name="address">Address to be saved.</param>
