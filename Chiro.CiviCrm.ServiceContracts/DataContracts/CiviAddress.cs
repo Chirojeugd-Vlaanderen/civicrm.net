@@ -47,6 +47,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember]
         public string postal_code_suffix { get; set; }
         [DataMember]
+        public string state_province_id { get; set; }
+        [DataMember]
         public string country_id { get; set; }
         /// <summary>
         /// Name of country, or ISO-code

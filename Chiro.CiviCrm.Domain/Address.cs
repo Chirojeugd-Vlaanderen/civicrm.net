@@ -32,6 +32,7 @@ namespace Chiro.CiviCrm.Domain
         public string City { get; set; }
         public string PostalCode { get; set; }
         public string PostalCodeSuffix { get; set; }
+        public int? StateProvinceId { get; set; }
         public int? CountryId { get; set; }
         /// <summary>
         /// Name of country, or ISO-code
