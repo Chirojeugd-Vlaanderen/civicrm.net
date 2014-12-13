@@ -37,14 +37,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AntiXssLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\AntiXssLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="HtmlSanitizationLibrary, Version=4.3.0.0, Culture=neutral, PublicKeyToken=d127efab8a9c114f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\AntiXSS.4.3.0\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
@@ -54,14 +46,15 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
+    <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DataContracts\CiviAddress.cs" />
-    <Compile Include="DataContracts\CiviAddressRequest.cs" />
     <Compile Include="DataContracts\CiviContactId.cs" />
     <Compile Include="DataContracts\CiviResult.cs" />
-    <Compile Include="DataContracts\CiviExternalIdentifier.cs" />
-    <Compile Include="DataContracts\CiviId.cs" />
+    <Compile Include="DataContracts\Requests\CiviExternalIdentifierRequest.cs" />
+    <Compile Include="DataContracts\Requests\CiviRequest.cs" />
+    <Compile Include="DataContracts\Requests\CiviIdRequest.cs" />
     <Compile Include="DataContracts\CiviContact.cs" />
     <Compile Include="DataContracts\CiviResultValues.cs" />
     <Compile Include="DataContracts\EmptyClass.cs" />

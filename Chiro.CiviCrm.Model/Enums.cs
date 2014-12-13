@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,8 +14,15 @@
    limitations under the License.
  */
 
-namespace Chiro.CiviCrm.Domain
+namespace Chiro.CiviCrm.Model
 {
+    public enum CiviEntity
+    {
+        Contact,
+        Address
+        // TODO: support more entities
+    }
+
     public enum ContactType
     {
         Individual,

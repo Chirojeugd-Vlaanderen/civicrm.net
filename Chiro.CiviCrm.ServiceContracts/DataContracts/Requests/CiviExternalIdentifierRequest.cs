@@ -14,22 +14,21 @@
    limitations under the License.
  */
 
-using Chiro.CiviCrm.BehaviorExtension;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
-    [JsonConvertible]
-    public class CiviAddressRequest: CiviExternalIdentifier
+    /// <summary>
+    /// Request for searching a contact based on its external identifier.
+    /// </summary>
+    public class CiviExternalIdentifierRequest: CiviRequest
     {
-        [JsonProperty("return")]
-        public string return_fields { get; set; }
-        [JsonProperty("api.Address.get")]
-        public EmptyClass api_address_get { get; set; }
+        public string external_identifier { get; set; }
+
+        public CiviExternalIdentifierRequest() : base() { }
     }
 }

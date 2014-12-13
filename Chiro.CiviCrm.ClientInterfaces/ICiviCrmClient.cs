@@ -16,7 +16,8 @@
 
 using System;
 using System.Collections.Generic;
-using Chiro.CiviCrm.Domain;
+using Chiro.CiviCrm.Model;
+using Chiro.CiviCrm.Model.Requests;
 
 namespace Chiro.CiviCrm.ClientInterfaces
 {
@@ -26,19 +27,18 @@ namespace Chiro.CiviCrm.ClientInterfaces
     public interface ICiviCrmClient: IDisposable
     {
         /// <summary>
-        /// Find a contact based on its <paramref name="id"/>
+        /// Find a single contact based on the <paramref name="request"/>
         /// </summary>
-        /// <param name="id">contact ID of contact to be found</param>
-        /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
-        Contact ContactGet(int id);
+        /// <param name="request">search criteria for the contact</param>
+        /// <returns>If found, the unique contact statisfying the <paramref name="request"/>.</returns>
+        Contact ContactGetSingle(BaseRequest request);
 
         /// <summary>
-        /// Find a contact with given <paramref name="externalIdentifier"/>.
+        /// Find contacts satisifying the <paramref name="request"/>.
         /// </summary>
-        /// <param name="externalIdentifier">External identifier of requested contact.</param>
-        /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
-        /// <c>null</c> otherwise.</returns>
-        Contact ContactFind(string externalIdentifier);
+        /// <param name="request">search criteria for the contact</param>
+        /// <returns>The contacts statisfying the <paramref name="request"/>.</returns>
+        Contact[] ContactGet(BaseRequest request);
 
         /// <summary>
         /// Creates or updates the <paramref name="contact"/>.
@@ -49,20 +49,6 @@ namespace Chiro.CiviCrm.ClientInterfaces
         Contact ContactSave(Contact contact);
 
         /// <summary>
-        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
-        /// </summary>
-        /// <param name="contactId">ID of the contact whose adresses you are requesting.</param>
-        /// <returns>Adresses of the contact with given <paramref name="contactId"/></returns>
-        Address[] ContactAddressesGet(int contactId);
-
-        /// <summary>
-        /// Finds the addresses of the contact with given <paramref name="externalIdentifier"/>.
-        /// </summary>
-        /// <param name="externalIdentifier">An external identifier</param>
-        /// <returns>Addresses of the contact with given <paramref name="externalIdentifier"/>.</returns>
-        Address[] ContactAddressesFind(string externalIdentifier);
-
-        /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
         /// </summary>
         /// <param name="address">Address to be saved.</param>
@@ -70,9 +56,9 @@ namespace Chiro.CiviCrm.ClientInterfaces
         Address AddressSave(Address address);
 
         /// <summary>
-        /// Deletes the address with given <paramref name="addressId"/>.
+        /// Deletes the address with given <paramref name="id"/>.
         /// </summary>
-        /// <param name="addressId">AddressId of address to be deleted.</param>
-        void AddressDelete(int addressId);
+        /// <param name="id">AddressId of address to be deleted.</param>
+        void AddressDelete(int id);
     }
 }

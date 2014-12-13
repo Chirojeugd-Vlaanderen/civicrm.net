@@ -20,10 +20,12 @@ using System.Linq;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.ClientInterfaces;
-using Chiro.CiviCrm.Domain;
+using Chiro.CiviCrm.Model;
 using System.Diagnostics;
 using Chiro.CiviCrm.Api.DataContracts;
 using AutoMapper;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
+using Chiro.CiviCrm.Model.Requests;
 
 namespace Chiro.CiviCrm.Client
 {
@@ -51,13 +53,13 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
-        /// Find a contact based on its <paramref name="id"/>
+        /// Find a single contact based on the <paramref name="request"/>
         /// </summary>
-        /// <param name="id">contact ID of contact to be found</param>
-        /// <returns>Contact with given <paramref name="id"/>, if any. Otherwise <c>null</c>.</returns>
-        public Contact ContactGet(int id)
+        /// <param name="request">search criteria for the contact</param>
+        /// <returns>If found, the unique contact statisfying the <paramref name="request"/>.</returns>
+        public Contact ContactGetSingle(BaseRequest request)
         {
-            var civiContact = base.Channel.ContactGet(_apiKey, _key, new CiviId(id));
+            var civiContact = base.Channel.ContactGetSingle(_apiKey, _key, Mapper.Map<CiviRequest>(request));
 
             // If you get a mapping exception here, regarding AddressId, just clean the solution,
             // and build it again.
@@ -66,15 +68,14 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
-        /// Find a contact with given <paramref name="externalIdentifier"/>.
+        /// Find contacts satisifying the <paramref name="request"/>.
         /// </summary>
-        /// <param name="externalIdentifier">External identifier of requested contact.</param>
-        /// <returns>Contact with given <paramref name="externalIdentifier"/>, if any.
-        /// <c>null</c> otherwise.</returns>
-        public Contact ContactFind(string externalIdentifier)
+        /// <param name="request">search criteria for the contact</param>
+        /// <returns>The contacts statisfying the <paramref name="request"/>.</returns>
+        public Contact[] ContactGet(BaseRequest request)
         {
-            var civiContact = base.Channel.ContactFind(_apiKey, _key, new CiviExternalIdentifier(externalIdentifier));
-            return Mapper.Map<Contact>(civiContact);
+            var result = base.Channel.ContactGet(_apiKey, _key, Mapper.Map<CiviRequest>(request));
+            return Mapper.Map<Contact[]>(result.values);
         }
 
 
@@ -97,18 +98,6 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
-        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
-        /// </summary>
-        /// <param name="contactId">ID of the contact whose adresses you are requesting.</param>
-        /// <returns>Adresses of the contact with given <paramref name="contactId"/></returns>
-        public Address[] ContactAddressesGet(int contactId)
-        {
-            var result = base.Channel.ContactAdressesGet(_apiKey, _key, new CiviContactId(contactId));
-            AssertValid(result);
-            return Mapper.Map<Address[]>(result.values);
-        }
-
-        /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
         /// </summary>
         /// <param name="address">Address to be saved.</param>
@@ -123,27 +112,13 @@ namespace Chiro.CiviCrm.Client
         }
 
         /// <summary>
-        /// Deletes the address with given <paramref name="addressId"/>.
+        /// Deletes the address with given <paramref name="id"/>.
         /// </summary>
-        /// <param name="addressId">AddressId of address to be deleted.</param>
-        public void AddressDelete(int addressId)
+        /// <param name="id">AddressId of address to be deleted.</param>
+        public void AddressDelete(int id)
         {
-            var result = base.Channel.AddressDelete(_apiKey, _key, new CiviId(addressId));
+            var result = base.Channel.AddressDelete(_apiKey, _key, new CiviIdRequest(id));
             AssertValid(result);
-        }
-
-        /// <summary>
-        /// Finds the addresses of the contact with given <paramref name="externalIdentifier"/>.
-        /// </summary>
-        /// <param name="externalIdentifier">An external identifier</param>
-        /// <returns>Addresses of the contact with given <paramref name="externalIdentifier"/>.</returns>
-        public Address[] ContactAddressesFind(string externalIdentifier)
-        {
-            var result = base.Channel.ContactFind(_apiKey, _key, new CiviAddressRequest { 
-                external_identifier = externalIdentifier.ToString(), 
-                api_address_get = new EmptyClass(), 
-                return_fields = "contact_ïd" });
-            return Mapper.Map<Address[]>(result.chained_addresses.values);
         }
 
         /// <summary>

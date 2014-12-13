@@ -14,27 +14,21 @@
    limitations under the License.
  */
 
-using Chiro.CiviCrm.BehaviorExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.BehaviorExtension
 {
     /// <summary>
-    /// Some class that basically converts an ID to the json-part of the request url.
+    /// If you implement this interface on your class, and your class is [JsonConvertible],
+    /// ToJson will be called to generate custom Json for the object, instead of 
+    /// using the standard serialization to Json.
     /// </summary>
-    [JsonConvertible]
-    public class CiviId
+    public interface ICustomJsonConversion
     {
-        public int id { get; set; }
-        public int sequential { get; set; }
-
-        public CiviId(int id)
-        {
-            this.id = id;
-            this.sequential = 1;
-        }
+        string ToJson();
     }
 }

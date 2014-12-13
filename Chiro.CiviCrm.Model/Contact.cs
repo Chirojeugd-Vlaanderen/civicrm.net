@@ -15,8 +15,9 @@
  */
 
 using System;
+using System.Collections.Generic;
 
-namespace Chiro.CiviCrm.Domain
+namespace Chiro.CiviCrm.Model
 {
     public class Contact
     {
@@ -76,5 +77,7 @@ namespace Chiro.CiviCrm.Domain
         public string IndividualSuffix { get; set; }
         public string StateProvinceName { get; set; }
         public string Country { get; set; }
+
+        public IEnumerable<Address> ChainedAddresses { get; set; }
     }
 }

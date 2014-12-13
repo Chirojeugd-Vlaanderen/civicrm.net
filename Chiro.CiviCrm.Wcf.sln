@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.Example",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.BehaviorExtension", "Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj", "{F39A9E29-95E9-4304-A42D-1266F81B5ECF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Domain", "Chiro.CiviCrm.Domain\Chiro.CiviCrm.Domain.csproj", "{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Client", "Chiro.CiviCrm.Client\Chiro.CiviCrm.Client.csproj", "{B0F99AFC-7CD5-4C06-B362-840F0DFB560C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.ClientInterfaces", "Chiro.CiviCrm.ClientInterfaces\Chiro.CiviCrm.ClientInterfaces.csproj", "{C51D5B97-3AF5-4AD8-9B40-3C04DF6FC1C4}"
@@ -21,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D2B03C
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Model", "Chiro.CiviCrm.Model\Chiro.CiviCrm.Model.csproj", "{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,16 +62,6 @@ Global
 		{F39A9E29-95E9-4304-A42D-1266F81B5ECF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{F39A9E29-95E9-4304-A42D-1266F81B5ECF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{F39A9E29-95E9-4304-A42D-1266F81B5ECF}.Release|x86.ActiveCfg = Release|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|x86.ActiveCfg = Release|Any CPU
 		{B0F99AFC-7CD5-4C06-B362-840F0DFB560C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B0F99AFC-7CD5-4C06-B362-840F0DFB560C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F99AFC-7CD5-4C06-B362-840F0DFB560C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -92,6 +82,16 @@ Global
 		{C51D5B97-3AF5-4AD8-9B40-3C04DF6FC1C4}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{C51D5B97-3AF5-4AD8-9B40-3C04DF6FC1C4}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{C51D5B97-3AF5-4AD8-9B40-3C04DF6FC1C4}.Release|x86.ActiveCfg = Release|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7C6F2810-20BE-4DC8-A7D1-92999BE67D61}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

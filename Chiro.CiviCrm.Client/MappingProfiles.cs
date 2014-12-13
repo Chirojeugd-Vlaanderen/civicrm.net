@@ -16,7 +16,9 @@
 
 using AutoMapper;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Domain;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
+using Chiro.CiviCrm.Model;
+using Chiro.CiviCrm.Model.Requests;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +45,10 @@ namespace Chiro.CiviCrm.Client
                     opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.birth_date)))
                 .ForMember(
                     dst => dst.DeceasedDate,
-                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.deceased_date)));
+                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.deceased_date)))
+                .ForMember(
+                    dst => dst.ChainedAddresses,
+                    opt => opt.MapFrom(src => src.chained_addresses.values));
             CreateMap<CiviAddress, Address>();
         }
     };
@@ -59,8 +64,18 @@ namespace Chiro.CiviCrm.Client
             DestinationMemberNamingConvention = new LowerUnderscoreNamingConvention();
             CreateMap<Contact, CiviContact>()
                 .ForMember(dst => dst.birth_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.BirthDate)))
-                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.DeceasedDate)));
+                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.DeceasedDate)))
+                // Prevent chained entities from being mapped back.
+                .ForMember(dst => dst.chained_addresses, opt => opt.Ignore());
             CreateMap<Address, CiviAddress>();
+
+            // I wonder if this can be done more elegantly:
+            CreateMap<BaseRequest, CiviRequest>()
+                .Include<ExternalIdentifierRequest, CiviExternalIdentifierRequest>()
+                .Include<IdRequest, CiviIdRequest>()
+                .ForMember(src => src.sequential, opt => opt.UseValue(1));
+            CreateMap<ExternalIdentifierRequest, CiviExternalIdentifierRequest>();
+            CreateMap<IdRequest, CiviIdRequest>();
         }
     }
 

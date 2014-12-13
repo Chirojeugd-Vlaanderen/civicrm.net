@@ -45,8 +45,14 @@ namespace Chiro.CiviCrm.BehaviorExtension
         {
             if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
             {
-                var result = JsonConvert.SerializeObject(parameter);
-                return result;
+                if (parameter is ICustomJsonConversion)
+                {
+                    return ((ICustomJsonConversion)parameter).ToJson();
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(parameter);
+                }
             }
             else
             {

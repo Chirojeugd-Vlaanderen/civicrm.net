@@ -16,8 +16,9 @@
 using System;
 using Chiro.CiviCrm.Client;
 using Chiro.CiviCrm.ClientInterfaces;
-using Chiro.CiviCrm.Domain;
+using Chiro.CiviCrm.Model;
 using System.Collections.Generic;
+using Chiro.CiviCrm.Model.Requests;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -41,7 +42,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // This example works on the contact with contactId 2.
                 const int contactId = 2;
 
-                var contact = client.ContactGet(contactId);
+                var contact = client.ContactGetSingle(new IdRequest
+                    {
+                        Id = contactId,
+                        ChainedEntities = new[] { CiviEntity.Address }
+                    });
 
                 if (contact == null)
                 {
@@ -54,12 +59,12 @@ namespace Chiro.CiviCrm.Wcf.Example
                     Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
                     Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
 
-                    //// Change first name:
-                    //contact.FirstName = "Jean";
-                    //client.ContactSave(contact);
+                    // Change first name:
+                    contact.FirstName = "John";
+                    client.ContactSave(contact);
                 }
 
-                ShowAddresses(client.ContactAddressesFind(contact.ExternalIdentifier.ToString()));
+                ShowAddresses(contact);
 
                 // Add an address. Delete it again.
 
@@ -73,19 +78,37 @@ namespace Chiro.CiviCrm.Wcf.Example
                 };
 
                 newAddress = client.AddressSave(newAddress);
-                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+
+                // Get contact again, to find out whether the address 
+                // has been added.
+                contact = client.ContactGetSingle(new IdRequest
+                {
+                    Id = contactId,
+                    ReturnFields = "Id",    // I am not interested in the fields of the contact.
+                    ChainedEntities = new[] { CiviEntity.Address }
+                });
+
+                ShowAddresses(contact);
                 client.AddressDelete(newAddress.Id.Value);
-                ShowAddresses(client.ContactAddressesGet(contact.Id.Value));
+
+                contact = client.ContactGetSingle(new IdRequest
+                {
+                    Id = contactId,
+                    ReturnFields = "Id",    // I am not interested in the fields of the contact.
+                    ChainedEntities = new[] { CiviEntity.Address }
+                });
+
+                ShowAddresses(contact);
             }
 
             Console.WriteLine("Press enter.");
             Console.ReadLine();
         }
 
-        private static void ShowAddresses(IEnumerable<Address> adresses)
+        private static void ShowAddresses(Contact c)
         {
             Console.WriteLine("\nAddresses:");
-            foreach (var a in adresses)
+            foreach (var a in c.ChainedAddresses)
             {
                 Console.WriteLine(
                     "  Address {0}: {1}, {2} {5} {3} - {4},{6}", 

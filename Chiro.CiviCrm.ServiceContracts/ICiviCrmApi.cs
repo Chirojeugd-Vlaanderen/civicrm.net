@@ -18,6 +18,7 @@ using System;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 
 namespace Chiro.CiviCrm.Api
 {
@@ -28,33 +29,31 @@ namespace Chiro.CiviCrm.Api
     public interface ICiviCrmApi
     {
         /// <summary>
-        /// Find contact with given <paramref name="id"/>
+        /// Find a single contact based on the <paramref name="request"/>
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="id">(CiviCRM) ID of contact to be found</param>
-        /// <returns>If found, the (unique) contact with given <paramref name="id"/>,
-        /// otherwise <c>null</c>.</returns>
+        /// <param name="request">search criteria for the contact</param>
+        /// <returns>If found, the unique contact statisfying the <paramref name="request"/>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={id}")]
-        CiviContact ContactGet(string apiKey, string key, CiviId id);
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}")]
+        CiviContact ContactGetSingle(string apiKey, string key, CiviRequest request);
 
         /// <summary>
-        /// Find contact with given <paramref name="externalIdentifier"/>.
+        /// Find one or more contacts.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="externalIdentifier">External identifier of contact to find.</param>
-        /// <returns>If found, then (unique) contact with given
-        /// <paramref name="externalIdentifier"/>, otherwise <c>null</c>.</returns>
+        /// <param name="request">Selection criteria for contacts to find.</param>
+        /// <returns>The requested contacts.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={externalIdentifier}")]
-        CiviContact ContactFind(string apiKey, string key, CiviExternalIdentifier externalIdentifier);
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}")]
+        CiviResultValues<CiviContact> ContactGet(string apiKey, string key, CiviRequest request);
 
         /// <summary>
-        /// Savers or updates the given <paramref name="contact"/>.
+        /// Saves or updates the given <paramref name="contact"/>.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
@@ -67,16 +66,16 @@ namespace Chiro.CiviCrm.Api
         CiviResultValues<CiviContact> ContactSave(string apiKey, string key, CiviContact contact);
 
         /// <summary>
-        /// Returns the adresses of the contact with given <paramref name="contactId"/>.
+        /// Returns one or more addresses.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="contactId">ContactId of the adresses you are looking for.</param>
-        /// <returns>A CiviResult containing the adresses of the contact with given <paramref name="ContactId"/>.</returns>
+        /// <param name="request">Selection criteria for the addresses to find.</param>
+        /// <returns>The requested </returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={contactId}")]
-        CiviResultValues<CiviAddress> ContactAdressesGet(string apiKey, string key, CiviContactId contactId);
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}")]
+        CiviResultValues<CiviAddress> AdressesGet(string apiKey, string key, CiviRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
@@ -99,7 +98,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>A CiviResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&sequential=1&json={addressId}")]
-        CiviResult AddressDelete(string apiKey, string key, CiviId addressId);
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&json={request}")]
+        CiviResult AddressDelete(string apiKey, string key, CiviIdRequest request);
     }
 }
