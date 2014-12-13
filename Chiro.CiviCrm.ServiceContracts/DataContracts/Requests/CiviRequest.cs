@@ -37,7 +37,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public string[] chained_entities { get; set; }
 
         [JsonProperty("return", NullValueHandling = NullValueHandling.Ignore)]
-        public string return_values { get; set; }
+        public string return_fields { get; set; }
 
         public int sequential { get; set; }
         /// <summary>

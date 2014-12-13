@@ -84,7 +84,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact = client.ContactGetSingle(new IdRequest
                 {
                     Id = contactId,
-                    ReturnFields = "Id",    // I am not interested in the fields of the contact.
+                    ReturnFields = "id",    // I am not interested in the fields of the contact.
                     ChainedEntities = new[] { CiviEntity.Address }
                 });
 
@@ -94,7 +94,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact = client.ContactGetSingle(new IdRequest
                 {
                     Id = contactId,
-                    ReturnFields = "Id",    // I am not interested in the fields of the contact.
+                    ReturnFields = "id",    // I am not interested in the fields of the contact.
                     ChainedEntities = new[] { CiviEntity.Address }
                 });
 
