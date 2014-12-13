@@ -39,35 +39,39 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = new CiviCrmClient())
             {
-                // This example works on the contact with contactId 2.
-                const int contactId = 2;
+                // Typically you would use external ID's to talk to CiviCRM.
+                const string externalId = "1111111";
 
-                var contact = client.ContactGetSingle(new IdRequest
+                // Get the contact, and chain the contact's addresses.
+                var contact = client.ContactGetSingle(new ExternalIdentifierRequest
                     {
-                        Id = contactId,
+                        ExternalIdentifier = externalId,
                         ChainedEntities = new[] { CiviEntity.Address }
                     });
 
+                // Keep the contact Id for later reference.
+                int contactId = contact.Id.Value;
+
+                // Exit if contact is not found.
                 if (contact == null)
                 {
                     Console.WriteLine("Contact not found.");
-                }
-                else
-                {
-                    Console.WriteLine("Found: {0} {1} ({4}); id: {2}; {3}", contact.FirstName, contact.LastName, contact.Id, contact.ContactType, contact.GenderId);
-                    Console.WriteLine("Birth date: {0}", contact.BirthDate);
-                    Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
-                    Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
-
-                    // Change first name:
-                    contact.FirstName = "John";
-                    client.ContactSave(contact);
+                    return;
                 }
 
+                // Show some information about the contact.
+                Console.WriteLine("Found: {0} {1} ({4}); id: {2}; {3}", contact.FirstName, contact.LastName, contact.Id, contact.ContactType, contact.GenderId);
+                Console.WriteLine("Birth date: {0}", contact.BirthDate);
+                Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
+                Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
                 ShowAddresses(contact);
 
-                // Add an address. Delete it again.
+                //// Change first name:
+                //contact.FirstName = "John";
+                //client.ContactSave(contact);
 
+
+                // Add an address to the contact.
                 var newAddress = new Address
                 {
                     ContactId = contact.Id.Value,
@@ -81,20 +85,30 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 // Get contact again, to find out whether the address 
                 // has been added.
+                // Note that we now use the CiviCRM contact ID.
                 contact = client.ContactGetSingle(new IdRequest
                 {
                     Id = contactId,
-                    ReturnFields = "id",    // I am not interested in the fields of the contact.
+                    // We don't need all fields of the contact, we are only interested in the
+                    // addresses.
+
+                    // ReturnFields are still in civicrm notation, meaning lowercase and
+                    // underscores (see issue #19)
+                    ReturnFields = "id",
                     ChainedEntities = new[] { CiviEntity.Address }
                 });
 
+                // Show adresses
                 ShowAddresses(contact);
+
+                // Delete the added addres
                 client.AddressDelete(newAddress.Id.Value);
 
+                // Get the adresses again, to verify that the new address is gone.
                 contact = client.ContactGetSingle(new IdRequest
                 {
                     Id = contactId,
-                    ReturnFields = "id",    // I am not interested in the fields of the contact.
+                    ReturnFields = "id",
                     ChainedEntities = new[] { CiviEntity.Address }
                 });
 
