@@ -66,8 +66,9 @@ namespace Chiro.CiviCrm.Wcf.Example
                 Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
                 ShowAddresses(contact);
 
-                //// Change first name:
+                //// Change first name and birth date:
                 //contact.FirstName = "John";
+                //contact.BirthDate = new DateTime(1979, 3, 2);
                 //client.ContactSave(contact);
 
 

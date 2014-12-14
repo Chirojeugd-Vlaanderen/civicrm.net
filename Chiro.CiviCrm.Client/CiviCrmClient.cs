@@ -1,5 +1,6 @@
 ﻿/*
    Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2015 Johan Vervloet
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,6 +27,7 @@ using Chiro.CiviCrm.Api.DataContracts;
 using AutoMapper;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.Model.Requests;
+using AutoMapper.Mappers;
 
 namespace Chiro.CiviCrm.Client
 {
@@ -37,6 +39,24 @@ namespace Chiro.CiviCrm.Client
         private readonly string _apiKey;
         private readonly string _key;
 
+        private static MappingEngine _mapper = null;
+
+        /// <summary>
+        /// Create a private mapping engine, to not disturb possible
+        /// existing automapper configurations.
+        /// </summary>
+        private void ConfigureMapper()
+        {
+            // See issue #20 (https://github.com/johanv/civicrm.net/issues/20).
+
+            var store = new ConfigurationStore(new TypeMapFactory(), MapperRegistry.Mappers);
+            store.AssertConfigurationIsValid();
+            _mapper = new MappingEngine(store);
+
+            store.AddProfile<CiviToNetProfile>();
+            store.AddProfile<NetToCiviProfile>();
+        }
+
         /// <summary>
         /// Creates a new CiviCRM-client
         /// </summary>
@@ -45,11 +65,10 @@ namespace Chiro.CiviCrm.Client
             _apiKey = Properties.Settings.Default.UserKey;
             _key = Properties.Settings.Default.SiteKey;
 
-            Mapper.Initialize(cfg =>
+            if (_mapper == null)
             {
-                cfg.AddProfile<CiviToNetProfile>();
-                cfg.AddProfile<NetToCiviProfile>();
-            });
+                ConfigureMapper();
+            }
         }
 
         /// <summary>
@@ -59,12 +78,9 @@ namespace Chiro.CiviCrm.Client
         /// <returns>If found, the unique contact statisfying the <paramref name="request"/>.</returns>
         public Contact ContactGetSingle(BaseRequest request)
         {
-            var civiContact = base.Channel.ContactGetSingle(_apiKey, _key, Mapper.Map<CiviRequest>(request));
+            var civiContact = base.Channel.ContactGetSingle(_apiKey, _key, _mapper.Map<CiviRequest>(request));
 
-            // If you get a mapping exception here, regarding AddressId, just clean the solution,
-            // and build it again.
-
-            return Mapper.Map<Contact>(civiContact);
+            return _mapper.Map<Contact>(civiContact);
         }
 
         /// <summary>
@@ -74,8 +90,8 @@ namespace Chiro.CiviCrm.Client
         /// <returns>The contacts statisfying the <paramref name="request"/>.</returns>
         public Contact[] ContactGet(BaseRequest request)
         {
-            var result = base.Channel.ContactGet(_apiKey, _key, Mapper.Map<CiviRequest>(request));
-            return Mapper.Map<Contact[]>(result.values);
+            var result = base.Channel.ContactGet(_apiKey, _key, _mapper.Map<CiviRequest>(request));
+            return _mapper.Map<Contact[]>(result.values);
         }
 
 
@@ -87,14 +103,14 @@ namespace Chiro.CiviCrm.Client
         /// <returns>The saved contact, with ID.</returns>
         public Contact ContactSave(Contact contact)
         {
-            var civiContact = Mapper.Map<CiviContact>(contact);
+            var civiContact = _mapper.Map<CiviContact>(contact);
 
             // If you get a mapping exception here regarding mapping empty strings too booleans,
             // you are probably saving a contact that has an invalid contact id.
 
             var result = base.Channel.ContactSave(_apiKey, _key, civiContact);
             AssertValid(result);
-            return Mapper.Map<Contact>(result.values.FirstOrDefault());
+            return _mapper.Map<Contact>(result.values.FirstOrDefault());
         }
 
         /// <summary>
@@ -104,11 +120,11 @@ namespace Chiro.CiviCrm.Client
         /// <returns>The saved address.</returns>
         public Address AddressSave(Address address)
         {
-            var civiAddress = Mapper.Map<CiviAddress>(address);
+            var civiAddress = _mapper.Map<CiviAddress>(address);
 
             var result = base.Channel.AddressSave(_apiKey, _key, civiAddress);
             AssertValid(result);
-            return Mapper.Map<Address>(result.values.FirstOrDefault());
+            return _mapper.Map<Address>(result.values.FirstOrDefault());
         }
 
         /// <summary>

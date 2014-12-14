@@ -1,5 +1,6 @@
 ﻿/*
    Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014 Johan Vervloet
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -36,16 +37,11 @@ namespace Chiro.CiviCrm.Client
         {
             SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
             DestinationMemberNamingConvention = new PascalCaseNamingConvention();
+            CreateMap<string, int?>().ConvertUsing<NullIntTypeConverter>();
+            CreateMap<string, bool?>().ConvertUsing<NullBooleanTypeConverter>();
+            CreateMap<string, DateTime?>().ConvertUsing<CiviDateTypeConverter>();
+
             CreateMap<CiviContact, Contact>()
-                .ForMember(
-                    dst => dst.OnHold,
-                    opt => opt.MapFrom(src => !String.IsNullOrEmpty(src.on_hold) && (Convert.ToInt32(src.on_hold) != 0)))
-                .ForMember(
-                    dst => dst.BirthDate,
-                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.birth_date)))
-                .ForMember(
-                    dst => dst.DeceasedDate,
-                    opt => opt.MapFrom(src => MappingHelpers.CiviDateToDateTime(src.deceased_date)))
                 .ForMember(
                     dst => dst.ChainedAddresses,
                     opt => opt.MapFrom(src => src.chained_addresses.values));
@@ -62,14 +58,15 @@ namespace Chiro.CiviCrm.Client
         {
             SourceMemberNamingConvention = new PascalCaseNamingConvention();
             DestinationMemberNamingConvention = new LowerUnderscoreNamingConvention();
+            CreateMap<DateTime?, string>().ConvertUsing<DateCiviTypeConverter>();
+
             CreateMap<Contact, CiviContact>()
-                .ForMember(dst => dst.birth_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.BirthDate)))
-                .ForMember(dst => dst.deceased_date, opt => opt.MapFrom(src => MappingHelpers.DateTimeToCiviDate(src.DeceasedDate)))
                 // Prevent chained entities from being mapped back.
                 .ForMember(dst => dst.chained_addresses, opt => opt.Ignore());
             CreateMap<Address, CiviAddress>();
 
-            // I wonder if this can be done more elegantly:
+            // Configure mappings for each request.
+            // I wonder if this can be done more generic:
             CreateMap<BaseRequest, CiviRequest>()
                 .Include<ExternalIdentifierRequest, CiviExternalIdentifierRequest>()
                 .Include<IdRequest, CiviIdRequest>()
@@ -80,21 +77,65 @@ namespace Chiro.CiviCrm.Client
     }
 
     /// <summary>
-    /// Some extension methods to make the mappings more readable
+    /// Conversion from string to int?
+    /// Thank you http://stackoverflow.com/questions/4101516/automapper-how-to-parse-an-int-from-a-string-and-possible-to-creating-rules-bas
     /// </summary>
-    internal static class MappingHelpers
+    internal class NullIntTypeConverter : TypeConverter<string, int?>
     {
-        public static DateTime? CiviDateToDateTime(string civiDate)
+        protected override int? ConvertCore(string source)
         {
-            return String.IsNullOrEmpty(civiDate) ? (DateTime?)null : DateTime.ParseExact(
-                        civiDate,
-                        "yyyy-MM-dd",
-                        System.Globalization.CultureInfo.InvariantCulture);
+            if (source == null)
+                return null;
+            else
+            {
+                int result;
+                return Int32.TryParse(source, out result) ? (int?)result : null;
+            }
         }
+    }
 
-        public static string DateTimeToCiviDate(DateTime? dateTime)
+    /// <summary>
+    /// Conversion from string (null, "", "0" or "1") to bool?
+    /// </summary>
+    internal class NullBooleanTypeConverter : TypeConverter<string, bool?>
+    {
+        protected override bool? ConvertCore(string source)
         {
-            return dateTime == null ? null : dateTime.Value.ToString("yyyy-MM-dd");
+            if (String.IsNullOrEmpty(source))
+            {
+                return false;
+            }
+            else
+            {
+                int result;
+                Int32.TryParse(source, out result);
+                return (result > 0);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Conversion from CiviCRM date (which we get as a string) to a DateTime?
+    /// </summary>
+    internal class CiviDateTypeConverter : TypeConverter<string, DateTime?>
+    {
+        protected override DateTime? ConvertCore(string source)
+        {
+            return String.IsNullOrEmpty(source) ? (DateTime?)null : DateTime.ParseExact(
+                source,
+                "yyyy-MM-dd",
+                System.Globalization.CultureInfo.InvariantCulture);
+        }
+    }
+
+    /// <summary>
+    /// Conversion from DateTime? to CiviCRM date.
+    /// </summary>
+    internal class DateCiviTypeConverter : TypeConverter<DateTime?, string>
+    {
+        protected override string ConvertCore(DateTime? source)
+        {
+            return source == null ? null : source.Value.ToString("yyyy-MM-dd");
         }
     }
 }
