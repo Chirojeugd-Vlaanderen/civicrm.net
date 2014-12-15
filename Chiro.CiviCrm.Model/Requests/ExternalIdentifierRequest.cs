@@ -27,6 +27,23 @@ namespace Chiro.CiviCrm.Model.Requests
     /// </summary>
     public class ExternalIdentifierRequest: BaseRequest
     {
+        /// <summary>
+        /// Constructs an external identifier request for the contact with given
+        /// <paramref name="externalIdentifier"/>.
+        /// </summary>
+        /// <param name="externalIdentifier"></param>
+        /// <remarks>If you want to do a chained call, just provide a value for
+        /// the ChainedEntities property.</remarks>
+        public ExternalIdentifierRequest(string externalIdentifier): base()
+        {
+            ExternalIdentifier = externalIdentifier;
+        }
+
+        /// <summary>
+        /// Construct an empty external identifier request.
+        /// </summary>
+        public ExternalIdentifierRequest() : this(null) { }
+
         public string ExternalIdentifier { get; set; }
     }
 }
