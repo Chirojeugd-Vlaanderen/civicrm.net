@@ -15,6 +15,7 @@
  */
 
 using Chiro.CiviCrm.BehaviorExtension;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -200,5 +201,11 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
         [DataMember(Name="api.Address.get")]
         public CiviResultValues<CiviAddress> chained_addresses { get; set; }
+
+        // Options are relevant for updates. Semantically they do not
+        // belong in this data contract, but the CiviCRM API expects
+        // them here.
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public CiviApiOptions options { get; set; }
     }
 }

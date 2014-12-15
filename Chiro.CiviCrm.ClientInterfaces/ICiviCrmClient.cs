@@ -45,15 +45,17 @@ namespace Chiro.CiviCrm.ClientInterfaces
         /// </summary>
         /// <param name="contact">Contact to be saved. If it has an ID, the existing contat will be overwritten.
         /// Otherwise a new contact is created.</param>
+        /// <param name="options">Options to pass to the API.</param>
         /// <returns>The saved contact, with ID.</returns>
-        Contact ContactSave(Contact contact);
+        Contact ContactSave(Contact contact, ApiOptions options);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
         /// </summary>
         /// <param name="address">Address to be saved.</param>
+        /// <param name="options">Options to pass to the API.</param>
         /// <returns>The saved address.</returns>
-        Address AddressSave(Address address);
+        Address AddressSave(Address address, ApiOptions options);
 
         /// <summary>
         /// Deletes the address with given <paramref name="id"/>.

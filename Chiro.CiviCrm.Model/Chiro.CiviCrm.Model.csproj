@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Address.cs" />
+    <Compile Include="ApiOptions.cs" />
     <Compile Include="Requests\BaseRequest.cs" />
     <Compile Include="Contact.cs" />
     <Compile Include="Enums.cs" />

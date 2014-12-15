@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -20,23 +20,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Model.Requests
+namespace Chiro.CiviCrm.Model
 {
-    /// <summary>
-    /// This class is used to send a get-request to the CiviCRM API. The base request
-    /// will just return the first 25 entities. Use one of the inheriting requests
-    /// for more fine grained search.
-    /// </summary>
-    public class BaseRequest
+    public class ApiOptions
     {
-        /// <summary>
-        /// Fields to return, comma seperated.
-        /// </summary>
-        public string ReturnFields { get; set; }
-
-        /// <summary>
-        /// Entities to chain.
-        /// </summary>
-        public CiviEntity[] ChainedEntities { get; set; }
+        public string Match { get; set; }
     }
 }

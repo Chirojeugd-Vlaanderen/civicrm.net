@@ -20,23 +20,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Model.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
-    /// This class is used to send a get-request to the CiviCRM API. The base request
-    /// will just return the first 25 entities. Use one of the inheriting requests
-    /// for more fine grained search.
+    /// Options to pass to the CiviCRM API.
     /// </summary>
-    public class BaseRequest
+    public class CiviApiOptions
     {
-        /// <summary>
-        /// Fields to return, comma seperated.
-        /// </summary>
-        public string ReturnFields { get; set; }
-
-        /// <summary>
-        /// Entities to chain.
-        /// </summary>
-        public CiviEntity[] ChainedEntities { get; set; }
+        public string match { get; set; }
     }
 }

@@ -23,7 +23,7 @@ using Chiro.CiviCrm.Model.Requests;
 namespace Chiro.CiviCrm.Wcf.Example
 {
     /// <summary>
-    /// Example for the CiviCrm-API proof of concept
+    /// Examples for the CiviCrm-API proof of concept.
     /// </summary>
     /// <remarks>
     /// Please check your configuration!
@@ -35,13 +35,30 @@ namespace Chiro.CiviCrm.Wcf.Example
     /// </remarks>
     class Program
     {
-        static void Main(string[] args)
+        // Put an existing external ID here:
+        private const string externalId = "1111111";
+
+        /// <summary>
+        /// Choose any example you like to run.
+        /// </summary>
+        /// <param name="arg"></param>
+        static void Main(string[] arg)
+        {
+            Example3();
+
+            Console.WriteLine("Press enter.");
+            Console.ReadLine();
+        }
+
+
+        /// <summary>
+        /// This example gets a contact, adds an address, and deletes the
+        /// address again.
+        /// </summary>
+        static void Example1()
         {
             using (var client = new CiviCrmClient())
             {
-                // Typically you would use external ID's to talk to CiviCRM.
-                const string externalId = "1111111";
-
                 // Get the contact, and chain the contact's addresses.
                 var contact = client.ContactGetSingle(new ExternalIdentifierRequest
                     {
@@ -59,18 +76,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                     return;
                 }
 
-                // Show some information about the contact.
-                Console.WriteLine("Found: {0} {1} ({4}); id: {2}; {3}", contact.FirstName, contact.LastName, contact.Id, contact.ContactType, contact.GenderId);
-                Console.WriteLine("Birth date: {0}", contact.BirthDate);
-                Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
-                Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
+                ShowContact(contact);
                 ShowAddresses(contact);
-
-                //// Change first name and birth date:
-                //contact.FirstName = "John";
-                //contact.BirthDate = new DateTime(1979, 3, 2);
-                //client.ContactSave(contact);
-
 
                 // Add an address to the contact.
                 var newAddress = new Address
@@ -82,7 +89,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     Country = "BE",
                 };
 
-                newAddress = client.AddressSave(newAddress);
+                newAddress = client.AddressSave(newAddress, null);
 
                 // Get contact again, to find out whether the address 
                 // has been added.
@@ -115,9 +122,87 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 ShowAddresses(contact);
             }
+        }
 
-            Console.WriteLine("Press enter.");
-            Console.ReadLine();
+        /// <summary>
+        /// This example changes name and birth date of a contact.
+        /// </summary>
+        public static void Example2()
+        {
+            using (var client = new CiviCrmClient())
+            {
+                // Get the contact, and chain the contact's addresses.
+                var contact = client.ContactGetSingle(new ExternalIdentifierRequest
+                    {
+                        ExternalIdentifier = externalId,
+                        ChainedEntities = new[] { CiviEntity.Address }
+                    });
+
+                // Keep the contact Id for later reference.
+                int contactId = contact.Id.Value;
+
+                // Exit if contact is not found.
+                if (contact == null)
+                {
+                    Console.WriteLine("Contact not found.");
+                    return;
+                }
+
+                ShowContact(contact);
+
+                // Change first name and birth date:
+                contact.FirstName = "Jos";
+                contact.BirthDate = new DateTime(1979, 3, 3);
+                client.ContactSave(contact, null);
+
+                // Get contact again, to see whether it has worked.
+                contact = client.ContactGetSingle(new ExternalIdentifierRequest
+                {
+                    ExternalIdentifier = externalId,
+                    ChainedEntities = new[] { CiviEntity.Address }
+                });
+                ShowContact(contact);
+            }
+        }
+
+        /// <summary>
+        /// This example updates a contact with a given external ID, without
+        /// knowing the CiviCRM ID.
+        /// </summary>
+        public static void Example3()
+        {
+            using (var client = new CiviCrmClient())
+            {
+                var contact = new Contact
+                {
+                    ExternalIdentifier = externalId,
+                    FirstName = "Wesley",
+                    LastName = "Decabooter"
+                };
+
+                client.ContactSave(
+                    contact, 
+                    // use external ID to find the contact, instead of contact id.
+                    new ApiOptions{Match = "external_identifier"});
+
+                // Get the contact again. First name and last name
+                // should be updated. Other info should still be
+                // there.
+
+                contact = client.ContactGetSingle(new ExternalIdentifierRequest(externalId));
+                ShowContact(contact);
+            }
+        }
+
+        #region some output functions.
+
+        private static void ShowContact(Contact contact)
+        {
+            // Show some information about the contact.
+            Console.WriteLine("Found: {0} {1} ({4}); id: {2}; {3}", contact.FirstName, contact.LastName, contact.Id, contact.ContactType, contact.GenderId);
+            Console.WriteLine("Birth date: {0}", contact.BirthDate);
+            Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
+            Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
         }
 
         private static void ShowAddresses(Contact c)
@@ -136,5 +221,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     a.StateProvinceId);
             }
         }
+
+        #endregion
     }
 }

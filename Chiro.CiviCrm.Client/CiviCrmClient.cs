@@ -100,10 +100,15 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         /// <param name="contact">Contact to be saved. If it has an ID, the existing contat will be overwritten.
         /// Otherwise a new contact is created.</param>
+        /// <param name="options">Options to pass to the API.</param>
         /// <returns>The saved contact, with ID.</returns>
-        public Contact ContactSave(Contact contact)
+        public Contact ContactSave(Contact contact, ApiOptions options)
         {
             var civiContact = _mapper.Map<CiviContact>(contact);
+            if (options != null)
+            {
+                civiContact.options = _mapper.Map<CiviApiOptions>(options);
+            }
 
             // If you get a mapping exception here regarding mapping empty strings too booleans,
             // you are probably saving a contact that has an invalid contact id.
@@ -117,10 +122,15 @@ namespace Chiro.CiviCrm.Client
         /// Creates or updates the given <paramref name="address"/>.
         /// </summary>
         /// <param name="address">Address to be saved.</param>
+        /// <param name="options">Options to pass to the API.</param>
         /// <returns>The saved address.</returns>
-        public Address AddressSave(Address address)
+        public Address AddressSave(Address address, ApiOptions options)
         {
             var civiAddress = _mapper.Map<CiviAddress>(address);
+            if (options != null)
+            {
+                civiAddress.options = _mapper.Map<CiviApiOptions>(options);
+            }
 
             var result = base.Channel.AddressSave(_apiKey, _key, civiAddress);
             AssertValid(result);

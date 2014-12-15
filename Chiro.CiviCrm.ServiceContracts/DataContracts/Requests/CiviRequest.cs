@@ -39,12 +39,18 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("return", NullValueHandling = NullValueHandling.Ignore)]
         public string return_fields { get; set; }
 
+        /// <summary>
+        /// Options to pass to the CiviCRM-API
+        /// </summary>
+        public CiviApiOptions options { get; set; }
+
         public int sequential { get; set; }
+
         /// <summary>
         /// Dummy property we will serialize if we need to chain.
         /// </summary>
         [JsonProperty("chains.placeholder", NullValueHandling = NullValueHandling.Ignore)]
-        public int? chains_placeholder { get; set; }
+        public int? chains_placeholder { get; private set; }
 
         public CiviRequest()
         {
@@ -59,7 +65,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
             string chains;
 
-            if (chained_entities == null)
+            if (chained_entities == null || !chained_entities.Any())
             {
                 chains = String.Empty;
                 chains_placeholder = null;

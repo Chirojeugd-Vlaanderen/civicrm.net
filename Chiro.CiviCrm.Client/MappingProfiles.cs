@@ -65,6 +65,8 @@ namespace Chiro.CiviCrm.Client
                 .ForMember(dst => dst.chained_addresses, opt => opt.Ignore());
             CreateMap<Address, CiviAddress>();
 
+            CreateMap<ApiOptions, CiviApiOptions>();
+
             // Configure mappings for each request.
             // I wonder if this can be done more generic:
             CreateMap<BaseRequest, CiviRequest>()
