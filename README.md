@@ -1,11 +1,20 @@
 # Chiro.CiviCrm.Wcf
 
-This project uses WCF to use the CiviCRM API. It is not a full solution, it is just a proof of concept. It contains a small example.
+This project aims to provide a .NET client library for CiviCRM. It connects to the CiviCRM
+API using WCF.
 
-## You need to patch CiviCRM
+## Warning!
+
+### Volatile interface
+
+This is a young project, and its interface (defined in Chiro.CiviCrm.ClientInterfaces) still
+changes a lot. And it will keep on changing for a while, at least until issues #22 and #23
+are fixed.
+
+### You need to patch CiviCRM
 
 For this to work, you need to patch CiviCRM:
-https://github.com/civicrm/civicrm-core/pull/4641
+https://github.com/civicrm/civicrm-core/pull/4641/files
 (No worries, it is a small patch.)
 
 ## How to get the example to work
