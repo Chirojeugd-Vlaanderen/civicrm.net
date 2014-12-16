@@ -26,17 +26,18 @@ namespace Chiro.CiviCrm.Wcf.Example
     /// Examples for the CiviCrm-API proof of concept.
     /// </summary>
     /// <remarks>
-    /// Please check your configuration!
-    /// 
-    /// The settings of Chiro.CiviCrm.Client should contain your CiviCRM site key
-    /// and the key of your CiviCRM-API-user.
-    /// 
-    /// The url of the CiviCRM API is in the App.Config of this project.
+    /// Please check the configuration in the App.config file of this project.
+    /// You should adapt the endpoint address of your API, and your site key
+    /// and api key in the settings.
     /// </remarks>
     class Program
     {
         // Put an existing external ID here:
         private const string externalId = "1111111";
+
+        // Get API key and site key from configuration.
+        private static readonly string _apiKey = Properties.Settings.Default.ApiKey;
+        private static readonly string _siteKey = Properties.Settings.Default.SiteKey;
 
         /// <summary>
         /// Choose any example you like to run.
@@ -57,7 +58,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         /// </summary>
         static void Example1()
         {
-            using (var client = new CiviCrmClient())
+            using (var client = new CiviCrmClient(_siteKey, _apiKey))
             {
                 // Get the contact, and chain the contact's addresses.
                 var contact = client.ContactGetSingle(new ExternalIdentifierRequest
@@ -129,7 +130,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         /// </summary>
         public static void Example2()
         {
-            using (var client = new CiviCrmClient())
+            using (var client = new CiviCrmClient(_siteKey, _apiKey))
             {
                 // Get the contact, and chain the contact's addresses.
                 var contact = client.ContactGetSingle(new ExternalIdentifierRequest
@@ -171,7 +172,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         /// </summary>
         public static void Example3()
         {
-            using (var client = new CiviCrmClient())
+            using (var client = new CiviCrmClient(_siteKey, _apiKey))
             {
                 var contact = new Contact
                 {

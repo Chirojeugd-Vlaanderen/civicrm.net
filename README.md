@@ -37,17 +37,23 @@ Of course, you replace the 12311 by the real contact-ID of the civi contact, and
 
 ### Configuration of Chiro.CiviCrm.Wcf.Example
 
-In `App.config` of Chiro.CiviCrm.Wcf.Example, you edit this line:
+In `App.config`, you edit the endpoint:
 
-    <endpoint 
-      address="http://192.168.56.1/dev/sites/all/modules/civicrm/extern/rest.php" 
-      binding="webHttpBinding" behaviorConfiguration="civiCrm"
-      contract="Chiro.CiviCrm.Api.ICiviCrmApi" />
+      <endpoint 
+	address="http://192.168.124.1/dev2/sites/all/modules/civicrm/extern/rest.php" 
+	binding="webHttpBinding" bindingConfiguration="MyBindingConfiguration" 
+	behaviorConfiguration="civiCrm" contract="Chiro.CiviCrm.Api.ICiviCrmApi"/>
 
-Replace `http://192.168.56.1/dev` with the url of your Drupal site.
+Adapt these lines to configure your CiviCRM site key, and your api user key:
 
-In the Settings of Chiro.CiviCrm.Client, you change the values of `UserKey` and `SiteKey` into the user's API key, and the key of your CiviCrm instance.
+      <setting name="SiteKey" serializeAs="String">
+        <value>462e033f1b3495d094f401d89772ba5b</value>
+      </setting>
+      <setting name="ApiKey" serializeAs="String">
+        <value>blablablapi</value>
+      </setting>
 
-In `Program.cs`, replace the value of `contactId` by the ID of an existing contact in your CiviCRM instance.
+In `Program.cs`, replace the value of `externalId` by the external ID of an existing contact 
+in your CiviCRM instance.
 
 Make sure that Chiro.CiviCrm.Wcf.Example is the solutions startup project. Now you should be able to run the example.

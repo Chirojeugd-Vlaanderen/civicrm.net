@@ -27,6 +27,13 @@ namespace Chiro.CiviCrm.ClientInterfaces
     public interface ICiviCrmClient: IDisposable
     {
         /// <summary>
+        /// Configure the CiviCRM client.
+        /// </summary>
+        /// <param name="siteKey">Site key of your CiviCRM instance.</param>
+        /// <param name="apiKey">API key of a user with CiviCRM API access.</param>
+        void Configure(string siteKey, string apiKey);
+
+        /// <summary>
         /// Find a single contact based on the <paramref name="request"/>
         /// </summary>
         /// <param name="request">search criteria for the contact</param>

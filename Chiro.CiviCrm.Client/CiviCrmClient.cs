@@ -36,8 +36,8 @@ namespace Chiro.CiviCrm.Client
     /// </summary>
     public class CiviCrmClient: ClientBase<ICiviCrmApi>, ICiviCrmClient
     {
-        private readonly string _apiKey;
-        private readonly string _key;
+        private string _apiKey;
+        private string _key;
 
         private static MappingEngine _mapper = null;
 
@@ -62,13 +62,32 @@ namespace Chiro.CiviCrm.Client
         /// </summary>
         public CiviCrmClient()
         {
-            _apiKey = Properties.Settings.Default.UserKey;
-            _key = Properties.Settings.Default.SiteKey;
-
             if (_mapper == null)
             {
                 ConfigureMapper();
             }
+        }
+
+        /// <summary>
+        /// Create a a new CiviCRM-client, and configure it with the given
+        /// <paramref name="siteKey"/> and <paramref name="apiKey"/>.
+        /// </summary>
+        /// <param name="siteKey">Site key of your CiviCRM instance.</param>
+        /// <param name="apiKey">API key of an API user in your CiviCRM instance.</param>
+        public CiviCrmClient(string siteKey, string apiKey):this()
+        {
+            Configure(siteKey, apiKey);
+        }
+
+        /// <summary>
+        /// Configure the CiviCRM client.
+        /// </summary>
+        /// <param name="siteKey">Site key of your CiviCRM instance.</param>
+        /// <param name="apiKey">API key of a user with CiviCRM API access.</param>
+        public void Configure(string siteKey, string apiKey)
+        {
+            _apiKey = apiKey;
+            _key = siteKey;
         }
 
         /// <summary>
