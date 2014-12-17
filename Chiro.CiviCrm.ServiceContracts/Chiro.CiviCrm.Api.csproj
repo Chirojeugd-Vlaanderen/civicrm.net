@@ -52,6 +52,7 @@
     <Compile Include="DataContracts\CiviAddress.cs" />
     <Compile Include="DataContracts\CiviApiOptions.cs" />
     <Compile Include="DataContracts\CiviResult.cs" />
+    <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="DataContracts\Requests\CiviExternalIdentifierRequest.cs" />
     <Compile Include="DataContracts\Requests\CiviRequest.cs" />
     <Compile Include="DataContracts\Requests\CiviIdRequest.cs" />

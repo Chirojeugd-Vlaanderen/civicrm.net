@@ -19,6 +19,7 @@ using Chiro.CiviCrm.ClientInterfaces;
 using Chiro.CiviCrm.Model;
 using System.Collections.Generic;
 using Chiro.CiviCrm.Model.Requests;
+using Chiro.CiviCrm.Api.DataContracts;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -45,12 +46,35 @@ namespace Chiro.CiviCrm.Wcf.Example
         /// <param name="arg"></param>
         static void Main(string[] arg)
         {
-            Example3();
+            Example0();
 
             Console.WriteLine("Press enter.");
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// This example gets a contact, and shows its info.
+        /// </summary>
+        static void Example0()
+        {
+            using (var client = new CiviCrmClient(_siteKey, _apiKey))
+            {
+                // Get the contact, and chain the contact's addresses.
+                var contact = client.ContactGetSingle(new ExternalIdentifierRequest
+                {
+                    ExternalIdentifier = externalId
+                });
+
+                // Exit if contact is not found.
+                if (contact == null)
+                {
+                    Console.WriteLine("Contact not found.");
+                    return;
+                }
+
+                ShowContact(contact);
+            }
+        }
 
         /// <summary>
         /// This example gets a contact, adds an address, and deletes the

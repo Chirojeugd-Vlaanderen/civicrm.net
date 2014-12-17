@@ -72,6 +72,10 @@
       <Project>{7c6f2810-20be-4dc8-a7d1-92999be67d61}</Project>
       <Name>Chiro.CiviCrm.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Chiro.CiviCrm.ServiceContracts\Chiro.CiviCrm.Api.csproj">
+      <Project>{c27c0fb3-740a-4705-98df-3b237984c44f}</Project>
+      <Name>Chiro.CiviCrm.Api</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

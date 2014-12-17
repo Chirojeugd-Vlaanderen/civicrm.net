@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.Api.DataContracts;
 using System;
 using System.Collections.Generic;
 

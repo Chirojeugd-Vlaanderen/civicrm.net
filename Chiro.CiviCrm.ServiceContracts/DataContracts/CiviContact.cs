@@ -34,7 +34,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public int? id { get; set; }
 
         [DataMember]
-        public string contact_type { get; set; }
+        public ContactType contact_type { get; set; }
 
         [DataMember]
         public string contact_sub_type { get; set; }
@@ -83,7 +83,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string preferred_language { get; set; }
 
         [DataMember]
-        public string preferred_mail_format { get; set; }
+        public MailFormat preferred_mail_format { get; set; }
 
         [DataMember]
         public string first_name { get; set; }
@@ -98,22 +98,22 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string formal_title { get; set; }
 
         [DataMember]
-        public string communication_style_id { get; set; }
+        public CommunicationStyle communication_style_id { get; set; }
 
         [DataMember]
         public string job_title { get; set; }
 
         [DataMember]
-        public string gender_id { get; set; }
+        public Gender gender_id { get; set; }
 
         [DataMember]
-        public string birth_date { get; set; }
+        public DateTime? birth_date { get; set; }
 
         [DataMember]
         public bool is_deceased { get; set; }
 
         [DataMember]
-        public string deceased_date { get; set; }
+        public DateTime? deceased_date { get; set; }
 
         [DataMember]
         public string household_name { get; set; }
@@ -131,7 +131,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string current_employer { get; set; }
 
         [DataMember]
-        public string address_id { get; set; }
+        public int? address_id { get; set; }
 
         [DataMember]
         public string street_address { get; set; }
@@ -158,28 +158,28 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string geo_code_2 { get; set; }
 
         [DataMember]
-        public string phone_id { get; set; }
+        public int? phone_id { get; set; }
 
         [DataMember]
-        public string phone_type_id { get; set; }
+        public PhoneType? phone_type_id { get; set; }
 
         [DataMember]
         public string phone { get; set; }
 
         [DataMember]
-        public string email_id { get; set; }
+        public int? email_id { get; set; }
 
         [DataMember]
         public string email { get; set; }
 
         [DataMember]
-        public string on_hold { get; set; }
+        public bool? on_hold { get; set; }
 
         [DataMember]
-        public string im_id { get; set; }
+        public int? im_id { get; set; }
 
         [DataMember]
-        public string provider_id { get; set; }
+        public Provider? provider_id { get; set; }
 
         [DataMember]
         public string im { get; set; }
