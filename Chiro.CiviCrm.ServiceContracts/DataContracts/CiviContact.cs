@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using System;
@@ -46,17 +47,22 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string display_name { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool do_not_email { get; set; }
 
+        [JsonConverter(typeof(BoolConverter))]
         [DataMember, JsonProperty]
         public bool do_not_phone { get; set; }
 
+        [JsonConverter(typeof(BoolConverter))]
         [DataMember, JsonProperty]
         public bool do_not_sms { get; set; }
 
+        [JsonConverter(typeof(BoolConverter))]
         [DataMember, JsonProperty]
         public bool do_not_trade { get; set; }
 
+        [JsonConverter(typeof(BoolConverter))]
         [DataMember, JsonProperty]
         public bool is_opt_out { get; set; }
 
@@ -98,18 +104,21 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string formal_title { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(EnumIntConverter))]
         public CommunicationStyle communication_style_id { get; set; }
 
         [DataMember, JsonProperty]
         public string job_title { get; set; }
 
         [DataMember, JsonProperty]
+        //[JsonConverter(typeof(EnumIntConverter))]
         public Gender gender_id { get; set; }
 
         [DataMember, JsonProperty]
         public DateTime? birth_date { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool is_deceased { get; set; }
 
         [DataMember, JsonProperty]
@@ -125,6 +134,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string sic_code  { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool contact_is_deleted  { get; set; }
 
         [DataMember, JsonProperty]
@@ -161,6 +171,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public int? phone_id { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(EnumIntConverter))]
         public PhoneType? phone_type_id { get; set; }
 
         [DataMember, JsonProperty]
@@ -173,12 +184,14 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string email { get; set; }
 
         [DataMember, JsonProperty]
-        public bool? on_hold { get; set; }
+        [JsonConverter(typeof(BoolConverter))]
+        public bool on_hold { get; set; }
 
         [DataMember, JsonProperty]
         public int? im_id { get; set; }
 
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(EnumIntConverter))]
         public Provider? provider_id { get; set; }
 
         [DataMember, JsonProperty]

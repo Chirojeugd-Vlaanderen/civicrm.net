@@ -34,7 +34,7 @@ namespace Chiro.CiviCrm.Wcf.Example
     class Program
     {
         // Put an existing external ID here:
-        private const string externalId = "1111111";
+        private const string externalId = "29";
 
         // Get API key and site key from configuration.
         private static readonly string _apiKey = Properties.Settings.Default.ApiKey;

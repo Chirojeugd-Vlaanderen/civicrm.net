@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using System;
@@ -36,8 +37,10 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember, JsonProperty]
         public int location_type_id { get; set; }
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool is_primary { get; set; }
         [DataMember, JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool is_billing { get; set; }
         [DataMember, JsonProperty]
         public string street_address { get; set; }

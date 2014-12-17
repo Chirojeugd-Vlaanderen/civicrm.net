@@ -49,6 +49,8 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\EnumIntConverter.cs" />
     <Compile Include="DataContracts\CiviAddress.cs" />
     <Compile Include="DataContracts\CiviApiOptions.cs" />
     <Compile Include="DataContracts\CiviResult.cs" />
