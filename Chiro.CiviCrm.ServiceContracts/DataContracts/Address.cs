@@ -28,32 +28,32 @@ namespace Chiro.CiviCrm.Api.DataContracts
 {
     [DataContract]
     [JsonConvertible]
-    public class CiviAddress
+    public class Address
     {
-        [DataMember, JsonProperty]
-        public int? id { get; set; }
-        [DataMember, JsonProperty]
-        public string contact_id { get; set; }
-        [DataMember, JsonProperty]
-        public int location_type_id { get; set; }
-        [DataMember, JsonProperty]
+        [DataMember(Name="id"), JsonProperty]
+        public int? Id { get; set; }
+        [DataMember(Name="contact_id"), JsonProperty]
+        public int? ContactId { get; set; }
+        [DataMember(Name="location_type_id"), JsonProperty]
+        public int LocationTypeId { get; set; }
+        [DataMember(Name="is_primary"), JsonProperty]
         [JsonConverter(typeof(BoolConverter))]
-        public bool is_primary { get; set; }
-        [DataMember, JsonProperty]
+        public bool IsPrimary { get; set; }
+        [DataMember(Name="is_billing"), JsonProperty]
         [JsonConverter(typeof(BoolConverter))]
-        public bool is_billing { get; set; }
-        [DataMember, JsonProperty]
-        public string street_address { get; set; }
-        [DataMember, JsonProperty]
-        public string city { get; set; }
-        [DataMember, JsonProperty]
-        public string postal_code { get; set; }
-        [DataMember, JsonProperty]
-        public string postal_code_suffix { get; set; }
-        [DataMember, JsonProperty]
-        public string state_province_id { get; set; }
-        [DataMember, JsonProperty]
-        public string country_id { get; set; }
+        public bool IsBilling { get; set; }
+        [DataMember(Name="street_address"), JsonProperty]
+        public string StreetAddress { get; set; }
+        [DataMember(Name="city"), JsonProperty]
+        public string City { get; set; }
+        [DataMember(Name="postal_code"), JsonProperty]
+        public string PostalCode { get; set; }
+        [DataMember(Name="postal_code_suffix"), JsonProperty]
+        public string PostalCodeSuffix { get; set; }
+        [DataMember(Name="state_province_id"), JsonProperty]
+        public int StateProvinceId { get; set; }
+        [DataMember(Name="country_id"), JsonProperty]
+        public int CountryId { get; set; }
         /// <summary>
         /// Name of country, or ISO-code
         /// </summary>
@@ -61,13 +61,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// You can use this to create/update the country of an address.
         /// The CiviCRM address API doesn't seem to fetch the country.
         /// </remarks>
-        [DataMember, JsonProperty]
-        public string country { get; set; }
+        [DataMember(Name="country"), JsonProperty]
+        public string Country { get; set; }
 
         // Options are relevant for updates. Semantically they do not
         // belong in this data contract, but the CiviCRM API expects
         // them here.
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public CiviApiOptions options { get; set; }
+        public ApiOptions options { get; set; }
     }
 }

@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +26,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// <summary>
     /// Options to pass to the CiviCRM API.
     /// </summary>
-    public class CiviApiOptions
+    public class ApiOptions
     {
-        public string match { get; set; }
+        [JsonProperty("match")]
+        public string Match { get; set; }
     }
 }

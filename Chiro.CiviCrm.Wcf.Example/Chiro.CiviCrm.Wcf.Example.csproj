@@ -60,17 +60,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Chiro.CiviCrm.ClientInterfaces\Chiro.CiviCrm.ClientInterfaces.csproj">
-      <Project>{c51d5b97-3af5-4ad8-9b40-3c04df6fc1c4}</Project>
-      <Name>Chiro.CiviCrm.ClientInterfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chiro.CiviCrm.Client\Chiro.CiviCrm.Client.csproj">
-      <Project>{b0f99afc-7cd5-4c06-b362-840f0dfb560c}</Project>
-      <Name>Chiro.CiviCrm.Client</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chiro.CiviCrm.Model\Chiro.CiviCrm.Model.csproj">
-      <Project>{7c6f2810-20be-4dc8-a7d1-92999be67d61}</Project>
-      <Name>Chiro.CiviCrm.Model</Name>
+    <ProjectReference Include="..\Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj">
+      <Project>{f39a9e29-95e9-4304-a42d-1266f81b5ecf}</Project>
+      <Name>Chiro.CiviCrm.BehaviorExtension</Name>
     </ProjectReference>
     <ProjectReference Include="..\Chiro.CiviCrm.ServiceContracts\Chiro.CiviCrm.Api.csproj">
       <Project>{c27c0fb3-740a-4705-98df-3b237984c44f}</Project>

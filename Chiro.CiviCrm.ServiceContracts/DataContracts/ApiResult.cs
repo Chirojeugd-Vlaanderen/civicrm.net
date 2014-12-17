@@ -24,9 +24,17 @@ using System.Threading.Tasks;
 namespace Chiro.CiviCrm.Api.DataContracts
 {
     [DataContract]
-    public class CiviResultValues<T>: CiviResult
+    public class ApiResult
     {
-        [DataMember]
-        public IEnumerable<T> values { get; set; }
+        [DataMember(Name="is_error")]
+        public int IsError { get; set; }
+        [DataMember(Name="version")]
+        public int Version { get; set; }
+        [DataMember(Name="count")]
+        public int Count { get; set; }
+        [DataMember(Name="id")]
+        public int? Id { get; set; }
+        [DataMember(Name="error_message")]
+        public string ErrorMessage { get; set; }
     }
 }
