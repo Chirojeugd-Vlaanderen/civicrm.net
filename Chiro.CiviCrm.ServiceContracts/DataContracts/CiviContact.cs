@@ -30,176 +30,176 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class CiviContact
     {
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public ContactType contact_type { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string contact_sub_type { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string sort_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string display_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool do_not_email { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool do_not_phone { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool do_not_sms { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool do_not_trade { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool is_opt_out { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string legal_identifier { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string external_identifier { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string nick_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string legal_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string image_URL { get; set; }
 
         // preferred communication method is too much hassle.
-        //[DataMember]
+        //[DataMember, JsonProperty]
         //public IEnumerable<int> preferred_communication_method { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string preferred_language { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public MailFormat preferred_mail_format { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string first_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string middle_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string last_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string formal_title { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public CommunicationStyle communication_style_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string job_title { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public Gender gender_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public DateTime? birth_date { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool is_deceased { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public DateTime? deceased_date { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string household_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string organization_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string sic_code  { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool contact_is_deleted  { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string current_employer { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? address_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string street_address { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string supplemental_address_1 { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string supplemental_address_2 { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string city { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string postal_code_suffix { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string postal_code { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string geo_code_1 { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string geo_code_2 { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? phone_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public PhoneType? phone_type_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string phone { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? email_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string email { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool? on_hold { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? im_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public Provider? provider_id { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string im { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string world_region { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string individual_prefix { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string individual_suffix { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string state_province_name { get; set; }
 
-        [DataMember]
+        [DataMember, JsonProperty]
         public string country { get; set; }
 
-        [DataMember(Name="api.Address.get")]
+        [DataMember(Name="api.Address.get"), JsonProperty]
         public CiviResultValues<CiviAddress> chained_addresses { get; set; }
 
         // Options are relevant for updates. Semantically they do not

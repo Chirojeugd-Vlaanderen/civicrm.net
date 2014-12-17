@@ -29,27 +29,27 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class CiviAddress
     {
-        [DataMember]
+        [DataMember, JsonProperty]
         public int? id { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string contact_id { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public int location_type_id { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool is_primary { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public bool is_billing { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string street_address { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string city { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string postal_code { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string postal_code_suffix { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string state_province_id { get; set; }
-        [DataMember]
+        [DataMember, JsonProperty]
         public string country_id { get; set; }
         /// <summary>
         /// Name of country, or ISO-code
@@ -58,7 +58,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// You can use this to create/update the country of an address.
         /// The CiviCRM address API doesn't seem to fetch the country.
         /// </remarks>
-        [DataMember]
+        [DataMember, JsonProperty]
         public string country { get; set; }
 
         // Options are relevant for updates. Semantically they do not
