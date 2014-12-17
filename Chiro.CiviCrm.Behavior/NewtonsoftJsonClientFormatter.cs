@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Thank you, Carlos Figueira
+// http://blogs.msdn.com/b/endpoint/archive/2011/05/03/wcf-extensibility-message-formatters.aspx
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,7 +48,8 @@ namespace Chiro.CiviCrm.BehaviorExtension
                 using (StreamReader sr = new StreamReader(ms))
                 {
                     Type returnType = this.operation.Messages[1].Body.ReturnValue.Type;
-                    return serializer.Deserialize(sr, returnType);
+                    var result = serializer.Deserialize(sr, returnType);
+                    return result;
                 }
             }
         }

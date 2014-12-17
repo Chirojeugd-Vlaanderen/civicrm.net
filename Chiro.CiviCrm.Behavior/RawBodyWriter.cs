@@ -1,4 +1,7 @@
-﻿using System;
+﻿// Thank you, Carlos Figueira
+// http://blogs.msdn.com/b/endpoint/archive/2011/05/03/wcf-extensibility-message-formatters.aspx
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel.Channels;

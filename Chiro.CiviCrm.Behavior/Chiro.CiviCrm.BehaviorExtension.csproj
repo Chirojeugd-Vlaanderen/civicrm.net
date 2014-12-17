@@ -53,6 +53,7 @@
     <Compile Include="ICustomJsonConversion.cs" />
     <Compile Include="JsonConvertibleAttribute.cs" />
     <Compile Include="JsonQueryStringConverter.cs" />
+    <Compile Include="MyRawMapper.cs" />
     <Compile Include="MyWebHttpBehavior.cs" />
     <Compile Include="MyWebHttpBehaviorExtensionElement.cs" />
     <Compile Include="NewtonsoftJsonClientFormatter.cs" />
