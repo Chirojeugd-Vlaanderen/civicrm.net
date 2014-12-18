@@ -30,7 +30,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class Address
     {
-        [DataMember(Name="id"), JsonProperty]
+        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
         [DataMember(Name="contact_id"), JsonProperty]
         public int? ContactId { get; set; }
@@ -51,9 +51,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember(Name="postal_code_suffix"), JsonProperty]
         public string PostalCodeSuffix { get; set; }
         [DataMember(Name="state_province_id"), JsonProperty]
-        public int StateProvinceId { get; set; }
+        public int? StateProvinceId { get; set; }
         [DataMember(Name="country_id"), JsonProperty]
-        public int CountryId { get; set; }
+        public int? CountryId { get; set; }
         /// <summary>
         /// Name of country, or ISO-code
         /// </summary>

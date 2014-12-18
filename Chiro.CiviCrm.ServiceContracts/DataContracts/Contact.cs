@@ -31,7 +31,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class Contact
     {
-        [DataMember(Name="id"), JsonProperty]
+        [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
 
         [DataMember(Name="contact_type"), JsonProperty]
@@ -88,8 +88,10 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember(Name="preferred_language"), JsonProperty]
         public string PreferredLanguage { get; set; }
 
-        [DataMember(Name="preferred_mail_format"), JsonProperty]
-        public MailFormat PreferredMailFormat { get; set; }
+        // also troubles with preferred mail format
+        //[DataMember(Name="preferred_mail_format"), JsonProperty]
+        //[JsonConverter(typeof(EnumIntConverter))]
+        //public MailFormat PreferredMailFormat { get; set; }
 
         [DataMember(Name="first_name"), JsonProperty]
         public string FirstName { get; set; }
@@ -111,7 +113,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string JobTitle { get; set; }
 
         [DataMember(Name="gender_id"), JsonProperty]
-        //[JsonConverter(typeof(EnumIntConverter))]
+        [JsonConverter(typeof(EnumIntConverter))]
         public Gender Gender { get; set; }
 
         [DataMember(Name="birth_date"), JsonProperty]
@@ -213,7 +215,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string Country { get; set; }
 
         [DataMember(Name="api.Address.get"), JsonProperty]
-        public CiviResultValues<Address> ChainedAddresses { get; set; }
+        public ApiResultValue<Address> ChainedAddresses { get; set; }
 
         // Options are relevant for updates. Semantically they do not
         // belong in this data contract, but the CiviCRM API expects

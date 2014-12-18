@@ -24,7 +24,7 @@ using System.Threading.Tasks;
 namespace Chiro.CiviCrm.Api.DataContracts
 {
     [DataContract]
-    public class CiviResultValues<T>: ApiResult
+    public class ApiResultValue<T>: ApiResult
     {
         [DataMember(Name="values")]
         public IEnumerable<T> Values { get; set; }

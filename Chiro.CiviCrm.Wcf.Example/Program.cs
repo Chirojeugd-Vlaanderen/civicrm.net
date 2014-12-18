@@ -52,7 +52,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example0();
+            Example4();
 
             Console.WriteLine("Press enter.");
             Console.ReadLine();
@@ -118,9 +118,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                     PostalCode = "9000",
                     City = "Gent",
                     Country = "BE",
+                    LocationTypeId = 1,
                 };
 
-                newAddress.Id = client.AddressSave(_apiKey, _siteKey, newAddress).Id;
+                var result = client.AddressSave(_apiKey, _siteKey, newAddress);
+                newAddress.Id = result.Id;
 
                 // Get contact again, to find out whether the address 
                 // has been added.
@@ -141,7 +143,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 ShowAddresses(contact);
 
                 // Delete the added addres
-                client.AddressDelete(_apiKey, _siteKey, newAddress.Id.Value);
+                client.AddressDelete(_apiKey, _siteKey, new IdRequest(newAddress.Id.Value));
 
                 // Get the adresses again, to verify that the new address is gone.
                 contact = client.ContactGetSingle(_apiKey, _siteKey, new IdRequest
@@ -226,6 +228,30 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
         }
 
+        /// <summary>
+        ///  Changes gender and preferred mail format, as test for enums.
+        /// </summary>
+        public static void Example4()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                var contact = client.ContactGetSingle(_apiKey, _siteKey, new ExternalIdentifierRequest(externalId));
+                ShowContact(contact);
+
+                contact.Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male;
+                //contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
+                
+                var result = client.ContactSave(
+                    _apiKey, _siteKey, contact
+                    );
+
+                // Get contact again to check.
+
+                contact = client.ContactGetSingle(_apiKey, _siteKey, new ExternalIdentifierRequest(externalId));
+                ShowContact(contact);
+            }
+        }
+
         #region some output functions.
 
         private static void ShowContact(Contact contact)
@@ -235,6 +261,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             Console.WriteLine("Birth date: {0}", contact.BirthDate);
             Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
             Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
+            //Console.WriteLine("Mail Format: {0}", contact.PreferredMailFormat);
         }
 
         private static void ShowAddresses(Contact c)
