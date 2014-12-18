@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,16 +14,21 @@
    limitations under the License.
  */
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Model
+namespace Chiro.CiviCrm.Api.DataContracts
 {
+    /// <summary>
+    /// Options to pass to the CiviCRM API.
+    /// </summary>
     public class ApiOptions
     {
+        [JsonProperty("match")]
         public string Match { get; set; }
     }
 }

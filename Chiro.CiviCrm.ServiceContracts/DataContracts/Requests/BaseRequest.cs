@@ -31,19 +31,21 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// CiviRequest. (See e.g. CiviExternalIdentifierRequest.)
     /// </summary>
     [JsonConvertible]
-    public class CiviRequest: ICustomJsonConversion
+    public class BaseRequest: ICustomJsonConversion
     {
         [JsonIgnore]
-        public string[] chained_entities { get; set; }
+        public CiviEntity[] ChainedEntities { get; set; }
 
         [JsonProperty("return", NullValueHandling = NullValueHandling.Ignore)]
-        public string return_fields { get; set; }
+        public string ReturnFields { get; set; }
 
         /// <summary>
         /// Options to pass to the CiviCRM-API
         /// </summary>
-        public CiviApiOptions options { get; set; }
+        [JsonProperty("options")]
+        public ApiOptions Options { get; set; }
 
+        [JsonProperty]
         public int sequential { get; set; }
 
         /// <summary>
@@ -52,7 +54,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("chains.placeholder", NullValueHandling = NullValueHandling.Ignore)]
         public int? chains_placeholder { get; private set; }
 
-        public CiviRequest()
+        public BaseRequest()
         {
             chains_placeholder = null;
             sequential = 1;
@@ -65,14 +67,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
             string chains;
 
-            if (chained_entities == null || !chained_entities.Any())
+            if (ChainedEntities == null || !ChainedEntities.Any())
             {
                 chains = String.Empty;
                 chains_placeholder = null;
             }
             else
             {
-                var parts = from entity in chained_entities
+                var parts = from entity in ChainedEntities
                             select String.Format("\"api.{0}.get\":{{}}", entity);
                 chains = String.Join(",", parts);
                 chains_placeholder = 1;

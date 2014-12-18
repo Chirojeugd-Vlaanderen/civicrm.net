@@ -49,14 +49,17 @@
     <Reference Include="System.Web.Extensions" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataContracts\CiviAddress.cs" />
-    <Compile Include="DataContracts\CiviApiOptions.cs" />
-    <Compile Include="DataContracts\CiviResult.cs" />
-    <Compile Include="DataContracts\Requests\CiviExternalIdentifierRequest.cs" />
-    <Compile Include="DataContracts\Requests\CiviRequest.cs" />
-    <Compile Include="DataContracts\Requests\CiviIdRequest.cs" />
-    <Compile Include="DataContracts\CiviContact.cs" />
-    <Compile Include="DataContracts\CiviResultValues.cs" />
+    <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\EnumIntConverter.cs" />
+    <Compile Include="DataContracts\Address.cs" />
+    <Compile Include="DataContracts\ApiOptions.cs" />
+    <Compile Include="DataContracts\ApiResult.cs" />
+    <Compile Include="DataContracts\Enums.cs" />
+    <Compile Include="DataContracts\Requests\ExternalIdentifierRequest.cs" />
+    <Compile Include="DataContracts\Requests\BaseRequest.cs" />
+    <Compile Include="DataContracts\Requests\IdRequest.cs" />
+    <Compile Include="DataContracts\Contact.cs" />
+    <Compile Include="DataContracts\ApiResultValues.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

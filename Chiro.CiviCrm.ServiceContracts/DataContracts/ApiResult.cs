@@ -14,28 +14,27 @@
    limitations under the License.
  */
 
-using Chiro.CiviCrm.BehaviorExtension;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
-    /// <summary>
-    /// Some class that basically converts an ID to the json-part of the request url.
-    /// </summary>
-    [JsonConvertible]
-    public class CiviIdRequest: CiviRequest
+    [DataContract]
+    public class ApiResult
     {
-        public int id { get; set; }
-
-        public CiviIdRequest() : base() { }
-
-        public CiviIdRequest(int id)
-            : this()
-        {
-            this.id = id;
-        }
+        [DataMember(Name="is_error")]
+        public int IsError { get; set; }
+        [DataMember(Name="version")]
+        public int Version { get; set; }
+        [DataMember(Name="count")]
+        public int Count { get; set; }
+        [DataMember(Name="id")]
+        public int? Id { get; set; }
+        [DataMember(Name="error_message")]
+        public string ErrorMessage { get; set; }
     }
 }

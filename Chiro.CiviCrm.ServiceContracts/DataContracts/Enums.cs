@@ -14,7 +14,8 @@
    limitations under the License.
  */
 
-namespace Chiro.CiviCrm.Model
+using System.Runtime.Serialization;
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     public enum CiviEntity
     {
@@ -23,60 +24,93 @@ namespace Chiro.CiviCrm.Model
         // TODO: support more entities
     }
 
+    [DataContract]
     public enum ContactType
     {
+        [EnumMember]
         Individual,
+        [EnumMember]
         Organization,
+        [EnumMember]
         Household
     }
 
+    [DataContract]
     public enum CommunicationMethod
     {
+        [EnumMember]
         Phone = 1,
+        [EnumMember]
         Email = 2,
+        [EnumMember]
         PostalMail = 3,
+        [EnumMember]
         Sms = 4,
+        [EnumMember]
         Fax = 5
     }
 
+    [DataContract]
     public enum MailFormat
     {
+        [EnumMember]
         Both,
+        [EnumMember]
         HTML,
+        [EnumMember]
         Text
     }
 
+    [DataContract]
     public enum Gender
     {
+        [EnumMember]
         Female = 1,
+        [EnumMember]
         Male = 2,
+        [EnumMember]
         Transgender = 3
     }
 
+    [DataContract]
     public enum CommunicationStyle
     {
+        [EnumMember]
         Formal = 1,
+        [EnumMember]
         Familiar = 2
     }
 
+    [DataContract]
     public enum PhoneType
     {
+        [EnumMember]
         Phone = 1,
+        [EnumMember]
         Mobile = 2,
+        [EnumMember]
         Fax = 3,
+        [EnumMember]
         Pager = 4,
+        [EnumMember]
         Voicemail = 5
     }
 
     // Remember the nillies :-)
-
+    [DataContract]
     public enum Provider
     {
+        [EnumMember]
         Yahoo = 1,
+        [EnumMember]
         MSN = 2,
+        [EnumMember]
         AIM = 3,
+        [EnumMember]
         GTalk = 4,
+        [EnumMember]
         Jabber = 5,
+        [EnumMember]
         Facebook = 6
     }
 }

@@ -14,19 +14,30 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.BehaviorExtension;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     /// <summary>
-    /// Options to pass to the CiviCRM API.
+    /// Some class that basically converts an ID to the json-part of the request url.
     /// </summary>
-    public class CiviApiOptions
+    [JsonConvertible]
+    public class IdRequest: BaseRequest
     {
-        public string match { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        public IdRequest() : base() { }
+
+        public IdRequest(int id)
+            : this()
+        {
+            this.Id = id;
+        }
     }
 }

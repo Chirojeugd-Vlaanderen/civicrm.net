@@ -24,5 +24,17 @@ namespace Chiro.CiviCrm.BehaviorExtension
         {
             return new JsonQueryStringConverter();
         }
+
+        protected override IClientMessageFormatter GetReplyClientFormatter(OperationDescription operationDescription, ServiceEndpoint endpoint)
+        {
+            if (operationDescription.Messages.Count == 1 || operationDescription.Messages[1].Body.ReturnValue.Type == typeof(void))
+            {
+                return base.GetReplyClientFormatter(operationDescription, endpoint);
+            }
+            else
+            {
+                return new NewtonsoftJsonClientFormatter(operationDescription, endpoint);
+            }
+        } 
     }
 }

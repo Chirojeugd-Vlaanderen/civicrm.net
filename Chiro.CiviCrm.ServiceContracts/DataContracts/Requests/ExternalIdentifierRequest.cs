@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,17 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// <summary>
     /// Request for searching a contact based on its external identifier.
     /// </summary>
-    public class CiviExternalIdentifierRequest: CiviRequest
+    public class ExternalIdentifierRequest: BaseRequest
     {
-        public string external_identifier { get; set; }
+        [JsonProperty("external_identifier")]
+        public string ExternalIdentifier { get; set; }
 
-        public CiviExternalIdentifierRequest() : base() { }
+        public ExternalIdentifierRequest() : base() { }
+
+        public ExternalIdentifierRequest(string externalIdentifier)
+            : this()
+        {
+            ExternalIdentifier = externalIdentifier;
+        }
     }
 }

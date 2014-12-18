@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,25 +14,45 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.BehaviorExtension;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Model
+namespace Chiro.CiviCrm.Api.DataContracts
 {
+    [DataContract]
+    [JsonConvertible]
     public class Address
     {
+        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
+        [DataMember(Name="contact_id"), JsonProperty]
         public int? ContactId { get; set; }
+        [DataMember(Name="location_type_id"), JsonProperty]
         public int LocationTypeId { get; set; }
+        [DataMember(Name="is_primary"), JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool IsPrimary { get; set; }
+        [DataMember(Name="is_billing"), JsonProperty]
+        [JsonConverter(typeof(BoolConverter))]
         public bool IsBilling { get; set; }
+        [DataMember(Name="street_address"), JsonProperty]
         public string StreetAddress { get; set; }
+        [DataMember(Name="city"), JsonProperty]
         public string City { get; set; }
+        [DataMember(Name="postal_code"), JsonProperty]
         public string PostalCode { get; set; }
+        [DataMember(Name="postal_code_suffix"), JsonProperty]
         public string PostalCodeSuffix { get; set; }
+        [DataMember(Name="state_province_id"), JsonProperty]
         public int? StateProvinceId { get; set; }
+        [DataMember(Name="country_id"), JsonProperty]
         public int? CountryId { get; set; }
         /// <summary>
         /// Name of country, or ISO-code
@@ -41,6 +61,13 @@ namespace Chiro.CiviCrm.Model
         /// You can use this to create/update the country of an address.
         /// The CiviCRM address API doesn't seem to fetch the country.
         /// </remarks>
-        public string Country { get;  set; }
+        [DataMember(Name="country"), JsonProperty]
+        public string Country { get; set; }
+
+        // Options are relevant for updates. Semantically they do not
+        // belong in this data contract, but the CiviCRM API expects
+        // them here.
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiOptions options { get; set; }
     }
 }
