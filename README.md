@@ -1,19 +1,21 @@
 # Chiro.CiviCrm.Wcf
 
-This project aims to provide a .NET client library for CiviCRM. It connects to the CiviCRM
+This project provides interfaces and a behavior that allow communication with the CiviCRM
 API using WCF.
 
 ## Warning!
 
 ### Volatile interface
 
-This is a young project, and its interface (defined in Chiro.CiviCrm.ClientInterfaces) still
-changes a lot. And it will keep on changing for a while, at least until issues #22 and #23
-are fixed.
+This is a young project, and therefore it is still changing a lot. So if you use this
+in your own software projects, chances are high that you will have to refactor things
+as the master branch moves on.
+
+I will keep you informed when this project becomes more or less stable.
 
 ### You need to patch CiviCRM
 
-For this to work, you need to patch CiviCRM:
+For all this to work, you need to patch CiviCRM:
 https://github.com/civicrm/civicrm-core/pull/4641/files
 (No worries, it is a small patch.)
 
