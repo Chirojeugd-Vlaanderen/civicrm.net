@@ -53,6 +53,19 @@ namespace Chiro.CiviCrm.Api
         ApiResultValue<Contact> ContactGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
+        /// Deletes a contact.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Request containing the ContactId</param>
+        /// <param name="skipUndelete">If 0, set the 'is_deleted' flag. If 1, effectively delete the record.</param>
+        /// <returns>A CiviResult</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&skip_undelete={skipUndelete}")]
+        ApiResult ContactDelete(string apiKey, string key, IdRequest request, int skipUndelete);
+
+        /// <summary>
         /// Saves or updates the given <paramref name="contact"/>.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
@@ -94,7 +107,7 @@ namespace Chiro.CiviCrm.Api
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="addressId">ID of the address to be deleted</param>
+        /// <param name="request">Request containing the AddressId.</param>
         /// <returns>A CiviResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,

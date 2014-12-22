@@ -274,7 +274,7 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 ShowContact(result.Values.FirstOrDefault());
 
-                //result = client.ContactDelete(_apiKey, _siteKey, result.Id);
+                client.ContactDelete(_apiKey, _siteKey, new IdRequest(result.Id.Value), 1);
             }
         }
 
