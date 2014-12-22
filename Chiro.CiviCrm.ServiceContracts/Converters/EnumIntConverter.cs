@@ -23,11 +23,11 @@ using System.Text;
 namespace Chiro.CiviCrm.Api.Converters
 {
     /// <summary>
-    /// Converter from enum to int (instead of the default conversion from and to string).
+    /// Converter from (nullable) enum to (nullable) int and vice versa.
     /// 
     /// Should work for nullable enums as well.
     /// </summary>
-    public class EnumIntConverter: JsonConverter
+    public class NullableEnumConverter: JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {

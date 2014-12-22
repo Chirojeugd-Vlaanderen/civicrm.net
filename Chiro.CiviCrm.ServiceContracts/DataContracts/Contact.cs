@@ -17,6 +17,7 @@
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
@@ -34,6 +35,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name="contact_type"), JsonProperty]
         public ContactType ContactType { get; set; }
 
@@ -88,10 +90,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember(Name="preferred_language"), JsonProperty]
         public string PreferredLanguage { get; set; }
 
-        // also troubles with preferred mail format
-        //[DataMember(Name="preferred_mail_format"), JsonProperty]
-        //[JsonConverter(typeof(EnumIntConverter))]
-        //public MailFormat PreferredMailFormat { get; set; }
+        [DataMember(Name="preferred_mail_format"), JsonProperty]
+        [JsonConverter(typeof(StringEnumConverter))]
+        public MailFormat PreferredMailFormat { get; set; }
 
         [DataMember(Name="first_name"), JsonProperty]
         public string FirstName { get; set; }
@@ -106,14 +107,14 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string FormalTitle { get; set; }
 
         [DataMember(Name="communication_style_id"), JsonProperty]
-        [JsonConverter(typeof(EnumIntConverter))]
+        [JsonConverter(typeof(NullableEnumConverter))]
         public CommunicationStyle CommunicationStyle { get; set; }
 
         [DataMember(Name="job_title"), JsonProperty]
         public string JobTitle { get; set; }
 
         [DataMember(Name="gender_id"), JsonProperty]
-        [JsonConverter(typeof(EnumIntConverter))]
+        [JsonConverter(typeof(NullableEnumConverter))]
         public Gender Gender { get; set; }
 
         [DataMember(Name="birth_date"), JsonProperty]
@@ -173,7 +174,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public int? PhoneId { get; set; }
 
         [DataMember(Name="phone_type_id"), JsonProperty]
-        [JsonConverter(typeof(EnumIntConverter))]
+        [JsonConverter(typeof(NullableEnumConverter))]
         public PhoneType? PhoneType { get; set; }
 
         [DataMember(Name="phone"), JsonProperty]
@@ -193,7 +194,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public int? ImId { get; set; }
 
         [DataMember(Name="provider_id"), JsonProperty]
-        [JsonConverter(typeof(EnumIntConverter))]
+        [JsonConverter(typeof(NullableEnumConverter))]
         public Provider? Provider { get; set; }
 
         [DataMember(Name="im"), JsonProperty]

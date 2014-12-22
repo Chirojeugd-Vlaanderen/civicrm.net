@@ -15,6 +15,7 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
@@ -52,7 +53,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example4();
+            Example5();
 
             Console.WriteLine("Press enter.");
             Console.ReadLine();
@@ -239,7 +240,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 ShowContact(contact);
 
                 contact.Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male;
-                //contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
+                contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
                 
                 var result = client.ContactSave(
                     _apiKey, _siteKey, contact
@@ -252,6 +253,31 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
         }
 
+        /// <summary>
+        /// Create a new contact with an external ID.
+        /// </summary>
+        public static void Example5()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                var contact = new Contact
+                {
+                    ContactType = ContactType.Individual,
+                    FirstName = "Lucky",
+                    LastName = "Luke",
+                    BirthDate = new DateTime(1946, 3, 3),
+                    Gender = Gender.Male,
+                    ExternalIdentifier = "YADAYADA",
+                    ApiOptions = new ApiOptions { Match = "external_identifier" }
+                };
+                var result = client.ContactSave(_apiKey, _siteKey, contact);
+
+                ShowContact(result.Values.FirstOrDefault());
+
+                //result = client.ContactDelete(_apiKey, _siteKey, result.Id);
+            }
+        }
+
         #region some output functions.
 
         private static void ShowContact(Contact contact)
@@ -261,7 +287,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             Console.WriteLine("Birth date: {0}", contact.BirthDate);
             Console.WriteLine("Deceased date: {0}", contact.DeceasedDate);
             Console.WriteLine("External ID: {0}", contact.ExternalIdentifier);
-            //Console.WriteLine("Mail Format: {0}", contact.PreferredMailFormat);
+            Console.WriteLine("Mail Format: {0}", contact.PreferredMailFormat);
         }
 
         private static void ShowAddresses(Contact c)
