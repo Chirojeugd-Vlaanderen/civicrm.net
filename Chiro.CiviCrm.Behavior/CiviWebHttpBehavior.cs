@@ -18,7 +18,12 @@ using System.ServiceModel.Dispatcher;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
-    public class MyWebHttpBehavior: WebHttpBehavior
+    /// <summary>
+    /// Custom WebHttpBehavior for the CiviCRM API.
+    /// 
+    /// It features a custom QueryStringConverter and a custom ReplyClientFormatter.
+    /// </summary>
+    public class CiviWebHttpBehavior: WebHttpBehavior
     {
         protected override QueryStringConverter GetQueryStringConverter(OperationDescription operationDescription)
         {

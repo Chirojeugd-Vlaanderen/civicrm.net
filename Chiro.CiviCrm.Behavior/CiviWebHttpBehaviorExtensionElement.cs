@@ -18,16 +18,19 @@ using System.ServiceModel.Configuration;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
-    public class MyWebHttpBehaviorExtensionElement: BehaviorExtensionElement
+    /// <summary>
+    /// A custom BehaviorExtensionElement for the CiviWebHttpBehavior.
+    /// </summary>
+    public class CiviWebHttpBehaviorExtensionElement: BehaviorExtensionElement
     {
         protected override object CreateBehavior()
         {
-            return new MyWebHttpBehavior();
+            return new CiviWebHttpBehavior();
         }
 
         public override Type BehaviorType
         {
-            get { return typeof(MyWebHttpBehavior); }
+            get { return typeof(CiviWebHttpBehavior); }
         }
     }
 }

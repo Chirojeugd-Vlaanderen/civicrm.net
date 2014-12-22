@@ -54,8 +54,8 @@
     <Compile Include="JsonConvertibleAttribute.cs" />
     <Compile Include="JsonQueryStringConverter.cs" />
     <Compile Include="MyRawMapper.cs" />
-    <Compile Include="MyWebHttpBehavior.cs" />
-    <Compile Include="MyWebHttpBehaviorExtensionElement.cs" />
+    <Compile Include="CiviWebHttpBehavior.cs" />
+    <Compile Include="CiviWebHttpBehaviorExtensionElement.cs" />
     <Compile Include="NewtonsoftJsonClientFormatter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RawBodyWriter.cs" />

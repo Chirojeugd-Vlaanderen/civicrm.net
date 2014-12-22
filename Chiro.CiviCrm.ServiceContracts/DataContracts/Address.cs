@@ -67,7 +67,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         // Options are relevant for updates. Semantically they do not
         // belong in this data contract, but the CiviCRM API expects
         // them here.
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiOptions options { get; set; }
+        [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiOptions ApiOptions { get; set; }
     }
 }
