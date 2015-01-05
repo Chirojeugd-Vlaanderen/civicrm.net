@@ -55,6 +55,7 @@ namespace Chiro.CiviCrm.Wcf.Example
    
             Example5();
 
+            _factory.Close();
             Console.WriteLine("Press enter.");
             Console.ReadLine();
         }

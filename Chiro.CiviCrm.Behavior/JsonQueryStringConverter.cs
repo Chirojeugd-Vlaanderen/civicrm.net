@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using System.ServiceModel.Dispatcher;
+using Newtonsoft.Json;
 /*
    Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
 
@@ -14,9 +16,6 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-using System;
-using System.ServiceModel.Dispatcher;
-using System.Web.Script.Serialization;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
