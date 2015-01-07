@@ -14,14 +14,12 @@
    limitations under the License.
  */
 
+using System;
+using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
-using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Xml;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {

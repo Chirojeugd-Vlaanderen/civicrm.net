@@ -59,6 +59,7 @@
     <Compile Include="DataContracts\Requests\IdRequest.cs" />
     <Compile Include="DataContracts\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
+    <Compile Include="DataContracts\Requests\NameGenderRequest.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
