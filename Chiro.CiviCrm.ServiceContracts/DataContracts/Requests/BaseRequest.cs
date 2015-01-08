@@ -42,19 +42,19 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("options")]
         public ApiOptions Options { get; set; }
 
-        [JsonProperty]
-        public int sequential { get; set; }
+        [JsonProperty("sequential")]
+        public int Sequential { get; set; }
 
         /// <summary>
         /// Dummy property we will serialize if we need to chain.
         /// </summary>
         [JsonProperty("chains.placeholder", NullValueHandling = NullValueHandling.Ignore)]
-        public int? chains_placeholder { get; private set; }
+        public int? ChainsPlaceholder { get; private set; }
 
         public BaseRequest()
         {
-            chains_placeholder = null;
-            sequential = 1;
+            ChainsPlaceholder = null;
+            Sequential = 1;
         }
 
         public string ToJson()
@@ -67,14 +67,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
             if (ChainedEntities == null || !ChainedEntities.Any())
             {
                 chains = String.Empty;
-                chains_placeholder = null;
+                ChainsPlaceholder = null;
             }
             else
             {
                 var parts = from entity in ChainedEntities
                             select String.Format("\"api.{0}.get\":{{}}", entity);
                 chains = String.Join(",", parts);
-                chains_placeholder = 1;
+                ChainsPlaceholder = 1;
             }
             string json = JsonConvert.SerializeObject(this);
 
