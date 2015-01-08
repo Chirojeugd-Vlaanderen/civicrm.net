@@ -113,7 +113,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
         [DataMember(Name="gender_id"), JsonProperty]
         [JsonConverter(typeof(NullableEnumConverter))]
-        public Gender Gender { get; set; }
+        public Gender? Gender { get; set; }
 
         [DataMember(Name="birth_date"), JsonProperty]
         public DateTime? BirthDate { get; set; }
