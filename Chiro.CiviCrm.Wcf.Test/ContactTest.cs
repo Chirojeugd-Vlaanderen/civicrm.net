@@ -27,7 +27,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// Try to retrieve contact 1, which is the default organization.
         /// </summary>
         [TestMethod]
-        public void Contact1Get()
+        public void Contact1GetTest()
         {
             using (var client = TestHelper.ClientGet())
             {
