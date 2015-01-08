@@ -106,7 +106,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
         [DataMember(Name="communication_style_id"), JsonProperty]
         [JsonConverter(typeof(NullableEnumConverter))]
-        public CommunicationStyle CommunicationStyle { get; set; }
+        public CommunicationStyle? CommunicationStyle { get; set; }
 
         [DataMember(Name="job_title"), JsonProperty]
         public string JobTitle { get; set; }
