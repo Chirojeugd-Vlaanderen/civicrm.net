@@ -18,6 +18,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D2B03C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.CustomFieldExample", "Chiro.CiviCrm.CustomFieldExample\Chiro.CiviCrm.CustomFieldExample.csproj", "{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.Test", "Chiro.CiviCrm.Wcf.Test\Chiro.CiviCrm.Wcf.Test.csproj", "{2FCD4844-0602-4EDB-879D-2133D52FC51C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +70,16 @@ Global
 		{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}.Release|x86.ActiveCfg = Release|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{2FCD4844-0602-4EDB-879D-2133D52FC51C}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
