@@ -215,8 +215,17 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
         // I think chaining should be handled in a more elegant way.
         // But I am not sure how it can be done.
-        [DataMember(Name="api.Address.get"), JsonProperty]
+        [DataMember(Name = "api.Address.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ApiResultValue<Address> ChainedAddresses { get; set; }
+        [DataMember(Name = "api.Phone.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResultValue<Phone> ChainedPhones { get; set; }
+        [DataMember(Name = "api.Email.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResultValue<Email> ChainedEmails { get; set; }
+        [DataMember(Name = "api.Website.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResultValue<Website> ChainedWebsites { get; set; }
+        [DataMember(Name = "api.Im.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResultValue<Im> ChainedIms { get; set; }
+
 
         // Options are relevant for updates. Semantically they do not
         // belong in this data contract, but the CiviCRM API expects

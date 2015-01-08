@@ -20,7 +20,11 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public enum CiviEntity
     {
         Contact,
-        Address
+        Address,
+        Phone,
+        Email,
+        Website,
+        Im
         // TODO: support more entities
     }
 
@@ -88,7 +92,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] Aim = 3,
         [EnumMember] GTalk = 4,
         [EnumMember] Jabber = 5,
-        [EnumMember] Facebook = 6
+        [EnumMember] Skype = 6
     }
 
     [DataContract]

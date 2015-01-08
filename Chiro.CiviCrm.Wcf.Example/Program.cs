@@ -55,7 +55,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example6();
+            Example7();
 
             _factory.Close();
             Console.WriteLine("Press enter.");
@@ -308,6 +308,53 @@ namespace Chiro.CiviCrm.Wcf.Example
                 client.WebsiteDelete(ApiKey, SiteKey, new IdRequest(website.Id.Value));
                 
                 Console.WriteLine("Website was deleted again.");
+            }
+        }
+
+        public static void Example7()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                var contact = client.ContactGetSingle(ApiKey, SiteKey,
+                    new ExternalIdentifierRequest
+                    {
+                        ExternalIdentifier = ExternalId,
+                        ChainedEntities = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                    });
+                ShowContact(contact);
+                ShowCommunication(contact);
+            }
+        }
+
+        private static void ShowCommunication(Contact contact)
+        {
+            if (contact.ChainedPhones.Count > 0)
+            {
+                foreach (var p in contact.ChainedPhones.Values)
+                {
+                    Console.WriteLine("Phone ({0}): {1}", p.PhoneType, p.PhoneNumber);
+                }
+            }
+            if (contact.ChainedEmails.Count > 0)
+            {
+                foreach (var e in contact.ChainedEmails.Values)
+                {
+                    Console.WriteLine("E-mail ({0}): {1}", e.LocationTypeId, e.EmailAddress);
+                }
+            }
+            if (contact.ChainedWebsites.Count > 0)
+            {
+                foreach (var w in contact.ChainedWebsites.Values)
+                {
+                    Console.WriteLine("Website ({0}): {1}", w.WebsiteType, w.Url);
+                }
+            }
+            if (contact.ChainedIms.Count > 0)
+            {
+                foreach (var im in contact.ChainedIms.Values)
+                {
+                    Console.WriteLine("{0}: {1}", im.Provider, im.Name);
+                }
             }
         }
 
