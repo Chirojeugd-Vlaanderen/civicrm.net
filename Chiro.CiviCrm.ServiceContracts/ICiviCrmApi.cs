@@ -49,7 +49,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested contacts.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}")]
         ApiResultValue<Contact> ContactGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
