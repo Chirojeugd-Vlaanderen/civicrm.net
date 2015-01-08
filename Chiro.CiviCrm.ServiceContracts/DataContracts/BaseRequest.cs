@@ -59,7 +59,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// Entities to be created in a chained call.
         /// </summary>
         [JsonIgnore]
-        protected List<IEntity> ChainedCreate { get; set; }
+        public IEnumerable<IEntity> ChainedCreate { get; set; }
 
         /// <summary>
         /// Dummy property we will serialize if we need to chain.
@@ -83,16 +83,30 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
             string chains;
 
-            if (ChainedGet == null || !ChainedGet.Any())
+            if ((ChainedGet == null || !ChainedGet.Any()) && (ChainedCreate == null || !ChainedCreate.Any()))
             {
                 chains = String.Empty;
                 ChainsPlaceholder = null;
             }
             else
             {
-                var parts = from entity in ChainedGet
+                IEnumerable<String> getChains = new string[0];
+                IEnumerable<String> createChains = new string[0];
+
+                if (ChainedGet != null)
+                {
+                    getChains = from entity in ChainedGet
                             select String.Format("\"api.{0}.get\":{{}}", entity);
-                chains = String.Join(",", parts);
+                }
+
+                if (ChainedCreate != null)
+                {
+                    createChains = from entity in ChainedCreate
+                        select
+                            String.Format("\"api.{0}.create\":{1}", entity.GetType().Name,
+                                JsonConvert.SerializeObject(entity));
+                }
+                chains = String.Join(",", getChains.Union(createChains));
                 ChainsPlaceholder = 1;
             }
             string json = JsonConvert.SerializeObject(this);

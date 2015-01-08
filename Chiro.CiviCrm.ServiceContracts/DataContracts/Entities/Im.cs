@@ -30,7 +30,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
-        [DataMember(Name = "contact_id"), JsonProperty]
+        [DataMember(Name = "contact_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
         [DataMember(Name = "location_type_id"), JsonProperty]
         public int LocationTypeId { get; set; }

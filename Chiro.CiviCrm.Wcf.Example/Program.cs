@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.ServiceModel;
@@ -55,7 +56,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example7();
+            Example8();
 
             _factory.Close();
             Console.WriteLine("Press enter.");
@@ -329,30 +330,60 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
         }
 
+        /// <summary>
+        /// Chained writing
+        /// </summary>
+        public static void Example8()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                // Create a contact, chain website.
+                var result = client.ContactSave(ApiKey, SiteKey,
+                    new Contact
+                    {
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ChainedCreate = new List<Website> {new Website {Url = "http://smurf.com"}}
+                    });
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(ApiKey, SiteKey,
+                    new IdRequest {Id = result.Id.Value, ChainedGet = new[] {CiviEntity.Website}});
+
+                ShowContact(contact);
+                ShowCommunication(contact);
+
+                // Delete contact
+
+                client.ContactDelete(ApiKey, SiteKey, new IdRequest(result.Id.Value), 1);
+            }
+        }
+
         private static void ShowCommunication(Contact contact)
         {
-            if (contact.ChainedPhones.Count > 0)
+            if (contact.ChainedPhones != null && contact.ChainedPhones.Count > 0)
             {
                 foreach (var p in contact.ChainedPhones.Values)
                 {
                     Console.WriteLine("Phone ({0}): {1}", p.PhoneType, p.PhoneNumber);
                 }
             }
-            if (contact.ChainedEmails.Count > 0)
+            if (contact.ChainedEmails != null && contact.ChainedEmails.Count > 0)
             {
                 foreach (var e in contact.ChainedEmails.Values)
                 {
                     Console.WriteLine("E-mail ({0}): {1}", e.LocationTypeId, e.EmailAddress);
                 }
             }
-            if (contact.ChainedWebsites.Count > 0)
+            if (contact.ChainedWebsites != null && contact.ChainedWebsites.Count > 0)
             {
                 foreach (var w in contact.ChainedWebsites.Values)
                 {
                     Console.WriteLine("Website ({0}): {1}", w.WebsiteType, w.Url);
                 }
             }
-            if (contact.ChainedIms.Count > 0)
+            if (contact.ChainedIms != null && contact.ChainedIms.Count > 0)
             {
                 foreach (var im in contact.ChainedIms.Values)
                 {
