@@ -14,7 +14,10 @@
    limitations under the License.
  */
 
+using System;
+using System.Diagnostics;
 using System.Linq;
+using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -23,21 +26,71 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class ContactTest
     {
-        /// <summary>
-        /// Try to retrieve contact 1, which is the default organization.
-        /// </summary>
-        [TestMethod]
-        public void Contact1GetTest()
+        private Contact _myContact;
+        private Address _myAddress;
+
+        [TestInitialize]
+        public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
             {
-                // Get the contact, and chain the contact's addresses.
-                var resultValue = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(1));
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new Contact
+                    {
+                        FirstName = "Joe",
+                        LastName = "Schmoe",
+                        ExternalIdentifier = "Unit_Test_External_ID",
+                        // If the contact with given external identifier already exists,
+                        // reuse it.
+                        ApiOptions = new ApiOptions {Match = "external_identifier"}
+                    });
 
-                Assert.AreEqual(0, resultValue.IsError);
-                Assert.AreEqual(1, resultValue.Count);
-                Assert.AreEqual(1, resultValue.Id);
-                Assert.AreEqual(1, resultValue.Values.First().Id);
+                _myContact = result.Values.First();
+
+                // TODO: chain this address creation.
+                // (As soon as write chaining is supported.)
+                var address = new Address
+                {
+                    ContactId = _myContact.Id,
+                    StreetAddress = "Kipdorp 30",
+                    PostalCode = "2000",
+                    City = "Antwerpen",
+                    CountryId = 1020,   // Belgium
+                    LocationTypeId = 1,
+                };
+                var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
+                _myAddress = addressResult.Values.First();
+            }
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest(_myContact.Id ?? 0),
+                    1);
+            }
+        }
+        [TestMethod]
+        public void ChainedAddressGet()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                Debug.Assert(_myContact.Id.HasValue);
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest
+                {
+                    Id = _myContact.Id.Value,
+                    // We don't need all fields of the contact, we are only interested in the
+                    // addresses.
+
+                    // ReturnFields are still in civicrm notation, meaning lowercase and
+                    // underscores (see issue #19)
+                    ReturnFields = "id",
+                    ChainedEntities = new[] { CiviEntity.Address }
+                });
+                Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
             }
         }
     }

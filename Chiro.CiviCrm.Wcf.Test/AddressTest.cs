@@ -53,9 +53,6 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                // This is not a unit test, because one test checks multiple things.
-                // I guess it is better than nothing.
-
                 var newAddress = new Address
                 {
                     ContactId = _myContact.Id,
