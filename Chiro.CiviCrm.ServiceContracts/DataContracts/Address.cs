@@ -14,18 +14,16 @@
    limitations under the License.
  */
 
+using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
+    /// <summary>
+    /// A CiviCRM address.
+    /// </summary>
     [DataContract]
     [JsonConvertible]
     public class Address

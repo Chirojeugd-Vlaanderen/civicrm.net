@@ -23,9 +23,9 @@ using Newtonsoft.Json.Converters;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    // Except for the contact id, there are no nullable ints or bools
-    // in the data contract. When an int/bool is missing, CiviCRM
-    // returns an empty string, which cannot be mapped automatically.
+    /// <summary>
+    /// A CiviCRM contact
+    /// </summary>
     [DataContract]
     [JsonConvertible]
     public class Contact
@@ -213,6 +213,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [DataMember(Name="country"), JsonProperty]
         public string Country { get; set; }
 
+        // I think chaining should be handled in a more elegant way.
+        // But I am not sure how it can be done.
         [DataMember(Name="api.Address.get"), JsonProperty]
         public ApiResultValue<Address> ChainedAddresses { get; set; }
 

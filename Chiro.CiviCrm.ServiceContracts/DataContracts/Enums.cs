@@ -27,90 +27,84 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [DataContract]
     public enum ContactType
     {
-        [EnumMember]
-        Individual,
-        [EnumMember]
-        Organization,
-        [EnumMember]
-        Household
+        [EnumMember] Individual,
+        [EnumMember] Organization,
+        [EnumMember] Household
     }
 
     [DataContract]
     public enum CommunicationMethod
     {
-        [EnumMember]
-        Phone = 1,
-        [EnumMember]
-        Email = 2,
-        [EnumMember]
-        PostalMail = 3,
-        [EnumMember]
-        Sms = 4,
-        [EnumMember]
-        Fax = 5
+        [EnumMember] Phone = 1,
+        [EnumMember] Email = 2,
+        [EnumMember] PostalMail = 3,
+        [EnumMember] Sms = 4,
+        [EnumMember] Fax = 5
     }
 
     [DataContract]
     public enum MailFormat
     {
-        [EnumMember]
-        Both,
-        [EnumMember]
-        HTML,
-        [EnumMember]
-        Text
+        [EnumMember] Both,
+        [EnumMember] HTML, // Dont change casing, API probably needs it this way.
+        [EnumMember] Text
     }
 
     [DataContract]
     public enum Gender
     {
-        [EnumMember]
-        Female = 1,
-        [EnumMember]
-        Male = 2,
-        [EnumMember]
-        Transgender = 3
+        [EnumMember] Female = 1,
+        [EnumMember] Male = 2,
+        [EnumMember] Transgender = 3
     }
 
     [DataContract]
     public enum CommunicationStyle
     {
-        [EnumMember]
-        Formal = 1,
-        [EnumMember]
-        Familiar = 2
+        [EnumMember] Formal = 1,
+        [EnumMember] Familiar = 2
     }
+
+    // The enum members below are actually configurable in CiviCRM. So you might need to
+    // change them. (Or better: find a better way to deal with this.)
 
     [DataContract]
     public enum PhoneType
     {
-        [EnumMember]
-        Phone = 1,
-        [EnumMember]
-        Mobile = 2,
-        [EnumMember]
-        Fax = 3,
-        [EnumMember]
-        Pager = 4,
-        [EnumMember]
-        Voicemail = 5
+        [EnumMember] Phone = 1,
+        [EnumMember] Mobile = 2,
+        [EnumMember] Fax = 3,
+        [EnumMember] Pager = 4,
+        [EnumMember] Voicemail = 5
     }
+
 
     // Remember the nillies :-)
     [DataContract]
     public enum Provider
     {
-        [EnumMember]
-        Yahoo = 1,
-        [EnumMember]
-        MSN = 2,
-        [EnumMember]
-        AIM = 3,
-        [EnumMember]
-        GTalk = 4,
-        [EnumMember]
-        Jabber = 5,
-        [EnumMember]
-        Facebook = 6
+        [EnumMember] Yahoo = 1,
+        [EnumMember] Msn = 2,
+        [EnumMember] Aim = 3,
+        [EnumMember] GTalk = 4,
+        [EnumMember] Jabber = 5,
+        [EnumMember] Facebook = 6
+    }
+
+    [DataContract]
+    public enum WebsiteType
+    {
+        [EnumMember] Work = 1,
+        [EnumMember] Main = 2,
+        [EnumMember] Facebook = 3,
+        [EnumMember] GooglePlus = 4,
+        [EnumMember] Instagram = 5,
+        [EnumMember] LinkedIn = 6,
+        [EnumMember] MySpace = 7,
+        [EnumMember] Pinterest = 8,
+        [EnumMember] SnapChat = 9,
+        [EnumMember] Tumblr = 10,
+        [EnumMember] Twitter = 11,
+        [EnumMember] Vine = 12
     }
 }
