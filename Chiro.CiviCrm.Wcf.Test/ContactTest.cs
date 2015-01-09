@@ -29,6 +29,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         private Contact _myContact;
         private Address _myAddress;
 
+        private int _myContactId;
+
         [TestInitialize]
         public void InitializeTest()
         {
@@ -46,6 +48,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 _myContact = result.Values.First();
+                Debug.Assert(_myContact.Id.HasValue);
+                _myContactId = _myContact.Id.Value;
 
                 // TODO: chain this address creation.
                 // (As soon as write chaining is supported.)
@@ -78,10 +82,9 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                Debug.Assert(_myContact.Id.HasValue);
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest
                 {
-                    Id = _myContact.Id.Value,
+                    Id = _myContactId,
                     // We don't need all fields of the contact, we are only interested in the
                     // addresses.
 
@@ -99,9 +102,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                Debug.Assert(_myContact.Id.HasValue);
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContact.Id.Value));
+                    new IdRequest(_myContactId));
 
                 contact.FirstName = "Eddy";
                 contact.BirthDate = new DateTime(1980, 8, 22);
@@ -114,7 +116,30 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
                 Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
             }
+        }
 
+        [TestMethod]
+        public void ApiOptions()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contact = new Contact
+                {
+                    ExternalIdentifier = _myContact.ExternalIdentifier,
+                    FirstName = "Wesley",
+                    LastName = "Decabooter",
+                    // use external ID to find the contact, instead of contact id.
+                    ApiOptions = new ApiOptions { Match = "external_identifier" }
+                };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(_myContact.Id, result.Id);
+                Assert.AreEqual(_myContact.Id, result.Values.First().Id);
+                Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
+                Assert.AreEqual(contact.LastName, result.Values.First().LastName);
+            }
         }
     }
 }
