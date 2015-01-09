@@ -93,5 +93,28 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
             }
         }
+
+        [TestMethod]
+        public void ChangeContact()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                Debug.Assert(_myContact.Id.HasValue);
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest(_myContact.Id.Value));
+
+                contact.FirstName = "Eddy";
+                contact.BirthDate = new DateTime(1980, 8, 22);
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(contact.Id, result.Id);
+                Assert.AreEqual(contact.Id, result.Values.First().Id);
+                Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
+                Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
+            }
+
+        }
     }
 }
