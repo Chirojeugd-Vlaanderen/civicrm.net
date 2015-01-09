@@ -141,5 +141,26 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.LastName, result.Values.First().LastName);
             }
         }
+
+        [TestMethod]
+        public void EnumProperties()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ExternalIdentifierRequest(_myContact.ExternalIdentifier));
+
+                contact.Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male;
+                contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(_myContact.Id, result.Id);
+                Assert.AreEqual(_myContact.Id, result.Values.First().Id);
+                Assert.AreEqual(contact.Gender, result.Values.First().Gender);
+                Assert.AreEqual(contact.PreferredMailFormat, result.Values.First().PreferredMailFormat);
+            }
+        }
     }
 }
