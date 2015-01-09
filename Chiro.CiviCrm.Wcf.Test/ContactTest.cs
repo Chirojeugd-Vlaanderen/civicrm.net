@@ -29,6 +29,11 @@ namespace Chiro.CiviCrm.Wcf.Test
         private Contact _myContact;
         private Address _myAddress;
 
+        private Phone _myPhone;
+        private Email _myEmail;
+        private Website _myWebsite;
+        private Im _myIm;
+
         private int _myContactId;
 
         [TestInitialize]
@@ -64,6 +69,31 @@ namespace Chiro.CiviCrm.Wcf.Test
                 };
                 var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
                 _myAddress = addressResult.Values.First();
+
+                _myPhone =
+                    client.PhoneSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                        new Phone {ContactId = _myContact.Id, PhoneNumber = "02-345 67 89", PhoneType = PhoneType.Phone})
+                        .Values.First();
+
+                _myEmail =
+                    client.EmailSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                        new Email {ContactId = _myContact.Id, EmailAddress = "joe@schmoe.com"})
+                        .Values.First();
+
+                _myWebsite =
+                    client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                        new Website
+                        {
+                            ContactId = _myContact.Id,
+                            Url = "https://twitter.com/jschmoe",
+                            WebsiteType = WebsiteType.Twitter
+                        })
+                        .Values.First();
+
+                _myIm =
+                    client.ImSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                        new Im {ContactId = _myContact.Id, Name = "joe.schmoe@facebook.com", Provider = Provider.Jabber})
+                        .Values.First();
             }
         }
 
@@ -77,6 +107,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     1);
             }
         }
+
         [TestMethod]
         public void ChainedAddressGet()
         {
@@ -94,6 +125,24 @@ namespace Chiro.CiviCrm.Wcf.Test
                     ChainedEntities = new[] { CiviEntity.Address }
                 });
                 Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
+            }
+        }
+
+        [TestMethod]
+        public void ChainedCommunicationGet()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ExternalIdentifierRequest
+                    {
+                        ExternalIdentifier = _myContact.ExternalIdentifier,
+                        ChainedEntities = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                    });
+                Assert.IsTrue(contact.ChainedPhones.Values.Any(src => src.Id == _myPhone.Id));
+                Assert.IsTrue(contact.ChainedEmails.Values.Any(src => src.Id == _myEmail.Id));
+                Assert.IsTrue(contact.ChainedWebsites.Values.Any(src => src.Id == _myWebsite.Id));
+                Assert.IsTrue(contact.ChainedIms.Values.Any(src => src.Id == _myIm.Id));
             }
         }
 

@@ -311,6 +311,9 @@ namespace Chiro.CiviCrm.Wcf.Example
             }
         }
 
+        /// <summary>
+        /// Get a contact with all communication.
+        /// </summary>
         public static void Example7()
         {
             using (var client = _factory.CreateChannel())
