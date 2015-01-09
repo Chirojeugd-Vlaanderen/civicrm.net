@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
@@ -25,6 +26,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class AddressTest
     {
         private Contact _myContact;
+        private Address _myAddress;
 
         [TestInitialize]
         public void InitializeTest()
@@ -34,6 +36,19 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new Contact {FirstName = "Joe", LastName = "Schmoe"});
                 _myContact = result.Values.First();
+                // TODO: chain this address creation.
+                // (As soon as write chaining is supported.)
+                var address = new Address
+                {
+                    ContactId = _myContact.Id,
+                    StreetAddress = "Kipdorp 30",
+                    PostalCode = "2000",
+                    City = "Antwerpen",
+                    CountryId = 1020,   // Belgium
+                    LocationTypeId = 1,
+                };
+                var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
+                _myAddress = addressResult.Values.First();
             }
         }
 
@@ -49,7 +64,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
-        public void AddAddressTest()
+        public void AddAddress()
         {
             using (var client = TestHelper.ClientGet())
             {
@@ -74,6 +89,20 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(newAddress.PostalCode, resultAddress.PostalCode);
                 Assert.AreEqual(1020, resultAddress.CountryId);
                 Assert.AreEqual(newAddress.LocationTypeId, resultAddress.LocationTypeId);
+            }
+        }
+
+        [TestMethod]
+        public void DeleteAddress()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                Debug.Assert(_myAddress.Id.HasValue);
+                var request = new IdRequest(_myAddress.Id.Value);
+
+                var result = client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                Assert.AreEqual(0, result.IsError);
             }
         }
     }
