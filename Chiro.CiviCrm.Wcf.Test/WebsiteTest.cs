@@ -63,7 +63,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
         [TestMethod]
-        public void CeateWebsite()
+        public void CreateWebsite()
         {
             using (var client = TestHelper.ClientGet())
             {

@@ -105,6 +105,9 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
                     new IdRequest(_myContact.Id ?? 0),
                     1);
+
+                Debug.Assert(result.IsError == 0,
+                    "Could not delete contact. Check for the delete_contact permission of your API user.");
             }
         }
 

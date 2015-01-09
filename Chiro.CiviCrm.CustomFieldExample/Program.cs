@@ -17,9 +17,9 @@
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.CustomFieldExample.Properties;
+using Chiro.CiviCrm.Wcf.CustomFieldExample.Properties;
 
-namespace Chiro.CiviCrm.CustomFieldExample
+namespace Chiro.CiviCrm.Wcf.CustomFieldExample
 {
     /// <summary>
     /// This program illustrates how you can address your custom fields in CiviCRM.

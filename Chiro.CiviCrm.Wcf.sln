@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D2B03C
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.CustomFieldExample", "Chiro.CiviCrm.CustomFieldExample\Chiro.CiviCrm.CustomFieldExample.csproj", "{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.CustomFieldExample", "Chiro.CiviCrm.CustomFieldExample\Chiro.CiviCrm.Wcf.CustomFieldExample.csproj", "{B13427C8-5E61-4B27-BBB3-F236B01ECAEA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.Test", "Chiro.CiviCrm.Wcf.Test\Chiro.CiviCrm.Wcf.Test.csproj", "{2FCD4844-0602-4EDB-879D-2133D52FC51C}"
 EndProject

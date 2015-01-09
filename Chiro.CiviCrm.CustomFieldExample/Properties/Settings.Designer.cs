@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Chiro.CiviCrm.CustomFieldExample.Properties {
+namespace Chiro.CiviCrm.Wcf.CustomFieldExample.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Chiro.CiviCrm.CustomFieldExample")]
+[assembly: AssemblyTitle("Chiro.CiviCrm.Wcf.CustomFieldExample")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Chiro.CiviCrm.CustomFieldExample")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright ©  2015 Chirojeugd-Vlaanderen vzw")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

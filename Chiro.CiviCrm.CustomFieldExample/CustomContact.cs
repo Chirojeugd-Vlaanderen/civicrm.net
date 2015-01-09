@@ -19,7 +19,7 @@ using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.CustomFieldExample
+namespace Chiro.CiviCrm.Wcf.CustomFieldExample
 {
     /// <summary>
     /// By inheriting from Contact, you can define your custom fields.

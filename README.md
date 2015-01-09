@@ -19,27 +19,38 @@ For all this to work, you need to patch CiviCRM:
 https://github.com/civicrm/civicrm-core/pull/4641/files
 (No worries, it is a small patch.)
 
-## How to get the example to work
+## How to get the examples/unit tests to work
+
+There two example console applications:
+
+* Chiro.CiviCrm.Wcf.Example (various examples)
+* Chiro.CiviCrm.Wcf.CustomFieldExample (shows how you can handle custom fields)
+
+There is also a project with unit tests: Chiro.CiviCrm.Wcf.Test.
+
+All those projects are configured in a similar way.
+Of course you will not run the examples or the tests on an important CiviCRM instance! :-)
 
 ### API-user
 
 I use CiviCRM on Drupal. Create a Drupal user, which has the following permissions:
 
 * CiviCRM: show all contacts
-* CiviCRM: edit all contacts (if you want to be able to do this with the api)
+* CiviCRM: edit all contacts
 * CiviCRM: create new contacts
+* CiviCRM: delete contacts
 * CiviCRM: use CiviCRM
 * CiviCRM: use AJAX API
 
 This user is automatically a contact in CiviCRM. You have to assign an API key to the user. This has to be done by a query on the database:
 
-    update civicrm_contact set api_key='mijnkey' where id=12311;
+    update civicrm_contact set api_key='blablablapi' where id=12311;
 
 Of course, you replace the 12311 by the real contact-ID of the civi contact, and you better choose something else as api key :-)
 
-### Configuration of Chiro.CiviCrm.Wcf.Example
+### Configuration of an example project or the unit test project
 
-In `App.config`, you edit the endpoint:
+In `App.config`, you change the endpoint address to your needs:
 
       <endpoint 
 	address="http://192.168.124.1/dev2/sites/all/modules/civicrm/extern/rest.php" 
