@@ -119,6 +119,36 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
+        public void CreateContact()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contact = new Contact
+                {
+                    ContactType = ContactType.Individual,
+                    FirstName = "Lucky",
+                    LastName = "Luke",
+                    BirthDate = new DateTime(1946, 3, 3),
+                    Gender = Gender.Male,
+                    ExternalIdentifier = "test_ext_id_yep",
+                    ApiOptions = new ApiOptions {Match = "external_identifier"}
+                };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.IsNotNull(result.Id);
+                Assert.AreEqual(result.Id, result.Values.First().Id);
+                Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
+                Assert.AreEqual(contact.LastName, result.Values.First().LastName);
+                Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
+                Assert.AreEqual(contact.Gender, result.Values.First().Gender);
+
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+            }
+        }
+
+        [TestMethod]
         public void ApiOptions()
         {
             using (var client = TestHelper.ClientGet())
