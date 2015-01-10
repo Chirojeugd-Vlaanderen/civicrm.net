@@ -15,13 +15,8 @@
  */
 
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
     /// Request for searching a contact based on its external identifier.

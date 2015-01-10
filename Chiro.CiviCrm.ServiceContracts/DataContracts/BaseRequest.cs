@@ -19,7 +19,7 @@ using System.Linq;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
     /// A class that basically converts a request to the json-part of the url.

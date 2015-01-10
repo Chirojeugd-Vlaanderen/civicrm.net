@@ -17,7 +17,7 @@
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
+using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chiro.CiviCrm.Wcf.Test

@@ -20,7 +20,7 @@ using System.Linq;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
+using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Wcf.Example.Properties;
 
 namespace Chiro.CiviCrm.Wcf.Example

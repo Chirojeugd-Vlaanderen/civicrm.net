@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013-2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,26 +14,26 @@
    limitations under the License.
  */
 
-using System.Runtime.Serialization;
-using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
-    /// Request to find a contact with a given first name,
-    /// last name and gender.
+    /// Some class that basically converts an ID to the json-part of the request url.
     /// </summary>
-    public class NameGenderRequest: BaseRequest
+    [JsonConvertible]
+    public class IdRequest: BaseRequest
     {
-        [JsonProperty("first_name")]
-        public string FirstName { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
 
-        [JsonProperty("last_name")]
-        public string LastName { get; set; }
+        public IdRequest() : base() { }
 
-        [DataMember(Name = "gender_id"), JsonProperty]
-        [JsonConverter(typeof(NullableEnumConverter))]
-        public Gender Gender { get; set; }
+        public IdRequest(int id)
+            : this()
+        {
+            this.Id = id;
+        }
     }
 }

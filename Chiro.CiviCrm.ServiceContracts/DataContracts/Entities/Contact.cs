@@ -21,7 +21,7 @@ using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
     /// A CiviCRM contact
