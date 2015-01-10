@@ -125,7 +125,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedEntities = new[] { CiviEntity.Address }
+                    ChainedGet = new[] { CiviEntity.Address }
                 });
                 Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
             }
@@ -140,7 +140,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = _myContact.ExternalIdentifier,
-                        ChainedEntities = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                        ChainedGet = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
                     });
                 Assert.IsTrue(contact.ChainedPhones.Values.Any(src => src.Id == _myPhone.Id));
                 Assert.IsTrue(contact.ChainedEmails.Values.Any(src => src.Id == _myEmail.Id));

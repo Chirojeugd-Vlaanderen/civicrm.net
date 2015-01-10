@@ -30,9 +30,15 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class BaseRequest: ICustomJsonConversion
     {
+        /// <summary>
+        /// Indicates which chained entities to get.
+        /// </summary>
         [JsonIgnore]
-        public CiviEntity[] ChainedEntities { get; set; }
+        public CiviEntity[] ChainedGet { get; set; }
 
+        /// <summary>
+        /// Fields to return after the call.
+        /// </summary>
         [JsonProperty("return", NullValueHandling = NullValueHandling.Ignore)]
         public string ReturnFields { get; set; }
 
@@ -42,8 +48,11 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
         public ApiOptions ApiOptions { get; set; }
 
+        /// <summary>
+        /// This should be one, for correctly deserializing the API results.
+        /// </summary>
         [JsonProperty("sequential")]
-        public int Sequential { get; set; }
+        public int Sequential { get { return 1; } }
 
         /// <summary>
         /// Dummy property we will serialize if we need to chain.
@@ -54,9 +63,12 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public BaseRequest()
         {
             ChainsPlaceholder = null;
-            Sequential = 1;
         }
 
+        /// <summary>
+        /// Converts the request to Json for the API.
+        /// </summary>
+        /// <returns>A Json-representation of this request.</returns>
         public string ToJson()
         {
             // There might be some functionality in Json.Net that can do this
@@ -64,14 +76,14 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
             string chains;
 
-            if (ChainedEntities == null || !ChainedEntities.Any())
+            if (ChainedGet == null || !ChainedGet.Any())
             {
                 chains = String.Empty;
                 ChainsPlaceholder = null;
             }
             else
             {
-                var parts = from entity in ChainedEntities
+                var parts = from entity in ChainedGet
                             select String.Format("\"api.{0}.get\":{{}}", entity);
                 chains = String.Join(",", parts);
                 ChainsPlaceholder = 1;

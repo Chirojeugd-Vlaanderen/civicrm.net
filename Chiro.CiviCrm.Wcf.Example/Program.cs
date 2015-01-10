@@ -98,7 +98,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedEntities = new[] { CiviEntity.Address }
+                        ChainedGet = new[] { CiviEntity.Address }
                     });
 
                 // Keep the contact Id for later reference.
@@ -140,7 +140,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedEntities = new[] { CiviEntity.Address }
+                    ChainedGet = new[] { CiviEntity.Address }
                 });
 
                 // Show adresses
@@ -154,7 +154,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 {
                     Id = contactId,
                     ReturnFields = "id",
-                    ChainedEntities = new[] { CiviEntity.Address }
+                    ChainedGet = new[] { CiviEntity.Address }
                 });
 
                 ShowAddresses(contact);
@@ -172,7 +172,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedEntities = new[] { CiviEntity.Address }
+                        ChainedGet = new[] { CiviEntity.Address }
                     });
 
                 // Exit if contact is not found.
@@ -196,7 +196,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    ChainedEntities = new[] { CiviEntity.Address }
+                    ChainedGet = new[] { CiviEntity.Address }
                 });
                 ShowContact(contact);
             }
@@ -322,7 +322,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedEntities = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                        ChainedGet = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
                     });
                 ShowContact(contact);
                 ShowCommunication(contact);
