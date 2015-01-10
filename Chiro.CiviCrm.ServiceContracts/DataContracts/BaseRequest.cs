@@ -39,8 +39,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// <summary>
         /// Options to pass to the CiviCRM-API
         /// </summary>
-        [JsonProperty("options")]
-        public ApiOptions Options { get; set; }
+        [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
+        public ApiOptions ApiOptions { get; set; }
 
         [JsonProperty("sequential")]
         public int Sequential { get; set; }

@@ -28,7 +28,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     [DataContract]
     [JsonConvertible]
-    public class Contact
+    public class Contact : BaseRequest
     {
         [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -225,12 +225,5 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public ApiResultValue<Website> ChainedWebsites { get; set; }
         [DataMember(Name = "api.Im.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ApiResultValue<Im> ChainedIms { get; set; }
-
-
-        // Options are relevant for updates. Semantically they do not
-        // belong in this data contract, but the CiviCRM API expects
-        // them here.
-        [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiOptions ApiOptions { get; set; }
     }
 }

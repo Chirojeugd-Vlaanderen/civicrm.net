@@ -26,7 +26,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     [DataContract]
     [JsonConvertible]
-    public class Address
+    public class Address: BaseRequest
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -61,11 +61,5 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         /// </remarks>
         [DataMember(Name="country"), JsonProperty]
         public string Country { get; set; }
-
-        // Options are relevant for updates. Semantically they do not
-        // belong in this data contract, but the CiviCRM API expects
-        // them here.
-        [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
-        public ApiOptions ApiOptions { get; set; }
     }
 }
