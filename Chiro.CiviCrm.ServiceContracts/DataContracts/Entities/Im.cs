@@ -26,7 +26,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     [DataContract]
     [JsonConvertible]
-    public class Im : BaseRequest
+    public class Im : BaseRequest, IEntity
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }

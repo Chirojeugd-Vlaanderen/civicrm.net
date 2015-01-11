@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
@@ -30,12 +31,6 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [JsonConvertible]
     public class BaseRequest: ICustomJsonConversion
     {
-        /// <summary>
-        /// Indicates which chained entities to get.
-        /// </summary>
-        [JsonIgnore]
-        public CiviEntity[] ChainedGet { get; set; }
-
         /// <summary>
         /// Fields to return after the call.
         /// </summary>
@@ -53,6 +48,18 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// </summary>
         [JsonProperty("sequential")]
         public int Sequential { get { return 1; } }
+
+        /// <summary>
+        /// Indicates which chained entities to get.
+        /// </summary>
+        [JsonIgnore]
+        public CiviEntity[] ChainedGet { get; set; }
+
+        /// <summary>
+        /// Entities to be created in a chained call.
+        /// </summary>
+        [JsonIgnore]
+        protected List<IEntity> ChainedCreate { get; set; }
 
         /// <summary>
         /// Dummy property we will serialize if we need to chain.

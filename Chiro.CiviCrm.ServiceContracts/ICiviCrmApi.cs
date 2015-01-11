@@ -50,7 +50,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}")]
-        ApiResultValue<Contact> ContactGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Contact> ContactGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Deletes a contact.
@@ -76,7 +76,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}")]
-        ApiResultValue<Contact> ContactSave(string apiKey, string key, Contact contact);
+        ApiResultValues<Contact> ContactSave(string apiKey, string key, Contact contact);
 
         /// <summary>
         /// Returns one or more addresses.
@@ -88,7 +88,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}")]
-        ApiResultValue<Address> AdressesGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Address> AdressesGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
@@ -100,7 +100,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&sequential=1&json={address}")]
-        ApiResultValue<Address> AddressSave(string apiKey, string key, Address address);
+        ApiResultValues<Address> AddressSave(string apiKey, string key, Address address);
 
         /// <summary>
         /// Deletes an address.
@@ -124,7 +124,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=get&json={request}")]
-        ApiResultValue<Phone> PhoneGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Phone> PhoneGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="phoneNumber"/>.
@@ -136,7 +136,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=create&sequential=1&json={phoneNumber}")]
-        ApiResultValue<Phone> PhoneSave(string apiKey, string key, Phone phoneNumber);
+        ApiResultValues<Phone> PhoneSave(string apiKey, string key, Phone phoneNumber);
 
         /// <summary>
         /// Deletes a phone number.
@@ -160,7 +160,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=get&json={request}")]
-        ApiResultValue<Email> EmailGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Email> EmailGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="emailAddress"/>.
@@ -172,7 +172,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=create&sequential=1&json={emailAddress}")]
-        ApiResultValue<Email> EmailSave(string apiKey, string key, Email emailAddress);
+        ApiResultValues<Email> EmailSave(string apiKey, string key, Email emailAddress);
 
         /// <summary>
         /// Deletes an e-mail address.
@@ -196,7 +196,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=get&json={request}")]
-        ApiResultValue<Website> WebsiteGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Website> WebsiteGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="website"/>.
@@ -208,7 +208,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=create&sequential=1&json={website}")]
-        ApiResultValue<Website> WebsiteSave(string apiKey, string key, Website website);
+        ApiResultValues<Website> WebsiteSave(string apiKey, string key, Website website);
 
         /// <summary>
         /// Deletes a website.
@@ -232,7 +232,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=get&json={request}")]
-        ApiResultValue<Im> ImGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Im> ImGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="im"/>.
@@ -244,7 +244,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=create&sequential=1&json={im}")]
-        ApiResultValue<Im> ImSave(string apiKey, string key, Im im);
+        ApiResultValues<Im> ImSave(string apiKey, string key, Im im);
 
         /// <summary>
         /// Deletes an Im.

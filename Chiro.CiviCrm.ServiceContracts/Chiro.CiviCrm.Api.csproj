@@ -62,6 +62,7 @@
     <Compile Include="DataContracts\IdRequest.cs" />
     <Compile Include="DataContracts\Entities\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
+    <Compile Include="DataContracts\IEntity.cs" />
     <Compile Include="DataContracts\NameGenderRequest.cs" />
     <Compile Include="DataContracts\Entities\Website.cs" />
     <Compile Include="ICiviCrmApi.cs" />

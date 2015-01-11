@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2015 Johan Vervloet
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,24 +14,10 @@
    limitations under the License.
  */
 
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
 namespace Chiro.CiviCrm.Api.DataContracts
 {
-    [DataContract]
-    public class ApiResultValues<T>: ApiResult
+    public interface IEntity
     {
-        [DataMember(Name="values")]
-        public IEnumerable<T> Values { get; set; }
-
-        public ApiResultValues() : base()
-        {
-        }
-
-        public ApiResultValues(IEnumerable<T> values) : this()
-        {
-            Values = values;
-        }
+        int? Id { get; set; }
     }
 }
