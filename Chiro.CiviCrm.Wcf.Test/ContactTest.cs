@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
@@ -167,6 +168,38 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.Id, result.Values.First().Id);
                 Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
                 Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
+            }
+        }
+
+        [TestMethod]
+        public void ChainedWebsiteCreate()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain website.
+                var myWebsite = new Website {Url = "http://smurf.com"};
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new Contact
+                    {
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ChainedCreate = new List<Website> { myWebsite }
+                    });
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Website } });
+
+                Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(1, contact.ChainedWebsites.Count);
+                Assert.AreEqual(myWebsite.Url, contact.ChainedWebsites.Values.First().Url);
+
+                // Delete contact
+
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+
             }
         }
 
