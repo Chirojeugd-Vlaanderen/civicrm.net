@@ -2,7 +2,7 @@
 // http://blogs.msdn.com/b/endpoint/archive/2011/05/03/wcf-extensibility-message-formatters.aspx
 
 using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -10,24 +10,25 @@ using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.Text;
-using System.Xml;
+using System.Text.RegularExpressions;
+using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
     class NewtonsoftJsonClientFormatter : IClientMessageFormatter
     {
-        OperationDescription operation;
-        Uri operationUri;
+        readonly OperationDescription _operation;
+        readonly Uri _operationUri;
         public NewtonsoftJsonClientFormatter(OperationDescription operation, ServiceEndpoint endpoint)
         {
-            this.operation = operation;
+            this._operation = operation;
             string endpointAddress = endpoint.Address.Uri.ToString();
             if (!endpointAddress.EndsWith("/"))
             {
                 endpointAddress = endpointAddress + "/";
             }
 
-            this.operationUri = new Uri(endpointAddress + operation.Name);
+            this._operationUri = new Uri(endpointAddress + operation.Name);
         }
 
         public object DeserializeReply(Message message, object[] parameters)
@@ -39,15 +40,15 @@ namespace Chiro.CiviCrm.BehaviorExtension
                 throw new InvalidOperationException("Incoming messages must have a body format of Raw. Is a ContentTypeMapper set on the WebHttpBinding?");
             }
 
-            XmlDictionaryReader bodyReader = message.GetReaderAtBodyContents();
-            Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+            var bodyReader = message.GetReaderAtBodyContents();
+            var serializer = new JsonSerializer();
             bodyReader.ReadStartElement("Binary");
             byte[] body = bodyReader.ReadContentAsBase64();
             using (MemoryStream ms = new MemoryStream(body))
             {
-                using (StreamReader sr = new StreamReader(ms))
+                using (var sr = new StreamReader(ms))
                 {
-                    Type returnType = this.operation.Messages[1].Body.ReturnValue.Type;
+                    Type returnType = this._operation.Messages[1].Body.ReturnValue.Type;
                     var result = serializer.Deserialize(sr, returnType);
                     return result;
                 }
@@ -57,14 +58,14 @@ namespace Chiro.CiviCrm.BehaviorExtension
         public Message SerializeRequest(MessageVersion messageVersion, object[] parameters)
         {
             byte[] body;
-            Newtonsoft.Json.JsonSerializer serializer = new Newtonsoft.Json.JsonSerializer();
+            JsonSerializer serializer = new JsonSerializer();
             using (MemoryStream ms = new MemoryStream())
             {
                 using (StreamWriter sw = new StreamWriter(ms, Encoding.UTF8))
                 {
-                    using (Newtonsoft.Json.JsonWriter writer = new Newtonsoft.Json.JsonTextWriter(sw))
+                    using (JsonWriter writer = new JsonTextWriter(sw))
                     {
-                        writer.Formatting = Newtonsoft.Json.Formatting.Indented;
+                        writer.Formatting = Formatting.Indented;
                         if (parameters.Length == 1)
                         {
                             // Single parameter, assuming bare
@@ -73,9 +74,9 @@ namespace Chiro.CiviCrm.BehaviorExtension
                         else
                         {
                             writer.WriteStartObject();
-                            for (int i = 0; i < this.operation.Messages[0].Body.Parts.Count; i++)
+                            for (int i = 0; i < this._operation.Messages[0].Body.Parts.Count; i++)
                             {
-                                writer.WritePropertyName(this.operation.Messages[0].Body.Parts[i].Name);
+                                writer.WritePropertyName(this._operation.Messages[0].Body.Parts[i].Name);
                                 serializer.Serialize(writer, parameters[0]);
                             }
 
@@ -89,8 +90,8 @@ namespace Chiro.CiviCrm.BehaviorExtension
                 }
             }
 
-            Message requestMessage = Message.CreateMessage(messageVersion, operation.Messages[0].Action, new RawBodyWriter(body));
-            requestMessage.Headers.To = operationUri;
+            Message requestMessage = Message.CreateMessage(messageVersion, _operation.Messages[0].Action, new RawBodyWriter(body));
+            requestMessage.Headers.To = _operationUri;
             requestMessage.Properties.Add(WebBodyFormatMessageProperty.Name, new WebBodyFormatMessageProperty(WebContentFormat.Raw));
             HttpRequestMessageProperty reqProp = new HttpRequestMessageProperty();
             reqProp.Headers[HttpRequestHeader.ContentType] = "application/json";

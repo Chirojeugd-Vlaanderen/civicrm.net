@@ -102,9 +102,11 @@ namespace Chiro.CiviCrm.Api.DataContracts
                 if (ChainedCreate != null)
                 {
                     createChains = from entity in ChainedCreate
+                        group entity by entity.GetType()
+                        into g
                         select
-                            String.Format("\"api.{0}.create\":{1}", entity.GetType().Name,
-                                JsonConvert.SerializeObject(entity));
+                            String.Format("\"api.{0}.create\":{1}", g.Key.Name,
+                                JsonConvert.SerializeObject(g));
                 }
                 chains = String.Join(",", getChains.Union(createChains));
                 ChainsPlaceholder = 1;

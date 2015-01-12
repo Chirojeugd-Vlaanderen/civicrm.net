@@ -184,6 +184,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     {
                         LastName = "Smurf",
                         FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions {Match = "external_identifier"},
                         ChainedCreate = new List<Website> { myWebsite }
                     });
                 Debug.Assert(result.Id.HasValue);
@@ -212,28 +214,32 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var my1StWebsite = new Website { Url = "http://smurf.com" };
                 var my2NdWebsite = new Website {Url = "http://salsaparilla.org"};
 
-                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
-                    {
-                        LastName = "Smurf",
-                        FirstName = "Smul",
-                        ChainedCreate = new List<Website> { my1StWebsite, my2NdWebsite }
-                    });
+                var newContact = new Contact
+                {
+                    LastName = "Smurf",
+                    FirstName = "Smul",
+                    ExternalIdentifier = "Test_External_Smurf",
+                    ApiOptions = new ApiOptions {Match = "external_identifier"},
+                    ChainedCreate = new List<Website> {my1StWebsite, my2NdWebsite}
+                };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
                 Debug.Assert(result.Id.HasValue);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
                     new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Website } });
+                Assert.IsNotNull(contact.Id);
 
-                Assert.AreEqual(result.Id, contact.Id);
+                // Clean up first (delete contact), then do other assertions.
+                // (So the contact gets deleted even if the assertions fail.)
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id.Value), 1);
+
+                Assert.IsNotNull(contact.Id);
+                Assert.AreEqual(newContact.ExternalIdentifier, contact.ExternalIdentifier);
                 Assert.AreEqual(2, contact.ChainedWebsites.Count);
                 Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my1StWebsite.Url));
                 Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my2NdWebsite.Url));
-
-                // Delete contact
-
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
-
             }
         }
 
