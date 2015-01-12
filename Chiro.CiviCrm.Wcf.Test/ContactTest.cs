@@ -204,6 +204,40 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
+        public void ChainedWebsiteCreateTwo()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain website.
+                var my1StWebsite = new Website { Url = "http://smurf.com" };
+                var my2NdWebsite = new Website {Url = "http://salsaparilla.org"};
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new Contact
+                    {
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ChainedCreate = new List<Website> { my1StWebsite, my2NdWebsite }
+                    });
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Website } });
+
+                Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(2, contact.ChainedWebsites.Count);
+                Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my1StWebsite.Url));
+                Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my2NdWebsite.Url));
+
+                // Delete contact
+
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+
+            }
+        }
+
+        [TestMethod]
         public void CreateContact()
         {
             using (var client = TestHelper.ClientGet())
