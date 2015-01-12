@@ -19,6 +19,10 @@ namespace Chiro.CiviCrm.BehaviorExtension
     {
         readonly OperationDescription _operation;
         readonly Uri _operationUri;
+
+        private static readonly Regex ValuesObjectInsteadOfArrayExpression = new Regex("\"values\":[{]");
+        private static readonly Regex KeyValueArrayItemExpression = new Regex("\"[0-9]+\":[{]");
+
         public NewtonsoftJsonClientFormatter(OperationDescription operation, ServiceEndpoint endpoint)
         {
             this._operation = operation;
@@ -44,7 +48,30 @@ namespace Chiro.CiviCrm.BehaviorExtension
             var serializer = new JsonSerializer();
             bodyReader.ReadStartElement("Binary");
             byte[] body = bodyReader.ReadContentAsBase64();
-            using (MemoryStream ms = new MemoryStream(body))
+
+            // If you chain an 'api.create' with multiple entities of the same type, the resulting Json cannot
+            // be parsed by the serializer. See this thread on the civicrm forums:
+            // http://forum.civicrm.org/index.php/topic,35393.0.html
+
+            string bodyString = Encoding.UTF8.GetString(body);
+
+            // Work around this issue:
+            while (KeyValueArrayItemExpression.IsMatch(bodyString))
+            {
+                int index = KeyValueArrayItemExpression.Matches(bodyString)[0].Index;
+                bodyString = KeyValueArrayItemExpression.Replace(bodyString, "{", 1);
+                bodyString = ReplaceCurlyBraces(bodyString, index, String.Empty, String.Empty);
+                body = Encoding.UTF8.GetBytes(bodyString);
+            }
+            while (ValuesObjectInsteadOfArrayExpression.IsMatch(bodyString))
+            {
+                int index = ValuesObjectInsteadOfArrayExpression.Matches(bodyString)[0].Index + 9;
+                bodyString = ValuesObjectInsteadOfArrayExpression.Replace(bodyString, "\"values\":{", 1);
+                bodyString = ReplaceCurlyBraces(bodyString, index, "[{", "}]");
+                body = Encoding.UTF8.GetBytes(bodyString);
+            }
+
+            using (var ms = new MemoryStream(body))
             {
                 using (var sr = new StreamReader(ms))
                 {
@@ -53,6 +80,36 @@ namespace Chiro.CiviCrm.BehaviorExtension
                     return result;
                 }
             }
+        }
+
+        private static string ReplaceCurlyBraces(string bodyString, int index, string newLeft, string newRight)
+        {
+            // Replace matching curly brace by square brace
+
+            Debug.Assert(bodyString[index] == '{');
+            int start = index + 1;
+
+            var builder = new StringBuilder(bodyString.Substring(0, index));
+            builder.Append(newLeft);
+
+            int level = 0;
+            while (level >= 0)
+            {
+                ++index;
+                if (bodyString[index] == '{')
+                {
+                    ++level;
+                }
+                if (bodyString[index] == '}')
+                {
+                    --level;
+                }
+            }
+
+            builder.Append(bodyString.Substring(start, index - start));
+            builder.Append(newRight);
+            builder.Append(bodyString.Substring(index + 1));
+            return builder.ToString();
         }
 
         public Message SerializeRequest(MessageVersion messageVersion, object[] parameters)
