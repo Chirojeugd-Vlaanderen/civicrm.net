@@ -205,6 +205,47 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Unit test for upstream issue:
+        /// https://issues.civicrm.org/jira/browse/CRM-15815
+        /// </summary>
+        [TestMethod]
+        public void ChainedPhoneAndAddressCreate()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain phone and website.
+                var myPhone = new Phone { PhoneNumber = "03-100 20 00"};
+                var myWebsite = new Website { Url = "http://smurf.com" };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new Contact
+                    {
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        ChainedCreate = new List<IEntity> { myPhone, myWebsite }
+                    });
+
+                // This crashes because of upstream issue CRM-15815:
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Phone, CiviEntity.Website } });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+
+                Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(1, contact.ChainedPhones.Count);
+                Assert.AreEqual(myPhone.PhoneNumber, contact.ChainedPhones.Values.First().PhoneNumber);
+                Assert.AreEqual(1, contact.ChainedWebsites.Count);
+                Assert.AreEqual(myWebsite.Url, contact.ChainedWebsites.Values.First().Url);
+            }
+        }
+
         [TestMethod]
         public void ChainedWebsiteCreateTwo()
         {
