@@ -206,11 +206,14 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         /// <summary>
-        /// Unit test for upstream issue:
+        /// Unit test for avoiding upstream issue:
         /// https://issues.civicrm.org/jira/browse/CRM-15815
         /// </summary>
+        /// <remarks>
+        /// See also: https://github.com/johanv/civicrm.net/issues/39
+        /// </remarks>
         [TestMethod]
-        public void ChainedPhoneAndAddressCreate()
+        public void ChainedPhoneAndWebsiteCreate()
         {
             using (var client = TestHelper.ClientGet())
             {
@@ -243,6 +246,49 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(myPhone.PhoneNumber, contact.ChainedPhones.Values.First().PhoneNumber);
                 Assert.AreEqual(1, contact.ChainedWebsites.Count);
                 Assert.AreEqual(myWebsite.Url, contact.ChainedWebsites.Values.First().Url);
+            }
+        }
+
+        /// <summary>
+        /// Unit test for upstream issue:
+        /// https://issues.civicrm.org/jira/browse/CRM-15815
+        /// </summary>
+        [TestMethod]
+        public void ChainedPhoneAnd2WebsitesCreate()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain phone and website.
+                var myPhone = new Phone { PhoneNumber = "03-100 20 00" };
+                var myWebsite1 = new Website { Url = "http://smurf.com" };
+                var myWebsite2 = new Website { Url = "http://smurf.org" };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new Contact
+                    {
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        ChainedCreate = new List<IEntity> { myWebsite1, myWebsite2, myPhone }
+                    });
+
+                // This crashes because of upstream issue CRM-15815:
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Phone, CiviEntity.Website } });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+
+                Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(1, contact.ChainedPhones.Count);
+                Assert.AreEqual(myPhone.PhoneNumber, contact.ChainedPhones.Values.First().PhoneNumber);
+                Assert.AreEqual(1, contact.ChainedWebsites.Count);
+                Assert.AreEqual(myWebsite1.Url, contact.ChainedWebsites.Values.First().Url);
+                Assert.AreEqual(myWebsite2.Url, contact.ChainedWebsites.Values.First().Url);
             }
         }
 

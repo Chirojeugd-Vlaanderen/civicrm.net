@@ -110,7 +110,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
                         into g
                         select
                             String.Format("\"api.{0}.create\":{1}", g.Key.Name,
-                                JsonConvert.SerializeObject(g));
+                                // serialize as entity if there is only one chained entity of the given type,
+                                // otherwise serialize as collection.
+                                g.Count() == 1 ? JsonConvert.SerializeObject(g.First()) : JsonConvert.SerializeObject(g));
                 }
                 chains = String.Join(",", getChains.Union(createChains));
                 ChainsPlaceholder = 1;
