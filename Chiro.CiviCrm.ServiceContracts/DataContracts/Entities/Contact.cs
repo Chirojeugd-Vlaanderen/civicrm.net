@@ -169,14 +169,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name="geo_code_2"), JsonProperty]
         public string GeoCode2 { get; set; }
 
-        [DataMember(Name="phone_id"), JsonProperty]
+        [DataMember(Name = "phone_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? PhoneId { get; set; }
 
-        [DataMember(Name="phone_type_id"), JsonProperty]
+        [DataMember(Name = "phone_type_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumConverter))]
         public PhoneType? PhoneType { get; set; }
 
-        [DataMember(Name="phone"), JsonProperty]
+        [DataMember(Name = "phone"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Phone { get; set; }
 
         [DataMember(Name="email_id"), JsonProperty]

@@ -42,7 +42,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public bool IsBilling { get; set; }
         [DataMember(Name = "phone"), JsonProperty]
         public string PhoneNumber { get; set; }
-        [DataMember(Name = "phone_numeric"), JsonProperty]
+        [DataMember(Name = "phone_numeric"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string PhoneNumeric { get; set; }
         [DataMember(Name = "phone_type_id"), JsonProperty]
         [JsonConverter(typeof(NullableEnumConverter))]

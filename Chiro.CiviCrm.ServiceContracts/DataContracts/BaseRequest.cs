@@ -58,6 +58,10 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// <summary>
         /// Entities to be created in a chained call.
         /// </summary>
+        /// <remarks>
+        /// This is an enumerable and not a list, so that you can directly assign a
+        /// list of e.g. addresses, without needing a cast.
+        /// </remarks>
         [JsonIgnore]
         public IEnumerable<IEntity> ChainedCreate { get; set; }
 
