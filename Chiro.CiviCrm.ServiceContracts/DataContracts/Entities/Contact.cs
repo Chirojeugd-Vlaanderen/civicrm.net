@@ -142,31 +142,31 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name="current_employer"), JsonProperty]
         public string CurrentEmployer { get; set; }
 
-        [DataMember(Name="address_id"), JsonProperty]
+        [DataMember(Name = "address_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? AddressId { get; set; }
 
-        [DataMember(Name="street_address"), JsonProperty]
+        [DataMember(Name = "street_address"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string StreetAddress { get; set; }
 
-        [DataMember(Name="supplemental_address_1"), JsonProperty]
+        [DataMember(Name = "supplemental_address_1"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SupplementalAddress1 { get; set; }
 
-        [DataMember(Name="supplemental_address_2"), JsonProperty]
+        [DataMember(Name = "supplemental_address_2"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string SupplementalAddress2 { get; set; }
 
-        [DataMember(Name="city"), JsonProperty]
+        [DataMember(Name = "city"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string City { get; set; }
 
-        [DataMember(Name="postal_code_suffix"), JsonProperty]
+        [DataMember(Name = "postal_code_suffix"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string PostalCodeSuffix { get; set; }
 
-        [DataMember(Name="postal_code"), JsonProperty]
+        [DataMember(Name = "postal_code"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string PostalCode { get; set; }
 
-        [DataMember(Name="geo_code_1"), JsonProperty]
+        [DataMember(Name = "geo_code_1"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GeoCode1 { get; set; }
 
-        [DataMember(Name="geo_code_2"), JsonProperty]
+        [DataMember(Name = "geo_code_2"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string GeoCode2 { get; set; }
 
         [DataMember(Name = "phone_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -179,24 +179,24 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "phone"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Phone { get; set; }
 
-        [DataMember(Name="email_id"), JsonProperty]
+        [DataMember(Name = "email_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? EmailId { get; set; }
 
-        [DataMember(Name="email"), JsonProperty]
+        [DataMember(Name = "email"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Email { get; set; }
 
-        [DataMember(Name="on_hold"), JsonProperty]
+        [DataMember(Name = "on_hold"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
         public bool OnHold { get; set; }
 
-        [DataMember(Name="im_id"), JsonProperty]
+        [DataMember(Name = "im_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? ImId { get; set; }
 
-        [DataMember(Name="provider_id"), JsonProperty]
+        [DataMember(Name = "provider_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumConverter))]
         public Provider? Provider { get; set; }
 
-        [DataMember(Name="im"), JsonProperty]
+        [DataMember(Name = "im"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Im { get; set; }
 
         [DataMember(Name="world_region"), JsonProperty]
@@ -208,10 +208,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name="individual_suffix"), JsonProperty]
         public string IndividualSuffix { get; set; }
 
-        [DataMember(Name="state_province_name"), JsonProperty]
+        [DataMember(Name = "state_province_name"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string StateProvinceName { get; set; }
 
-        [DataMember(Name="country"), JsonProperty]
+        [DataMember(Name = "country"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
 
         // I think chaining should be handled in a more elegant way.
