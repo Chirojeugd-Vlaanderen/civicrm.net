@@ -17,15 +17,24 @@
 using System.Runtime.Serialization;
 namespace Chiro.CiviCrm.Api.DataContracts
 {
+    [DataContract]
     public enum CiviEntity
     {
-        Contact,
-        Address,
-        Phone,
-        Email,
-        Website,
-        Im
+        [EnumMember] Contact,
+        [EnumMember] Address,
+        [EnumMember] Phone,
+        [EnumMember] Email,
+        [EnumMember] Website,
+        [EnumMember] Im
         // TODO: support more entities
+    }
+
+    [DataContract]
+    public enum ApiAction
+    {
+        [EnumMember] Create,
+        [EnumMember] Get,
+        [EnumMember] GetSingle
     }
 
     [DataContract]

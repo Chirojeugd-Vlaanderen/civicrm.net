@@ -27,7 +27,7 @@ namespace Chiro.CiviCrm.Api
     /// </summary>
     [ServiceContract]
     public interface ICiviCrmApi: IDisposable
-    {
+    {       
         /// <summary>
         /// Find a single contact based on the <paramref name="request"/>
         /// </summary>
@@ -258,5 +258,18 @@ namespace Chiro.CiviCrm.Api
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=delete&json={request}")]
         ApiResult ImDelete(string apiKey, string key, IdRequest request);
 
+        /// <summary>
+        /// Performs a generic call to the API. Please avoid this :-)
+        /// </summary>
+        /// <param name="apiKey">API-key of your API-user.</param>
+        /// <param name="key">Site key of your CiviCRM-instance.</param>
+        /// <param name="entity">Entity type for request.</param>
+        /// <param name="action">Action on the entity type.</param>
+        /// <param name="request">Generic request</param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action={action}&json={request}")]
+        ApiResult GenericCall(string apiKey, string key, CiviEntity entity, ApiAction action, BaseRequest request);
     }
 }

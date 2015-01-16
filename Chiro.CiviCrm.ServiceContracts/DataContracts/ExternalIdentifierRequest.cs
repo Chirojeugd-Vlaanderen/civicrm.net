@@ -26,6 +26,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [JsonProperty("external_identifier")]
         public string ExternalIdentifier { get; set; }
 
+        /// <summary>
+        /// Most of the time this will be <c>null</c>. But you can use this
+        /// property if you want to change only the external ID of a contact.
+        /// </summary>
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Id { get; set; }
+
         public ExternalIdentifierRequest() : base() { }
 
         public ExternalIdentifierRequest(string externalIdentifier)
