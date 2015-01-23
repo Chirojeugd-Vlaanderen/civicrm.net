@@ -62,6 +62,7 @@
     <Compile Include="AddressTest.cs" />
     <Compile Include="ContactTest.cs" />
     <Compile Include="GenericTest.cs" />
+    <Compile Include="RelationshipTest.cs" />
     <Compile Include="WebsiteTest.cs" />
   </ItemGroup>
   <ItemGroup>

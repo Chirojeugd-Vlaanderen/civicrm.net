@@ -115,6 +115,42 @@ namespace Chiro.CiviCrm.Api
         ApiResult AddressDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
+        /// Returns one or more relationships.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the relationships to find.</param>
+        /// <returns>The requested relationships</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=get&json={request}")]
+        ApiResultValues<Relationship> RelationshipGet(string apiKey, string key, BaseRequest request);
+
+        /// <summary>
+        /// Creates or updates the given <paramref name="relationship"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="relationship">Relationship to be saved</param>
+        /// <returns>A CiviResult containing the saved relationship.</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=create&sequential=1&json={relationship}")]
+        ApiResultValues<Relationship> RelationshipSave(string apiKey, string key, Relationship relationship);
+
+        /// <summary>
+        /// Deletes a relationship.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Request containing the RelationshipId.</param>
+        /// <returns>A CiviResult</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=delete&json={request}")]
+        ApiResult RelationshipDelete(string apiKey, string key, IdRequest request);
+
+        /// <summary>
         /// Returns one or more phone numbers.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>

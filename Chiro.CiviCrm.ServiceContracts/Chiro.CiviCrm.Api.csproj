@@ -49,11 +49,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BoolConverter.cs" />
+    <Compile Include="Converters\BuggyDateTimeConverter.cs" />
     <Compile Include="Converters\EnumIntConverter.cs" />
     <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
     <Compile Include="DataContracts\Entities\Email.cs" />
+    <Compile Include="DataContracts\Entities\Relationship.cs" />
     <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="DataContracts\Entities\Im.cs" />
     <Compile Include="DataContracts\Entities\Phone.cs" />

@@ -56,7 +56,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example8();
+            Example9();
 
             _factory.Close();
             Console.WriteLine("Press enter.");
@@ -357,6 +357,30 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // Delete contact
 
                 client.ContactDelete(ApiKey, SiteKey, new IdRequest(result.Id.Value), 1);
+            }
+        }
+
+        /// <summary>
+        /// Relationship example
+        /// </summary>
+        public static void Example9()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                var result = client.RelationshipGet(ApiKey, SiteKey, new IdRequest(12388));
+                var relationship = result.Values.FirstOrDefault();
+
+                if (relationship == null)
+                {
+                    Console.WriteLine("Relationship not found.");
+                }
+                else
+                {
+                    Console.WriteLine("Contact ID a: {0}", relationship.ContactIdA);
+                    Console.WriteLine("Contact ID b: {0}", relationship.ContactIdB);
+                    Console.WriteLine("Start date: {0}", relationship.StartDate);
+                    Console.WriteLine("End date: {0}", relationship.EndDate);
+                }
             }
         }
 
