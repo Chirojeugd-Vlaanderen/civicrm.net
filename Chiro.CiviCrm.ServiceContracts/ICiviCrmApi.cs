@@ -37,7 +37,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>If found, the unique contact statisfying the <paramref name="request"/>.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}&sequential=1")]
         Contact ContactGetSingle(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested contacts.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}&sequential=1")]
         ApiResultValues<Contact> ContactGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>A CiviResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&skip_undelete={skipUndelete}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&skip_undelete={skipUndelete}&sequential=1")]
         ApiResult ContactDelete(string apiKey, string key, IdRequest request, int skipUndelete);
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested addresses</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}&sequential=1")]
         ApiResultValues<Address> AdressesGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>A CiviResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&json={request}&sequential=1")]
         ApiResult AddressDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested relationships</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=get&json={request}&sequential=1")]
         ApiResultValues<Relationship> RelationshipGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>A CiviResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=delete&json={request}&sequential=1")]
         ApiResult RelationshipDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested phone numbers</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=get&json={request}&sequential=1")]
         ApiResultValues<Phone> PhoneGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An ApiResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=delete&json={request}&sequential=1")]
         ApiResult PhoneDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested e-mail addresses</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=get&json={request}&sequential=1")]
         ApiResultValues<Email> EmailGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An ApiResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=delete&json={request}&sequential=1")]
         ApiResult EmailDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested websites</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=get&json={request}&sequential=1")]
         ApiResultValues<Website> WebsiteGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An ApiResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=delete&json={request}&sequential=1")]
         ApiResult WebsiteDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -267,7 +267,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>The requested IM</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=get&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=get&json={request}&sequential=1")]
         ApiResultValues<Im> ImGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
@@ -291,7 +291,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An ApiResult</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=delete&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=delete&json={request}&sequential=1")]
         ApiResult ImDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -305,7 +305,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns></returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action={action}&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action={action}&json={request}&sequential=1")]
         ApiResult GenericCall(string apiKey, string key, CiviEntity entity, ApiAction action, BaseRequest request);
 
         /// <summary>
@@ -322,7 +322,7 @@ namespace Chiro.CiviCrm.Api
         /// <param name="result">This will contain the result.</param>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action=getsingle&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action=getsingle&json={request}&sequential=1")]
         Object GetSingle(string apiKey, string key, CiviEntity entity, BaseRequest request);
     }
 }

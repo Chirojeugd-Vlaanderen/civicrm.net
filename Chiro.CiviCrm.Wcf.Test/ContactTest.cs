@@ -21,6 +21,7 @@ using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
@@ -126,7 +127,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedGet = new[] { CiviEntity.Address }
+                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
                 });
                 Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
             }
@@ -141,8 +142,16 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = _myContact.ExternalIdentifier,
-                        ChainedGet = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Phone, new BaseRequest()},
+                                {CiviEntity.Email, new BaseRequest()},
+                                {CiviEntity.Website, new BaseRequest()},
+                                {CiviEntity.Im, new BaseRequest()}
+                            }
                     });
+                //new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
                 Assert.IsTrue(contact.ChainedPhones.Values.Any(src => src.Id == _myPhone.Id));
                 Assert.IsTrue(contact.ChainedEmails.Values.Any(src => src.Id == _myEmail.Id));
                 Assert.IsTrue(contact.ChainedWebsites.Values.Any(src => src.Id == _myWebsite.Id));
@@ -192,7 +201,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Website } });
+                    new IdRequest { Id = result.Id.Value, ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Website, new BaseRequest() } } });
 
                 Assert.AreEqual(result.Id, contact.Id);
                 Assert.AreEqual(1, contact.ChainedWebsites.Count);
@@ -236,7 +245,16 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Phone, CiviEntity.Website } });
+                    new IdRequest
+                    {
+                        Id = result.Id.Value,
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Phone, new BaseRequest()},
+                                {CiviEntity.Website, new BaseRequest()}
+                            }
+                    });
 
                 // Delete contact before doing assertions.
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
@@ -278,7 +296,16 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Phone, CiviEntity.Website } });
+                    new IdRequest
+                    {
+                        Id = result.Id.Value,
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Phone, new BaseRequest()},
+                                {CiviEntity.Website, new BaseRequest()}
+                            }
+                    });
 
                 // Delete contact before doing assertions.
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
@@ -315,7 +342,15 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest { Id = result.Id.Value, ChainedGet = new[] { CiviEntity.Website } });
+                    new IdRequest
+                    {
+                        Id = result.Id.Value,
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Website, new BaseRequest()}
+                            }
+                    });
                 Assert.IsNotNull(contact.Id);
 
                 // Clean up first (delete contact), then do other assertions.
@@ -404,5 +439,58 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.PreferredMailFormat, result.Values.First().PreferredMailFormat);
             }
         }
+
+        [TestMethod]
+        public void ChainedSearchRequest()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain website.
+                var my1StWebsite = new Website { Url = "http://smurf.com", WebsiteType = WebsiteType.Main};
+                var my2NdWebsite = new Website { Url = "http://salsaparilla.org", WebsiteType = WebsiteType.Work};
+
+                var newContact = new Contact
+                {
+                    LastName = "Smurf",
+                    FirstName = "Smul",
+                    ExternalIdentifier = "Test_External_Smurf",
+                    ApiOptions = new ApiOptions { Match = "external_identifier" },
+                    ChainedCreate = new List<Website> { my1StWebsite, my2NdWebsite }
+                };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
+                Debug.Assert(result.Id.HasValue);
+
+                // Get contact with main websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest
+                    {
+                        Id = result.Id.Value,
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Website, new CustomWebsiteRequest{WebsiteType = WebsiteType.Main}}
+                            }
+                    });
+                Assert.IsNotNull(contact.Id);
+
+                // Clean up first (delete contact), then do other assertions.
+                // (So the contact gets deleted even if the assertions fail.)
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id.Value), 1);
+
+                Assert.IsTrue(contact.ChainedWebsites.Values.All(w => w.WebsiteType == WebsiteType.Main));
+                Assert.IsTrue(contact.ChainedWebsites.Values.Any(w => w.Url == my1StWebsite.Url));
+            }
+        }
+
+    }
+
+    /// <summary>
+    /// Some custom request for testing.
+    /// </summary>
+    internal class CustomWebsiteRequest : BaseRequest
+    {
+        [JsonProperty(PropertyName = "website_type_id")]
+        public WebsiteType WebsiteType { get; set; }
     }
 }

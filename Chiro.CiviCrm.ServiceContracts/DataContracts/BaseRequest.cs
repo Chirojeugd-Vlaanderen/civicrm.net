@@ -44,16 +44,10 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public ApiOptions ApiOptions { get; set; }
 
         /// <summary>
-        /// This should be one, for correctly deserializing the API results.
-        /// </summary>
-        [JsonProperty("sequential")]
-        public int Sequential { get { return 1; } }
-
-        /// <summary>
         /// Indicates which chained entities to get.
         /// </summary>
         [JsonIgnore]
-        public CiviEntity[] ChainedGet { get; set; }
+        public Dictionary<CiviEntity, BaseRequest> ChainedGet { get; set; }
 
         /// <summary>
         /// Entities to be created in a chained call.
@@ -99,8 +93,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
 
                 if (ChainedGet != null)
                 {
-                    getChains = from entity in ChainedGet
-                            select String.Format("\"api.{0}.get\":{{}}", entity);
+                    getChains = from chainedCall in ChainedGet
+                            select String.Format("\"api.{0}.get\":{1}", chainedCall.Key, chainedCall.Value.ToJson());
                 }
 
                 if (ChainedCreate != null)

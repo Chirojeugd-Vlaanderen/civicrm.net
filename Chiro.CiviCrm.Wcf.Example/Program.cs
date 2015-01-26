@@ -119,10 +119,10 @@ namespace Chiro.CiviCrm.Wcf.Example
             {
                 // Get the contact, and chain the contact's addresses.
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
-                    {
-                        ExternalIdentifier = ExternalId,
-                        ChainedGet = new[] { CiviEntity.Address }
-                    });
+                {
+                    ExternalIdentifier = ExternalId,
+                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
+                });
 
                 // Keep the contact Id for later reference.
                 int contactId = contact.Id.Value;
@@ -163,7 +163,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedGet = new[] { CiviEntity.Address }
+                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
                 });
 
                 // Show adresses
@@ -177,7 +177,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 {
                     Id = contactId,
                     ReturnFields = "id",
-                    ChainedGet = new[] { CiviEntity.Address }
+                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
                 });
 
                 ShowAddresses(contact);
@@ -195,7 +195,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedGet = new[] { CiviEntity.Address }
+                        ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
                     });
 
                 // Exit if contact is not found.
@@ -219,7 +219,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    ChainedGet = new[] { CiviEntity.Address }
+                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
                 });
                 ShowContact(contact);
             }
@@ -345,7 +345,14 @@ namespace Chiro.CiviCrm.Wcf.Example
                     new ExternalIdentifierRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedGet = new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
+                        ChainedGet =
+                            new Dictionary<CiviEntity, BaseRequest>
+                            {
+                                {CiviEntity.Phone, new BaseRequest()},
+                                {CiviEntity.Email, new BaseRequest()},
+                                {CiviEntity.Im, new BaseRequest()},
+                                {CiviEntity.Website, new BaseRequest()}
+                            }
                     });
                 ShowContact(contact);
                 ShowCommunication(contact);
@@ -371,7 +378,11 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(ApiKey, SiteKey,
-                    new IdRequest {Id = result.Id.Value, ChainedGet = new[] {CiviEntity.Website}});
+                    new IdRequest
+                    {
+                        Id = result.Id.Value,
+                        ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Website, new BaseRequest()}}
+                    });
 
                 ShowContact(contact);
                 ShowCommunication(contact);

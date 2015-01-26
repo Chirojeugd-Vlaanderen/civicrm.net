@@ -47,6 +47,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     CountryId = 1020,   // Belgium
                     LocationTypeId = 1,
                 };
+                // If this fails, please turn off map and geocode services.
+                // (Adminis, System Settings, Maps)
                 var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
                 _myAddress = addressResult.Values.First();
             }
