@@ -25,8 +25,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] Phone,
         [EnumMember] Email,
         [EnumMember] Website,
-        [EnumMember] Im
-        // TODO: support more entities
+        [EnumMember] Im,
+        [EnumMember] Relationship,
     }
 
     [DataContract]

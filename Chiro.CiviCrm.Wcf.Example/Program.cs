@@ -23,6 +23,7 @@ using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Wcf.Example.Properties;
+using Newtonsoft.Json.Linq;
 
 namespace Chiro.CiviCrm.Wcf.Example
 {
@@ -37,7 +38,7 @@ namespace Chiro.CiviCrm.Wcf.Example
     class Program
     {
         // Put an existing external ID here:
-        private const string ExternalId = "29";
+        private const string ExternalId = "100461";
 
         // Get API key and site key from configuration.
         private static readonly string ApiKey = Settings.Default.ApiKey;
@@ -56,7 +57,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example9();
+            Example0_1();
 
             _factory.Close();
             Console.WriteLine("Press enter.");
@@ -83,6 +84,27 @@ namespace Chiro.CiviCrm.Wcf.Example
                     return;
                 }
 
+                ShowContact(contact);
+            }
+        }
+
+        /// <summary>
+        /// Gets a contact with the generic GetSingle.
+        /// </summary>
+        static void Example0_1()
+        {
+            using (var client = _factory.CreateChannel())
+            {
+                var result =
+                    client.GetSingle(ApiKey, SiteKey, CiviEntity.Contact, new ExternalIdentifierRequest(ExternalId)) as
+                        JObject;
+
+                if (result == null)
+                {
+                    Console.WriteLine("Contact not found.");
+                    return;
+                }
+                var contact = result.ToObject<Contact>();
                 ShowContact(contact);
             }
         }

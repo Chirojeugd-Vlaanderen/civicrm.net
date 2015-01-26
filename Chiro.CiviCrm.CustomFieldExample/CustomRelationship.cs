@@ -14,8 +14,8 @@
    limitations under the License.
  */
 
+using System.Collections.Generic;
 using System.Runtime.Serialization;
-using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
@@ -23,16 +23,17 @@ using Newtonsoft.Json;
 namespace Chiro.CiviCrm.Wcf.CustomFieldExample
 {
     /// <summary>
-    /// By inheriting from Contact, you can define your custom fields.
+    /// A relationship with a multi-value custom field.
     /// </summary>
     [JsonConvertible]
     [DataContract]
-    public class CustomContact: Contact
+    public class CustomRelatioship : Relationship
     {
         /// <summary>
-        /// Bind the member 'GapId' to the custom field custom_10.
+        /// Functies van het lid, met gelijkaardige representatie als
+        /// afdelingen. Bijvoorbeeld {{"GG1", "GG1"},{"FI", "FI"}}.
         /// </summary>
-        [DataMember(Name = "custom_10"), JsonProperty]
-        public int? GapId { get; set; }
+        [DataMember(Name = "custom_24"), JsonProperty]
+        public Dictionary<string, string> Functies { get; set; }
     }
 }
