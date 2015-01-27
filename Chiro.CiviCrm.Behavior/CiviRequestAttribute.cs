@@ -15,19 +15,15 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
     /// <summary>
-    /// Use this attribute to mark datacontracts that are to be converted to
-    /// Json by the JsonQueryStringConverter.
+    /// Use this attribute to mark classes that should be serialized to JSON for using
+    /// in the URL of a call of the CiviCRM-API.
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class JsonConvertibleAttribute: System.Attribute
+    public class CiviRequestAttribute: Attribute
     {
     }
 }

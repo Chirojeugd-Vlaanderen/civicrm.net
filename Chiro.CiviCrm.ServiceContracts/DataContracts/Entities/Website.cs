@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM Website.
     /// </summary>
     [DataContract]
-    [JsonConvertible]
+    [CiviRequest]
     public class Website : BaseRequest, IEntity
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

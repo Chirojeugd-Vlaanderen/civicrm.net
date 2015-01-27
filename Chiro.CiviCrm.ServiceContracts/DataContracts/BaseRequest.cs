@@ -28,7 +28,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// of 25. If you want to search for specific entities, you should inherit
     /// CiviRequest. (See e.g. CiviExternalIdentifierRequest.)
     /// </summary>
-    [JsonConvertible]
+    [CiviRequest]
     public class BaseRequest: ICustomJsonConversion
     {
         /// <summary>

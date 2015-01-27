@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
     /// <summary>
     /// By inheriting from Contact, you can define your custom fields.
     /// </summary>
-    [JsonConvertible]
+    [CiviRequest]
     [DataContract]
     public class CustomContact: Contact
     {

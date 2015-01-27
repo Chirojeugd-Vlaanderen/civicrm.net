@@ -27,7 +27,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM contact
     /// </summary>
     [DataContract]
-    [JsonConvertible]
+    [CiviRequest]
     public class Contact : BaseRequest, IEntity
     {
         [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]

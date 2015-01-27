@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
     /// <summary>
     /// A relationship with a multi-value custom field.
     /// </summary>
-    [JsonConvertible]
+    [CiviRequest]
     [DataContract]
     public class CustomRelatioship : Relationship
     {

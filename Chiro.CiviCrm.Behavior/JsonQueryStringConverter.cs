@@ -26,13 +26,13 @@ namespace Chiro.CiviCrm.BehaviorExtension
     {
         public override bool CanConvert(Type type)
         {
-            return (Attribute.GetCustomAttribute(type, typeof(JsonConvertibleAttribute)) != null)
+            return (Attribute.GetCustomAttribute(type, typeof(CiviRequestAttribute)) != null)
                 || base.CanConvert(type);
         }
 
         public override object ConvertStringToValue(string parameter, Type parameterType)
         {
-            if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
+            if (Attribute.GetCustomAttribute(parameterType, typeof(CiviRequestAttribute)) != null)
             {
                 // We don't need this client side. So I won't bother.
                 throw new NotImplementedException();
@@ -42,7 +42,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
 
         public override string ConvertValueToString(object parameter, Type parameterType)
         {
-            if (Attribute.GetCustomAttribute(parameterType, typeof(JsonConvertibleAttribute)) != null)
+            if (Attribute.GetCustomAttribute(parameterType, typeof(CiviRequestAttribute)) != null)
             {
                 if (parameter is ICustomJsonConversion)
                 {

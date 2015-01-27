@@ -22,7 +22,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// <summary>
     /// Some class that basically converts an ID to the json-part of the request url.
     /// </summary>
-    [JsonConvertible]
+    [CiviRequest]
     public class IdRequest: BaseRequest
     {
         [JsonProperty("id")]

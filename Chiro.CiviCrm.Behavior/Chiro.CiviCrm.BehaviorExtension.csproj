@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ICustomJsonConversion.cs" />
-    <Compile Include="JsonConvertibleAttribute.cs" />
+    <Compile Include="CiviRequestAttribute.cs" />
     <Compile Include="JsonQueryStringConverter.cs" />
     <Compile Include="MyRawMapper.cs" />
     <Compile Include="CiviWebHttpBehavior.cs" />

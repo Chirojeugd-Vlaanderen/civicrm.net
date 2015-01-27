@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM address.
     /// </summary>
     [DataContract]
-    [JsonConvertible]
+    [CiviRequest]
     public class Address: BaseRequest, IEntity
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
