@@ -22,6 +22,7 @@ using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.Wcf.Example.Properties;
 using Newtonsoft.Json.Linq;
 
@@ -57,7 +58,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             // Just use any usable endpoint in the config file.
             _factory = new ChannelFactory<ICiviCrmApi>("*");
    
-            Example0_1();
+            Example9();
 
             _factory.Close();
             Console.WriteLine("Press enter.");
@@ -72,7 +73,7 @@ namespace Chiro.CiviCrm.Wcf.Example
             using (var client = _factory.CreateChannel())
             {
                 // Get the contact, and chain the contact's addresses.
-                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
+                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     ExternalIdentifier = ExternalId
                 });
@@ -96,8 +97,8 @@ namespace Chiro.CiviCrm.Wcf.Example
             using (var client = _factory.CreateChannel())
             {
                 var result =
-                    client.GetSingle(ApiKey, SiteKey, CiviEntity.Contact, new ExternalIdentifierRequest(ExternalId)) as
-                        JObject;
+                    client.GetSingle(ApiKey, SiteKey, CiviEntity.Contact,
+                        new ContactRequest {ExternalIdentifier = ExternalId}) as JObject;
 
                 if (result == null)
                 {
@@ -118,10 +119,10 @@ namespace Chiro.CiviCrm.Wcf.Example
             using (var client = _factory.CreateChannel())
             {
                 // Get the contact, and chain the contact's addresses.
-                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
+                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
+                    AddressGetRequest = new BaseRequest()
                 });
 
                 // Keep the contact Id for later reference.
@@ -154,7 +155,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // Get contact again, to find out whether the address 
                 // has been added.
                 // Note that we now use the CiviCRM contact ID.
-                contact = client.ContactGetSingle(ApiKey, SiteKey, new IdRequest
+                contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     Id = contactId,
                     // We don't need all fields of the contact, we are only interested in the
@@ -163,7 +164,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
+                    AddressGetRequest = new BaseRequest()
                 });
 
                 // Show adresses
@@ -173,11 +174,11 @@ namespace Chiro.CiviCrm.Wcf.Example
                 client.AddressDelete(ApiKey, SiteKey, new IdRequest(newAddress.Id.Value));
 
                 // Get the adresses again, to verify that the new address is gone.
-                contact = client.ContactGetSingle(ApiKey, SiteKey, new IdRequest
+                contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     Id = contactId,
                     ReturnFields = "id",
-                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
+                    AddressGetRequest = new BaseRequest()
                 });
 
                 ShowAddresses(contact);
@@ -192,10 +193,10 @@ namespace Chiro.CiviCrm.Wcf.Example
             using (var client = _factory.CreateChannel())
             {
                 // Get the contact, and chain the contact's addresses.
-                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
+                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
+                        AddressGetRequest = new BaseRequest()
                     });
 
                 // Exit if contact is not found.
@@ -213,13 +214,14 @@ namespace Chiro.CiviCrm.Wcf.Example
                 // Change first name and birth date:
                 contact.FirstName = "Jos";
                 contact.BirthDate = new DateTime(1979, 3, 3);
-                client.ContactSave(ApiKey, SiteKey, contact);
+                client.ContactSave(ApiKey, SiteKey,
+                    new ContactRequest {Id = contactId, FirstName = "Jos", BirthDate = new DateTime(1979, 3, 3)});
 
                 // Get contact again, to see whether it has worked.
-                contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest
+                contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Address, new BaseRequest() } }
+                    AddressGetRequest = new BaseRequest()
                 });
                 ShowContact(contact);
             }
@@ -233,7 +235,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = _factory.CreateChannel())
             {
-                var contact = new Contact
+                var contactRequest = new ContactRequest
                 {
                     ExternalIdentifier = ExternalId,
                     FirstName = "Wesley",
@@ -243,14 +245,14 @@ namespace Chiro.CiviCrm.Wcf.Example
                 };
 
                 client.ContactSave(
-                    ApiKey, SiteKey, contact 
+                    ApiKey, SiteKey, contactRequest 
                     );
 
                 // Get the contact again. First name and last name
                 // should be updated. Other info should still be
                 // there.
 
-                contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest(ExternalId));
+                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest {ExternalIdentifier = ExternalId});
                 ShowContact(contact);
             }
         }
@@ -262,19 +264,27 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = _factory.CreateChannel())
             {
-                var contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest(ExternalId));
+                var contact = client.ContactGetSingle(ApiKey, SiteKey,
+                    new ContactRequest {ExternalIdentifier = ExternalId});
                 ShowContact(contact);
 
                 contact.Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male;
                 contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
-                
+
                 var result = client.ContactSave(
-                    ApiKey, SiteKey, contact
+                    ApiKey, SiteKey, new ContactRequest
+                    {
+                        Id = contact.Id,
+                        Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male,
+                        PreferredMailFormat =
+                            contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML
+                    }
                     );
 
                 // Get contact again to check.
 
-                contact = client.ContactGetSingle(ApiKey, SiteKey, new ExternalIdentifierRequest(ExternalId));
+                contact = client.ContactGetSingle(ApiKey, SiteKey,
+                    new ContactRequest {ExternalIdentifier = ExternalId});
                 ShowContact(contact);
             }
         }
@@ -286,7 +296,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = _factory.CreateChannel())
             {
-                var contact = new Contact
+                var contact = new ContactRequest
                 {
                     ContactType = ContactType.Individual,
                     FirstName = "Lucky",
@@ -311,7 +321,8 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = _factory.CreateChannel())
             {
-                var contactResult = client.ContactGet(ApiKey, SiteKey, new ExternalIdentifierRequest(ExternalId));
+                var contactResult = client.ContactGet(ApiKey, SiteKey,
+                    new ContactRequest {ExternalIdentifier = ExternalId});
 
                 var website = new Website
                 {
@@ -342,17 +353,13 @@ namespace Chiro.CiviCrm.Wcf.Example
             using (var client = _factory.CreateChannel())
             {
                 var contact = client.ContactGetSingle(ApiKey, SiteKey,
-                    new ExternalIdentifierRequest
+                    new ContactRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Phone, new BaseRequest()},
-                                {CiviEntity.Email, new BaseRequest()},
-                                {CiviEntity.Im, new BaseRequest()},
-                                {CiviEntity.Website, new BaseRequest()}
-                            }
+                        PhoneGetRequest = new BaseRequest(),
+                        EmailGetRequest = new BaseRequest(),
+                        ImGetRequest = new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
                     });
                 ShowContact(contact);
                 ShowCommunication(contact);
@@ -368,20 +375,21 @@ namespace Chiro.CiviCrm.Wcf.Example
             {
                 // Create a contact, chain website.
                 var result = client.ContactSave(ApiKey, SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         LastName = "Smurf",
                         FirstName = "Smul",
-                        ChainedCreate = new List<Website> {new Website {Url = "http://smurf.com"}}
+                        WebsiteSaveRequest = new List<BaseRequest> {new Website {Url = "http://smurf.com"}}
                     });
                 Debug.Assert(result.Id.HasValue);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(ApiKey, SiteKey,
-                    new IdRequest
+                    new ContactRequest
                     {
                         Id = result.Id.Value,
-                        ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Website, new BaseRequest()}}
+                        WebsiteGetRequest = new BaseRequest()
                     });
 
                 ShowContact(contact);
@@ -419,30 +427,30 @@ namespace Chiro.CiviCrm.Wcf.Example
 
         private static void ShowCommunication(Contact contact)
         {
-            if (contact.ChainedPhones != null && contact.ChainedPhones.Count > 0)
+            if (contact.PhoneResult != null && contact.PhoneResult.Count > 0)
             {
-                foreach (var p in contact.ChainedPhones.Values)
+                foreach (var p in contact.PhoneResult.Values)
                 {
                     Console.WriteLine("Phone ({0}): {1}", p.PhoneType, p.PhoneNumber);
                 }
             }
-            if (contact.ChainedEmails != null && contact.ChainedEmails.Count > 0)
+            if (contact.EmailResult != null && contact.EmailResult.Count > 0)
             {
-                foreach (var e in contact.ChainedEmails.Values)
+                foreach (var e in contact.EmailResult.Values)
                 {
                     Console.WriteLine("E-mail ({0}): {1}", e.LocationTypeId, e.EmailAddress);
                 }
             }
-            if (contact.ChainedWebsites != null && contact.ChainedWebsites.Count > 0)
+            if (contact.WebsiteResult != null && contact.WebsiteResult.Count > 0)
             {
-                foreach (var w in contact.ChainedWebsites.Values)
+                foreach (var w in contact.WebsiteResult.Values)
                 {
                     Console.WriteLine("Website ({0}): {1}", w.WebsiteType, w.Url);
                 }
             }
-            if (contact.ChainedIms != null && contact.ChainedIms.Count > 0)
+            if (contact.ImResult != null && contact.ImResult.Count > 0)
             {
-                foreach (var im in contact.ChainedIms.Values)
+                foreach (var im in contact.ImResult.Values)
                 {
                     Console.WriteLine("{0}: {1}", im.Provider, im.Name);
                 }
@@ -464,7 +472,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         private static void ShowAddresses(Contact c)
         {
             Console.WriteLine("\nAddresses:");
-            foreach (var a in c.ChainedAddresses.Values)
+            foreach (var a in c.AddressResult.Values)
             {
                 Console.WriteLine(
                     "  Address {0}: {1}, {2} {5} {3} - {4},{6}", 

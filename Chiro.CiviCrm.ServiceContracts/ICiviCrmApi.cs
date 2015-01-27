@@ -19,6 +19,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 
 namespace Chiro.CiviCrm.Api
 {
@@ -38,7 +39,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=getsingle&json={request}&sequential=1")]
-        Contact ContactGetSingle(string apiKey, string key, BaseRequest request);
+        Contact ContactGetSingle(string apiKey, string key, ContactRequest request);
 
         /// <summary>
         /// Find one or more contacts.
@@ -50,7 +51,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}&sequential=1")]
-        ApiResultValues<Contact> ContactGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Contact> ContactGet(string apiKey, string key, ContactRequest request);
 
         /// <summary>
         /// Deletes a contact.
@@ -76,7 +77,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}")]
-        ApiResultValues<Contact> ContactSave(string apiKey, string key, Contact contact);
+        ApiResultValues<Contact> ContactSave(string apiKey, string key, ContactRequest contact);
 
         /// <summary>
         /// Returns one or more addresses.

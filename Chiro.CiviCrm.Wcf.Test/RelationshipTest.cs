@@ -20,6 +20,7 @@ using System.Linq;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chiro.CiviCrm.Wcf.Test
@@ -40,7 +41,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result1 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
                         FirstName = "Joe",
                         LastName = "Schmoe",
@@ -52,7 +53,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 _myContactId = _myContact.Id.Value;
 
                 var result2 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
                         ContactType = ContactType.Organization,
                         OrganizationName = "Schmoe inc."

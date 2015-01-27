@@ -15,7 +15,7 @@
  */
 
 using System.Linq;
-using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chiro.CiviCrm.Wcf.Test
@@ -32,7 +32,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Get the contact, and chain the contact's addresses.
-                var resultValue = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(1));
+                var resultValue = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, new ContactRequest {Id = 1});
 
                 Assert.AreEqual(0, resultValue.IsError);
                 Assert.AreEqual(1, resultValue.Count);

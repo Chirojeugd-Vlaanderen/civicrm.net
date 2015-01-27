@@ -19,6 +19,7 @@ using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chiro.CiviCrm.Wcf.Test
@@ -36,7 +37,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
                         FirstName = "Joe",
                         LastName = "Schmoe",
@@ -69,7 +70,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         [TestMethod]
         public void ChangeOnlyExternalIdentifier()
         {
-            var request = new ExternalIdentifierRequest
+            var request = new ContactRequest
             {
                 Id = _myContactId,
                 ExternalIdentifier = "Unit_Test_New_External_ID"
@@ -82,7 +83,8 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact again, to check whether all went fine.
 
-                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myContactId));
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest {Id = _myContactId});
 
                 Assert.AreEqual(request.ExternalIdentifier, contact.ExternalIdentifier);
                 Assert.AreEqual(_myContact.FirstName, contact.FirstName);

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014, 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,9 +14,6 @@
    limitations under the License.
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
@@ -29,7 +26,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     /// CiviRequest. (See e.g. CiviExternalIdentifierRequest.)
     /// </summary>
     [CiviRequest]
-    public class BaseRequest: ICustomJsonConversion
+    public class BaseRequest
     {
         /// <summary>
         /// Fields to return after the call.
@@ -42,82 +39,5 @@ namespace Chiro.CiviCrm.Api.DataContracts
         /// </summary>
         [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
         public ApiOptions ApiOptions { get; set; }
-
-        /// <summary>
-        /// Indicates which chained entities to get.
-        /// </summary>
-        [JsonIgnore]
-        public Dictionary<CiviEntity, BaseRequest> ChainedGet { get; set; }
-
-        /// <summary>
-        /// Entities to be created in a chained call.
-        /// </summary>
-        /// <remarks>
-        /// This is an enumerable and not a list, so that you can directly assign a
-        /// list of e.g. addresses, without needing a cast.
-        /// </remarks>
-        [JsonIgnore]
-        public IEnumerable<IEntity> ChainedCreate { get; set; }
-
-        /// <summary>
-        /// Dummy property we will serialize if we need to chain.
-        /// </summary>
-        [JsonProperty("chains.placeholder", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ChainsPlaceholder { get; private set; }
-
-        public BaseRequest()
-        {
-            ChainsPlaceholder = null;
-        }
-
-        /// <summary>
-        /// Converts the request to Json for the API.
-        /// </summary>
-        /// <returns>A Json-representation of this request.</returns>
-        public string ToJson()
-        {
-            // There might be some functionality in Json.Net that can do this
-            // in a more elegant way.
-
-            string chains;
-
-            if ((ChainedGet == null || !ChainedGet.Any()) && (ChainedCreate == null || !ChainedCreate.Any()))
-            {
-                chains = String.Empty;
-                ChainsPlaceholder = null;
-            }
-            else
-            {
-                IEnumerable<String> getChains = new string[0];
-                IEnumerable<String> createChains = new string[0];
-
-                if (ChainedGet != null)
-                {
-                    getChains = from chainedCall in ChainedGet
-                            select String.Format("\"api.{0}.get\":{1}", chainedCall.Key, chainedCall.Value.ToJson());
-                }
-
-                if (ChainedCreate != null)
-                {
-                    createChains = from entity in ChainedCreate
-                        group entity by entity.GetType()
-                        into g
-                        select
-                            String.Format("\"api.{0}.create\":{1}", g.Key.Name,
-                                // serialize as entity if there is only one chained entity of the given type,
-                                // otherwise serialize as collection.
-                                g.Count() == 1 ? JsonConvert.SerializeObject(g.First()) : JsonConvert.SerializeObject(g));
-                }
-                chains = String.Join(",", getChains.Union(createChains));
-                ChainsPlaceholder = 1;
-            }
-            string json = JsonConvert.SerializeObject(this);
-
-            // if no chaining is needed, chains.placeholder will not be
-            // serialized. In that case the replace command below won't do a thing.
-            json = json.Replace("\"chains.placeholder\":1", chains);
-
-            return json;
-        }
     }
 }

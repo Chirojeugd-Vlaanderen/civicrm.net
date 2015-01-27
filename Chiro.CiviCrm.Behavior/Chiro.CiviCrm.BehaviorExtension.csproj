@@ -49,7 +49,6 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ICustomJsonConversion.cs" />
     <Compile Include="CiviRequestAttribute.cs" />
     <Compile Include="JsonQueryStringConverter.cs" />
     <Compile Include="MyRawMapper.cs" />

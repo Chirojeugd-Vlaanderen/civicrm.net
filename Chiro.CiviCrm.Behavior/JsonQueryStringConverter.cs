@@ -2,7 +2,7 @@
 using System.ServiceModel.Dispatcher;
 using Newtonsoft.Json;
 /*
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013, 2014, 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -42,21 +42,14 @@ namespace Chiro.CiviCrm.BehaviorExtension
 
         public override string ConvertValueToString(object parameter, Type parameterType)
         {
-            if (Attribute.GetCustomAttribute(parameterType, typeof(CiviRequestAttribute)) != null)
+            if (Attribute.GetCustomAttribute(parameterType, typeof (CiviRequestAttribute)) == null)
             {
-                if (parameter is ICustomJsonConversion)
-                {
-                    return ((ICustomJsonConversion)parameter).ToJson();
-                }
-                else
-                {
-                    return JsonConvert.SerializeObject(parameter);
-                }
-            }
-            else
-            {
+                // No CiviCRM request. Just convert as usual.
                 return base.ConvertValueToString(parameter, parameterType);
             }
+
+            string json = JsonConvert.SerializeObject(parameter);
+            return json;
         }
     }
 }

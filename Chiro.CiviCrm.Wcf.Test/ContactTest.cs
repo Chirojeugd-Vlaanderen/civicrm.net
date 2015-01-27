@@ -16,10 +16,12 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
 
@@ -44,8 +46,9 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         FirstName = "Joe",
                         LastName = "Schmoe",
                         ExternalIdentifier = "Unit_Test_External_ID",
@@ -118,7 +121,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new ContactRequest
                 {
                     Id = _myContactId,
                     // We don't need all fields of the contact, we are only interested in the
@@ -127,9 +130,9 @@ namespace Chiro.CiviCrm.Wcf.Test
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    ChainedGet = new Dictionary<CiviEntity, BaseRequest> {{CiviEntity.Address, new BaseRequest()}}
+                    AddressGetRequest =  new BaseRequest()
                 });
-                Assert.IsTrue(contact.ChainedAddresses.Values.Any(adr => adr.Id == _myAddress.Id));
+                Assert.IsTrue(contact.AddressResult.Values.Any(adr => adr.Id == _myAddress.Id));
             }
         }
 
@@ -139,23 +142,19 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new ExternalIdentifierRequest
+                    new ContactRequest
                     {
                         ExternalIdentifier = _myContact.ExternalIdentifier,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Phone, new BaseRequest()},
-                                {CiviEntity.Email, new BaseRequest()},
-                                {CiviEntity.Website, new BaseRequest()},
-                                {CiviEntity.Im, new BaseRequest()}
-                            }
+                        PhoneGetRequest = new BaseRequest(),
+                        EmailGetRequest = new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
+                        ImGetRequest = new BaseRequest()
                     });
                 //new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
-                Assert.IsTrue(contact.ChainedPhones.Values.Any(src => src.Id == _myPhone.Id));
-                Assert.IsTrue(contact.ChainedEmails.Values.Any(src => src.Id == _myEmail.Id));
-                Assert.IsTrue(contact.ChainedWebsites.Values.Any(src => src.Id == _myWebsite.Id));
-                Assert.IsTrue(contact.ChainedIms.Values.Any(src => src.Id == _myIm.Id));
+                Assert.IsTrue(contact.PhoneResult.Values.Any(src => src.Id == _myPhone.Id));
+                Assert.IsTrue(contact.EmailResult.Values.Any(src => src.Id == _myEmail.Id));
+                Assert.IsTrue(contact.WebsiteResult.Values.Any(src => src.Id == _myWebsite.Id));
+                Assert.IsTrue(contact.ImResult.Values.Any(src => src.Id == _myIm.Id));
             }
         }
 
@@ -165,18 +164,16 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId));
+                    new ContactRequest {Id = _myContactId});
 
-                contact.FirstName = "Eddy";
-                contact.BirthDate = new DateTime(1980, 8, 22);
-
-                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest {Id = _myContactId, FirstName = "Eddy", BirthDate = new DateTime(1980, 8, 22)});
 
                 Assert.AreEqual(0, result.IsError);
                 Assert.AreEqual(contact.Id, result.Id);
                 Assert.AreEqual(contact.Id, result.Values.First().Id);
-                Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
-                Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
+                Assert.AreEqual("Eddy", result.Values.First().FirstName);
+                Assert.AreEqual(new DateTime(1980, 8, 22), result.Values.First().BirthDate);
             }
         }
 
@@ -189,23 +186,24 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var myWebsite = new Website {Url = "http://smurf.com"};
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         LastName = "Smurf",
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions {Match = "external_identifier"},
-                        ChainedCreate = new List<Website> { myWebsite }
+                        WebsiteSaveRequest = new List<Website> { myWebsite }
                     });
                 Debug.Assert(result.Id.HasValue);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest { Id = result.Id.Value, ChainedGet = new Dictionary<CiviEntity, BaseRequest> { { CiviEntity.Website, new BaseRequest() } } });
+                    new ContactRequest {Id = result.Id.Value, WebsiteGetRequest = new BaseRequest()});
 
                 Assert.AreEqual(result.Id, contact.Id);
-                Assert.AreEqual(1, contact.ChainedWebsites.Count);
-                Assert.AreEqual(myWebsite.Url, contact.ChainedWebsites.Values.First().Url);
+                Assert.AreEqual(1, contact.WebsiteResult.Count);
+                Assert.AreEqual(myWebsite.Url, contact.WebsiteResult.Values.First().Url);
 
                 // Delete contact
 
@@ -231,39 +229,36 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var myWebsite = new Website { Url = "http://smurf.com" };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
                         LastName = "Smurf",
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions { Match = "external_identifier" },
-                        ChainedCreate = new List<IEntity> { myPhone, myWebsite }
+                        PhoneSaveRequest = new List<Phone> {myPhone},
+                        WebsiteSaveRequest = new List<Website> { myWebsite }
                     });
 
-                // This crashes because of upstream issue CRM-15815:
-                Debug.Assert(result.Id.HasValue);
+                // TODO: New workaround for upstream issue CRM-15815:
+                Assert.IsNotNull(result.Id);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest
+                    new ContactRequest
                     {
                         Id = result.Id.Value,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Phone, new BaseRequest()},
-                                {CiviEntity.Website, new BaseRequest()}
-                            }
+                        PhoneGetRequest =  new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
                     });
 
                 // Delete contact before doing assertions.
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
-                Assert.AreEqual(1, contact.ChainedPhones.Count);
-                Assert.AreEqual(myPhone.PhoneNumber, contact.ChainedPhones.Values.First().PhoneNumber);
-                Assert.AreEqual(1, contact.ChainedWebsites.Count);
-                Assert.AreEqual(myWebsite.Url, contact.ChainedWebsites.Values.First().Url);
+                Assert.AreEqual(1, contact.PhoneResult.Count);
+                Assert.AreEqual(myPhone.PhoneNumber, contact.PhoneResult.Values.First().PhoneNumber);
+                Assert.AreEqual(1, contact.WebsiteResult.Count);
+                Assert.AreEqual(myWebsite.Url, contact.WebsiteResult.Values.First().Url);
             }
         }
 
@@ -282,13 +277,15 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var myWebsite2 = new Website { Url = "http://smurf.org" };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact
+                    new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         LastName = "Smurf",
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
-                        ApiOptions = new ApiOptions { Match = "external_identifier" },
-                        ChainedCreate = new List<IEntity> { myWebsite1, myWebsite2, myPhone }
+                        ApiOptions = new ApiOptions {Match = "external_identifier"},
+                        WebsiteSaveRequest = new List<BaseRequest> {myWebsite1, myWebsite2},
+                        PhoneSaveRequest = new List<BaseRequest> {myPhone},
                     });
 
                 // This crashes because of upstream issue CRM-15815:
@@ -296,26 +293,22 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest
+                    new ContactRequest
                     {
                         Id = result.Id.Value,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Phone, new BaseRequest()},
-                                {CiviEntity.Website, new BaseRequest()}
-                            }
+                        PhoneGetRequest = new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
                     });
 
                 // Delete contact before doing assertions.
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
-                Assert.AreEqual(1, contact.ChainedPhones.Count);
-                Assert.AreEqual(myPhone.PhoneNumber, contact.ChainedPhones.Values.First().PhoneNumber);
-                Assert.AreEqual(1, contact.ChainedWebsites.Count);
-                Assert.AreEqual(myWebsite1.Url, contact.ChainedWebsites.Values.First().Url);
-                Assert.AreEqual(myWebsite2.Url, contact.ChainedWebsites.Values.First().Url);
+                Assert.AreEqual(1, contact.PhoneResult.Count);
+                Assert.AreEqual(myPhone.PhoneNumber, contact.PhoneResult.Values.First().PhoneNumber);
+                Assert.AreEqual(1, contact.WebsiteResult.Count);
+                Assert.AreEqual(myWebsite1.Url, contact.WebsiteResult.Values.First().Url);
+                Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.First().Url);
             }
         }
 
@@ -328,13 +321,14 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var my1StWebsite = new Website { Url = "http://smurf.com" };
                 var my2NdWebsite = new Website {Url = "http://salsaparilla.org"};
 
-                var newContact = new Contact
+                var newContact = new ContactRequest
                 {
+                    ContactType = ContactType.Individual,
                     LastName = "Smurf",
                     FirstName = "Smul",
                     ExternalIdentifier = "Test_External_Smurf",
                     ApiOptions = new ApiOptions {Match = "external_identifier"},
-                    ChainedCreate = new List<Website> {my1StWebsite, my2NdWebsite}
+                    WebsiteSaveRequest = new List<BaseRequest> {my1StWebsite, my2NdWebsite},
                 };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
@@ -342,14 +336,10 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest
+                    new ContactRequest
                     {
                         Id = result.Id.Value,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Website, new BaseRequest()}
-                            }
+                        WebsiteGetRequest = new BaseRequest()
                     });
                 Assert.IsNotNull(contact.Id);
 
@@ -359,9 +349,9 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 Assert.IsNotNull(contact.Id);
                 Assert.AreEqual(newContact.ExternalIdentifier, contact.ExternalIdentifier);
-                Assert.AreEqual(2, contact.ChainedWebsites.Count);
-                Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my1StWebsite.Url));
-                Assert.IsTrue(contact.ChainedWebsites.Values.Any(ws => ws.Url == my2NdWebsite.Url));
+                Assert.AreEqual(2, contact.WebsiteResult.Count);
+                Assert.IsTrue(contact.WebsiteResult.Values.Any(ws => ws.Url == my1StWebsite.Url));
+                Assert.IsTrue(contact.WebsiteResult.Values.Any(ws => ws.Url == my2NdWebsite.Url));
             }
         }
 
@@ -370,7 +360,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var contact = new Contact
+                var contact = new ContactRequest
                 {
                     ContactType = ContactType.Individual,
                     FirstName = "Lucky",
@@ -400,8 +390,9 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var contact = new Contact
+                var contact = new ContactRequest
                 {
+                    ContactType = ContactType.Individual,
                     ExternalIdentifier = _myContact.ExternalIdentifier,
                     FirstName = "Wesley",
                     LastName = "Decabooter",
@@ -425,18 +416,22 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new ExternalIdentifierRequest(_myContact.ExternalIdentifier));
+                    new ContactRequest {ExternalIdentifier = _myContact.ExternalIdentifier});
 
-                contact.Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male;
-                contact.PreferredMailFormat = contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML;
-
-                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        Id = contact.Id,
+                        Gender = contact.Gender == Gender.Male ? Gender.Female : Gender.Male,
+                        PreferredMailFormat =
+                            contact.PreferredMailFormat == MailFormat.HTML ? MailFormat.Text : MailFormat.HTML
+                    });
 
                 Assert.AreEqual(0, result.IsError);
                 Assert.AreEqual(_myContact.Id, result.Id);
                 Assert.AreEqual(_myContact.Id, result.Values.First().Id);
-                Assert.AreEqual(contact.Gender, result.Values.First().Gender);
-                Assert.AreEqual(contact.PreferredMailFormat, result.Values.First().PreferredMailFormat);
+                Assert.AreNotEqual(contact.Gender, result.Values.First().Gender);
+                Assert.AreNotEqual(contact.PreferredMailFormat, result.Values.First().PreferredMailFormat);
             }
         }
 
@@ -449,13 +444,14 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var my1StWebsite = new Website { Url = "http://smurf.com", WebsiteType = WebsiteType.Main};
                 var my2NdWebsite = new Website { Url = "http://salsaparilla.org", WebsiteType = WebsiteType.Work};
 
-                var newContact = new Contact
+                var newContact = new ContactRequest
                 {
+                    ContactType = ContactType.Individual,
                     LastName = "Smurf",
                     FirstName = "Smul",
                     ExternalIdentifier = "Test_External_Smurf",
                     ApiOptions = new ApiOptions { Match = "external_identifier" },
-                    ChainedCreate = new List<Website> { my1StWebsite, my2NdWebsite }
+                    WebsiteSaveRequest = new List<BaseRequest> { my1StWebsite, my2NdWebsite }
                 };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
@@ -463,14 +459,10 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Get contact with main websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest
+                    new ContactRequest
                     {
                         Id = result.Id.Value,
-                        ChainedGet =
-                            new Dictionary<CiviEntity, BaseRequest>
-                            {
-                                {CiviEntity.Website, new CustomWebsiteRequest{WebsiteType = WebsiteType.Main}}
-                            }
+                        WebsiteGetRequest = new Website {WebsiteType = WebsiteType.Main}
                     });
                 Assert.IsNotNull(contact.Id);
 
@@ -478,8 +470,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                 // (So the contact gets deleted even if the assertions fail.)
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id.Value), 1);
 
-                Assert.IsTrue(contact.ChainedWebsites.Values.All(w => w.WebsiteType == WebsiteType.Main));
-                Assert.IsTrue(contact.ChainedWebsites.Values.Any(w => w.Url == my1StWebsite.Url));
+                Assert.IsTrue(contact.WebsiteResult.Values.All(w => w.WebsiteType == WebsiteType.Main));
+                Assert.IsTrue(contact.WebsiteResult.Values.Any(w => w.Url == my1StWebsite.Url));
             }
         }
 

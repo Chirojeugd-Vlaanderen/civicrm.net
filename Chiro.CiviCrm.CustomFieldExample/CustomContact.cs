@@ -15,8 +15,8 @@
  */
 
 using System.Runtime.Serialization;
-using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
@@ -26,8 +26,17 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
     /// By inheriting from Contact, you can define your custom fields.
     /// </summary>
     [CiviRequest]
+    public class CustomContactRequest: ContactRequest
+    {
+        /// <summary>
+        /// Bind the member 'GapId' to the custom field custom_10.
+        /// </summary>
+        [JsonProperty("custom_10", NullValueHandling = NullValueHandling.Ignore)]
+        public int? GapId { get; set; }
+    }
+
     [DataContract]
-    public class CustomContact: Contact
+    public class CustomContact : Contact
     {
         /// <summary>
         /// Bind the member 'GapId' to the custom field custom_10.
@@ -35,4 +44,5 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
         [DataMember(Name = "custom_10"), JsonProperty]
         public int? GapId { get; set; }
     }
+
 }

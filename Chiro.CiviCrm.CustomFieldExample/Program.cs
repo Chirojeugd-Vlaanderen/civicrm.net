@@ -38,7 +38,7 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
 
         static void Main(string[] args)
         {
-            Example1();
+            Example2();
             Console.WriteLine("Press enter.");
             Console.ReadLine();
         }
@@ -84,7 +84,7 @@ namespace Chiro.CiviCrm.Wcf.CustomFieldExample
         /// </summary>
         public static void Example2()
         {
-            var customContact = new CustomContact
+            var customContact = new CustomContactRequest
             {
                 ContactType = ContactType.Individual,
                 Gender = Gender.Male,

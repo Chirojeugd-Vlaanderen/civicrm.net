@@ -18,6 +18,7 @@ using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Chiro.CiviCrm.Wcf.Test
@@ -33,8 +34,10 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
+                // ContactType seems to be mandatory for a create action of the CiviCRM
+                // contact api.
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Contact {FirstName = "Joe", LastName = "Schmoe"});
+                    new ContactRequest {ContactType = ContactType.Individual, FirstName = "Joe", LastName = "Schmoe"});
                 _myContact = result.Values.First();
                 // TODO: chain this address creation.
                 // (As soon as write chaining is supported.)

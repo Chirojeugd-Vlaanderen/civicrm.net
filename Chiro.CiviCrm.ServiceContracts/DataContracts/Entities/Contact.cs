@@ -28,7 +28,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     [DataContract]
     [CiviRequest]
-    public class Contact : BaseRequest, IEntity
+    public class Contact : IEntity
     {
         [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -216,14 +216,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         // I think chaining should be handled in a more elegant way.
         // But I am not sure how it can be done.
         [DataMember(Name = "api.Address.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiResultValues<Address> ChainedAddresses { get; set; }
+        public ApiResultValues<Address> AddressResult { get; set; }
         [DataMember(Name = "api.Phone.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiResultValues<Phone> ChainedPhones { get; set; }
+        public ApiResultValues<Phone> PhoneResult { get; set; }
         [DataMember(Name = "api.Email.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiResultValues<Email> ChainedEmails { get; set; }
+        public ApiResultValues<Email> EmailResult { get; set; }
         [DataMember(Name = "api.Website.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiResultValues<Website> ChainedWebsites { get; set; }
+        public ApiResultValues<Website> WebsiteResult { get; set; }
         [DataMember(Name = "api.Im.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public ApiResultValues<Im> ChainedIms { get; set; }
+        public ApiResultValues<Im> ImResult { get; set; }
     }
 }
