@@ -292,7 +292,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // This crashes because of upstream issue CRM-15815:
-                Debug.Assert(result.Id.HasValue);
+                Assert.IsNotNull(result.Id);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
