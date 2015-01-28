@@ -39,6 +39,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         FirstName = "Joe",
                         LastName = "Schmoe",
                         ExternalIdentifier = "Unit_Test_External_ID",
