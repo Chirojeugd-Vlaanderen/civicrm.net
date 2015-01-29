@@ -23,6 +23,13 @@ using Newtonsoft.Json.Converters;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
+    /// <summary>
+    /// Information for a get or create operation on a contact.
+    /// </summary>
+    /// <remarks>
+    /// This class has the same properties as Contact (or better: can have), but they
+    /// are all nullable, and all have NullValueHandling.Ignore.
+    /// </remarks>
     [CiviRequest]
     public class ContactRequest: BaseRequest
     {
@@ -55,6 +62,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("birth_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? BirthDate { get; set; }
 
+        [JsonProperty("is_deceased", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool IsDeceased { get; set; }
         [JsonProperty("deceased_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DeceasedDate { get; set; }
 
@@ -66,6 +76,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.address.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest AddressGetRequest { get; set; }
 
+        [JsonProperty("api.address.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<BaseRequest> AddressSaveRequest { get; set; }
+
         [JsonProperty("api.phone.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest PhoneGetRequest { get; set; }
 
@@ -75,6 +88,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.email.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest EmailGetRequest { get; set; }
 
+        [JsonProperty("api.email.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<BaseRequest> EmailSaveRequest { get; set; }
+
         [JsonProperty("api.website.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest WebsiteGetRequest { get; set; }
 
@@ -83,6 +99,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
         [JsonProperty("api.im.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest ImGetRequest { get; set; }
+
+        [JsonProperty("api.im.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<BaseRequest> ImSaveRequest { get; set; }
         #endregion
     }
 }
