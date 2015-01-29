@@ -17,7 +17,7 @@
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts
+namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     /// <summary>
     /// A class that basically converts a request to the json-part of the url.

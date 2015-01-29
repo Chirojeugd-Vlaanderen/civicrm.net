@@ -16,17 +16,18 @@
 
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Entities
+namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
 {
     /// <summary>
     /// A CiviCRM Website.
     /// </summary>
     [DataContract]
     [CiviRequest]
-    public class Website : BaseRequest, IEntity
+    public class Website : BaseRequest
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }

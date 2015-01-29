@@ -19,6 +19,7 @@ using System.ServiceModel;
 using System.ServiceModel.Web;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 
 namespace Chiro.CiviCrm.Api

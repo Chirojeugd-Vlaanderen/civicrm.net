@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Johan Vervloet
+   Copyright 2014 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,10 +14,26 @@
    limitations under the License.
  */
 
-namespace Chiro.CiviCrm.Api.DataContracts
+using Chiro.CiviCrm.BehaviorExtension;
+using Newtonsoft.Json;
+
+namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
-    public interface IEntity
+    /// <summary>
+    /// Some class that basically converts an ID to the json-part of the request url.
+    /// </summary>
+    [CiviRequest]
+    public class IdRequest: BaseRequest
     {
-        int? Id { get; set; }
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        public IdRequest() : base() { }
+
+        public IdRequest(int id)
+            : this()
+        {
+            this.Id = id;
+        }
     }
 }

@@ -17,6 +17,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 

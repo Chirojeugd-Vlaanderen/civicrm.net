@@ -55,18 +55,17 @@
     <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
-    <Compile Include="DataContracts\Entities\Email.cs" />
-    <Compile Include="DataContracts\Entities\Relationship.cs" />
+    <Compile Include="DataContracts\EntityRequests\Email.cs" />
+    <Compile Include="DataContracts\EntityRequests\Relationship.cs" />
     <Compile Include="DataContracts\Requests\ContactRequest.cs" />
     <Compile Include="DataContracts\Enums.cs" />
-    <Compile Include="DataContracts\Entities\Im.cs" />
-    <Compile Include="DataContracts\Entities\Phone.cs" />
-    <Compile Include="DataContracts\BaseRequest.cs" />
-    <Compile Include="DataContracts\IdRequest.cs" />
-    <Compile Include="DataContracts\Entities\Contact.cs" />
+    <Compile Include="DataContracts\EntityRequests\Im.cs" />
+    <Compile Include="DataContracts\EntityRequests\Phone.cs" />
+    <Compile Include="DataContracts\Requests\BaseRequest.cs" />
+    <Compile Include="DataContracts\Requests\IdRequest.cs" />
+    <Compile Include="DataContracts\EntityRequests\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
-    <Compile Include="DataContracts\IEntity.cs" />
-    <Compile Include="DataContracts\Entities\Website.cs" />
+    <Compile Include="DataContracts\EntityRequests\Website.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -79,7 +78,9 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="DataContracts\README.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

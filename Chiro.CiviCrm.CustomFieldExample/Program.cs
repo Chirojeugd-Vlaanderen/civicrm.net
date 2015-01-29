@@ -20,6 +20,7 @@ using System.Linq;
 using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.Wcf.CustomFieldExample.Properties;
 using Newtonsoft.Json.Linq;
 
