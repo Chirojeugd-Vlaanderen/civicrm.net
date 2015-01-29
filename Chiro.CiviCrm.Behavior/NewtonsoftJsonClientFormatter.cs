@@ -64,9 +64,26 @@ namespace Chiro.CiviCrm.BehaviorExtension
             bodyReader.ReadStartElement("Binary");
             byte[] body = bodyReader.ReadContentAsBase64();
 
+            body = ChainingArrayResultWorkAround(body);
+
+            using (var ms = new MemoryStream(body))
+            {
+                using (var sr = new StreamReader(ms))
+                {
+                    Type returnType = this._operation.Messages[1].Body.ReturnValue.Type;
+                    var result = serializer.Deserialize(sr, returnType);
+                    return result;
+                }
+            }
+        }
+
+        private static byte[] ChainingArrayResultWorkAround(byte[] body)
+        {
             // If you chain an 'api.create' with multiple entities of the same type, the resulting Json cannot
             // be parsed by the serializer. See this thread on the civicrm forums:
             // http://forum.civicrm.org/index.php/topic,35393.0.html
+
+            // TODO: can't we move this to a converter?
 
             string bodyString = Encoding.UTF8.GetString(body);
 
@@ -85,16 +102,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
                 bodyString = ReplaceCurlyBraces(bodyString, index, "[{", "}]");
                 body = Encoding.UTF8.GetBytes(bodyString);
             }
-
-            using (var ms = new MemoryStream(body))
-            {
-                using (var sr = new StreamReader(ms))
-                {
-                    Type returnType = this._operation.Messages[1].Body.ReturnValue.Type;
-                    var result = serializer.Deserialize(sr, returnType);
-                    return result;
-                }
-            }
+            return body;
         }
 
         private static string ReplaceCurlyBraces(string bodyString, int index, string newLeft, string newRight)
