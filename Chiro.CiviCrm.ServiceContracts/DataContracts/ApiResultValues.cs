@@ -14,7 +14,6 @@
    limitations under the License.
  */
 
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 namespace Chiro.CiviCrm.Api.DataContracts
@@ -23,13 +22,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
     public class ApiResultValues<T>: ApiResult
     {
         [DataMember(Name="values")]
-        public IEnumerable<T> Values { get; set; }
+        public T[] Values { get; set; }
 
         public ApiResultValues() : base()
         {
         }
 
-        public ApiResultValues(IEnumerable<T> values) : this()
+        public ApiResultValues(T[] values) : this()
         {
             Values = values;
         }
