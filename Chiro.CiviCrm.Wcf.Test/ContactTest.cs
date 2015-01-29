@@ -231,6 +231,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
                     {
+                        ContactType = ContactType.Individual,
                         LastName = "Smurf",
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
