@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.Converters
     /// DateTime? converter to work around CRM-15863
     /// https://issues.civicrm.org/jira/browse/CRM-15863
     /// </summary>
-    public class BuggyDateTimeConverter: JsonConverter
+    public class Crm15863Converter: JsonConverter
     {
         public static Regex LotsOfDigitsExpression = new Regex("([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})");
 

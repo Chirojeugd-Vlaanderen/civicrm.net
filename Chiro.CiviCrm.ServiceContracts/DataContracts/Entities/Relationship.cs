@@ -39,11 +39,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public int RelationshipTypeId { get; set; }
 
         [DataMember(Name = "start_date"), JsonProperty]
-        [JsonConverter(typeof(BuggyDateTimeConverter))]
+        [JsonConverter(typeof(Crm15863Converter))]
         public DateTime? StartDate { get; set; }
 
         [DataMember(Name = "end_date"), JsonProperty]
-        [JsonConverter(typeof(BuggyDateTimeConverter))]
+        [JsonConverter(typeof(Crm15863Converter))]
         public DateTime? EndDate { get; set; }
 
         [DataMember(Name = "is_active"), JsonProperty]

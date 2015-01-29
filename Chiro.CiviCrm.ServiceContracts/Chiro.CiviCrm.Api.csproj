@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\BoolConverter.cs" />
-    <Compile Include="Converters\BuggyDateTimeConverter.cs" />
+    <Compile Include="Converters\Crm15863Converter.cs" />
     <Compile Include="Converters\EnumIntConverter.cs" />
     <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
