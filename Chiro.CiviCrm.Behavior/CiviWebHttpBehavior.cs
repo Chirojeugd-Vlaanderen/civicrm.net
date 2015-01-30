@@ -38,7 +38,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
             }
             else
             {
-                return new NewtonsoftJsonClientFormatter(operationDescription, endpoint);
+                return new JsonClientFormatter(operationDescription, endpoint);
             }
         } 
     }

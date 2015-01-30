@@ -52,6 +52,7 @@
     <Compile Include="Converters\Crm15863Converter.cs" />
     <Compile Include="Converters\Crm15815Converter.cs" />
     <Compile Include="Converters\EnumIntConverter.cs" />
+    <Compile Include="DataContracts\CiviRequestAttribute.cs" />
     <Compile Include="DataContracts\EntityRequests\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
@@ -68,12 +69,6 @@
     <Compile Include="DataContracts\EntityRequests\Website.cs" />
     <Compile Include="ICiviCrmApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj">
-      <Project>{f39a9e29-95e9-4304-a42d-1266f81b5ecf}</Project>
-      <Name>Chiro.CiviCrm.BehaviorExtension</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

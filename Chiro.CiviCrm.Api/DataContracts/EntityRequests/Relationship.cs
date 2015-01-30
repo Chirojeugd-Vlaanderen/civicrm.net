@@ -18,7 +18,6 @@ using System;
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests

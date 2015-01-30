@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ServiceModel.Dispatcher;
+using Chiro.CiviCrm.Api.DataContracts;
 using Newtonsoft.Json;
 /*
    Copyright 2013, 2014, 2015 Chirojeugd-Vlaanderen vzw

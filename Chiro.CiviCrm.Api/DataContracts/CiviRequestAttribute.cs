@@ -16,7 +16,7 @@
 
 using System;
 
-namespace Chiro.CiviCrm.BehaviorExtension
+namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
     /// Use this attribute to mark classes that should be serialized to JSON for using

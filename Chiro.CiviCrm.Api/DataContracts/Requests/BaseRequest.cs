@@ -14,7 +14,6 @@
    limitations under the License.
  */
 
-using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests

@@ -17,7 +17,6 @@
 using System;
 using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

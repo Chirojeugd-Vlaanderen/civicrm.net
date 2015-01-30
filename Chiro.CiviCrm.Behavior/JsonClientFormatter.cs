@@ -30,7 +30,7 @@ using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.BehaviorExtension
 {
-    class NewtonsoftJsonClientFormatter : IClientMessageFormatter
+    class JsonClientFormatter : IClientMessageFormatter
     {
         readonly OperationDescription _operation;
         readonly Uri _operationUri;
@@ -38,7 +38,7 @@ namespace Chiro.CiviCrm.BehaviorExtension
         private static readonly Regex ValuesObjectInsteadOfArrayExpression = new Regex("\"values\":[{]");
         private static readonly Regex KeyValueArrayItemExpression = new Regex("\"[0-9]+\":[{]");
 
-        public NewtonsoftJsonClientFormatter(OperationDescription operation, ServiceEndpoint endpoint)
+        public JsonClientFormatter(OperationDescription operation, ServiceEndpoint endpoint)
         {
             this._operation = operation;
             string endpointAddress = endpoint.Address.Uri.ToString();
