@@ -30,7 +30,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// are all nullable, and all have NullValueHandling.Ignore.
     /// </remarks>
     [CiviRequest]
-    public class ContactRequest: BaseRequest
+    public partial class ContactRequest: BaseRequest
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }

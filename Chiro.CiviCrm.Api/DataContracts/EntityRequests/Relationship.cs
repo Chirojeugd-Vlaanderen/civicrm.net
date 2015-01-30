@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
 {
     [DataContract]
     [CiviRequest]
-    public class Relationship: BaseRequest
+    public partial class Relationship: BaseRequest
     {
         [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
