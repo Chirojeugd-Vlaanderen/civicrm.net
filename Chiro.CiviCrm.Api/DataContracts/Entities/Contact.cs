@@ -17,12 +17,12 @@
 using System;
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
     /// A CiviCRM contact

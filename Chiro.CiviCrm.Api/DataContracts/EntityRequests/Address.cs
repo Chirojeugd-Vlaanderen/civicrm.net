@@ -20,7 +20,7 @@ using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.BehaviorExtension;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Entities
+namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
 {
     /// <summary>
     /// A CiviCRM address.

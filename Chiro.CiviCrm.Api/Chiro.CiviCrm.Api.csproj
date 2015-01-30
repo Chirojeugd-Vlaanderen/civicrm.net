@@ -52,7 +52,7 @@
     <Compile Include="Converters\Crm15863Converter.cs" />
     <Compile Include="Converters\Crm15815Converter.cs" />
     <Compile Include="Converters\EnumIntConverter.cs" />
-    <Compile Include="DataContracts\Entities\Address.cs" />
+    <Compile Include="DataContracts\EntityRequests\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
     <Compile Include="DataContracts\EntityRequests\Email.cs" />
@@ -63,7 +63,7 @@
     <Compile Include="DataContracts\EntityRequests\Phone.cs" />
     <Compile Include="DataContracts\Requests\BaseRequest.cs" />
     <Compile Include="DataContracts\Requests\IdRequest.cs" />
-    <Compile Include="DataContracts\EntityRequests\Contact.cs" />
+    <Compile Include="DataContracts\Entities\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
     <Compile Include="DataContracts\EntityRequests\Website.cs" />
     <Compile Include="ICiviCrmApi.cs" />

@@ -84,7 +84,7 @@
       <Project>{F39A9E29-95E9-4304-A42D-1266F81B5ECF}</Project>
       <Name>Chiro.CiviCrm.BehaviorExtension</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Chiro.CiviCrm.ServiceContracts\Chiro.CiviCrm.Api.csproj">
+    <ProjectReference Include="..\Chiro.CiviCrm.Api\Chiro.CiviCrm.Api.csproj">
       <Project>{C27C0FB3-740A-4705-98DF-3B237984C44F}</Project>
       <Name>Chiro.CiviCrm.Api</Name>
     </ProjectReference>
