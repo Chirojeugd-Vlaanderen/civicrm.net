@@ -2,7 +2,7 @@
    Based on code of Carlus Figueira
    http://blogs.msdn.com/b/endpoint/archive/2011/05/03/wcf-extensibility-message-formatters.aspx
   
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013-2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -64,7 +64,8 @@ namespace Chiro.CiviCrm.BehaviorExtension
             bodyReader.ReadStartElement("Binary");
             byte[] body = bodyReader.ReadContentAsBase64();
 
-            body = ChainingArrayResultWorkAround(body);
+            // I tried to use a converter for this. But I failed miserably :-)
+            body = WorkAroundCrm15891(body);
 
             using (var ms = new MemoryStream(body))
             {
@@ -77,24 +78,41 @@ namespace Chiro.CiviCrm.BehaviorExtension
             }
         }
 
-        private static byte[] ChainingArrayResultWorkAround(byte[] body)
+        private static byte[] WorkAroundCrm15891(byte[] body)
         {
             // If you chain an 'api.create' with multiple entities of the same type, the resulting Json cannot
             // be parsed by the serializer. See this thread on the civicrm forums:
             // http://forum.civicrm.org/index.php/topic,35393.0.html
-
-            // TODO: can't we move this to a converter?
+            // https://issues.civicrm.org/jira/browse/CRM-15891
 
             string bodyString = Encoding.UTF8.GetString(body);
 
-            // Work around this issue:
+            // If the request contained a chained call with an array,
+            // the result doesn't return an array in 'values', but
+            // a key-value pair. And 'api.entity.create' results are
+            // in an object with the id of the main object as key.
+            // We will try to detect this kind of key-value-pairs, and replace
+            // them by ordinary arrays, so that our JSON parser won't complain.
+
+            // We can recognize this kind of key-value-pairs by a numerical key
+            // and an object as value.
             while (KeyValueArrayItemExpression.IsMatch(bodyString))
             {
                 int index = KeyValueArrayItemExpression.Matches(bodyString)[0].Index;
+                // remove key from key-value pair
                 bodyString = KeyValueArrayItemExpression.Replace(bodyString, "{", 1);
+                // remove curly braces around value
                 bodyString = ReplaceCurlyBraces(bodyString, index, String.Empty, String.Empty);
                 body = Encoding.UTF8.GetBytes(bodyString);
             }
+
+            // For simplicity I assume that the outermost 'values' contains only 
+            // one object.
+            // TODO: This doesn't have to be the case.
+            // I wonder what will happen if you e.g. get two contacts, and chain a create
+            // to the request. Didn't try yet.
+            // But if there is only one object, we just have to surround it's
+            // curly braces by square braces.
             while (ValuesObjectInsteadOfArrayExpression.IsMatch(bodyString))
             {
                 int index = ValuesObjectInsteadOfArrayExpression.Matches(bodyString)[0].Index + 9;
