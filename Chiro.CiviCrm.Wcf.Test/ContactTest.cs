@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Johan Vervloet
+   Copyright 2014-2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
@@ -32,14 +31,12 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class ContactTest
     {
         private Contact _myContact;
-        private Address _myAddress;
-
-        private Phone _myPhone;
-        private Email _myEmail;
-        private Website _myWebsite;
-        private Im _myIm;
-
         private int _myContactId;
+        private int _myAddressId;
+        private int _myPhoneId;
+        private int _myEmailId;
+        private int _myImId;
+        private int _myWebsiteId;
 
         [TestInitialize]
         public void InitializeTest()
@@ -53,6 +50,28 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Joe",
                         LastName = "Schmoe",
                         ExternalIdentifier = "Unit_Test_External_ID",
+                        AddressSaveRequest = new[]
+                        {
+                            new Address
+                            {
+                                StreetAddress = "Kipdorp 30",
+                                PostalCode = "2000",
+                                City = "Antwerpen",
+                                CountryId = 1020, // Belgium
+                                LocationTypeId = 1,
+                            }
+                        },
+                        PhoneSaveRequest = new[] {new Phone {PhoneNumber = "02-345 67 89", PhoneType = PhoneType.Phone}},
+                        EmailSaveRequest = new[] {new Email {EmailAddress = "joe@schmoe.com"}},
+                        WebsiteSaveRequest = new[]
+                        {
+                            new Website
+                            {
+                                Url = "https://twitter.com/jschmoe",
+                                WebsiteType = WebsiteType.Twitter
+                            }
+                        },
+                        ImSaveRequest = new[] {new Im {Name = "joe.schmoe@facebook.com", Provider = Provider.Jabber}},
                         // If the contact with given external identifier already exists,
                         // reuse it.
                         ApiOptions = new ApiOptions {Match = "external_identifier"}
@@ -62,44 +81,40 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Debug.Assert(_myContact.Id.HasValue);
                 _myContactId = _myContact.Id.Value;
 
-                // TODO: chain this address creation.
-                // (As soon as write chaining is supported.)
-                var address = new Address
+                // Fetch contact again, because chaining, sequential and reload option don't play well
+                // together. See https://issues.civicrm.org/jira/browse/CRM-15904.
+
+                var request = new ContactRequest
                 {
-                    ContactId = _myContact.Id,
-                    StreetAddress = "Kipdorp 30",
-                    PostalCode = "2000",
-                    City = "Antwerpen",
-                    CountryId = 1020,   // Belgium
-                    LocationTypeId = 1,
+                    Id = _myContactId,
+                    WebsiteGetRequest = new BaseRequest(),
+                    AddressGetRequest = new BaseRequest(),
+                    PhoneGetRequest = new BaseRequest(),
+                    EmailGetRequest = new BaseRequest(),
+                    ImGetRequest = new BaseRequest()
                 };
-                var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
-                _myAddress = addressResult.Values.First();
 
-                _myPhone =
-                    client.PhoneSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                        new Phone {ContactId = _myContact.Id, PhoneNumber = "02-345 67 89", PhoneType = PhoneType.Phone})
-                        .Values.First();
+                var result2 = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
 
-                _myEmail =
-                    client.EmailSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                        new Email {ContactId = _myContact.Id, EmailAddress = "joe@schmoe.com"})
-                        .Values.First();
+                int? websiteId = result2.Values.First().WebsiteResult.Values.First().Id;
+                Debug.Assert(websiteId.HasValue);
+                _myWebsiteId = websiteId.Value;
 
-                _myWebsite =
-                    client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                        new Website
-                        {
-                            ContactId = _myContact.Id,
-                            Url = "https://twitter.com/jschmoe",
-                            WebsiteType = WebsiteType.Twitter
-                        })
-                        .Values.First();
+                int? addressId = result2.Values.First().AddressResult.Values.First().Id;
+                Debug.Assert(addressId.HasValue);
+                _myAddressId = addressId.Value;
 
-                _myIm =
-                    client.ImSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                        new Im {ContactId = _myContact.Id, Name = "joe.schmoe@facebook.com", Provider = Provider.Jabber})
-                        .Values.First();
+                int? phoneId = result2.Values.First().PhoneResult.Values.First().Id;
+                Debug.Assert(phoneId.HasValue);
+                _myPhoneId = phoneId.Value;
+
+                int? emailId = result2.Values.First().EmailResult.Values.First().Id;
+                Debug.Assert(emailId.HasValue);
+                _myEmailId = emailId.Value;
+
+                int? imId = result2.Values.First().ImResult.Values.First().Id;
+                Debug.Assert(imId.HasValue);
+                _myImId = imId.Value;
             }
         }
 
@@ -133,7 +148,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     ReturnFields = "id",
                     AddressGetRequest =  new BaseRequest()
                 });
-                Assert.IsTrue(contact.AddressResult.Values.Any(adr => adr.Id == _myAddress.Id));
+                Assert.IsTrue(contact.AddressResult.Values.Any(adr => adr.Id == _myAddressId));
             }
         }
 
@@ -151,11 +166,10 @@ namespace Chiro.CiviCrm.Wcf.Test
                         WebsiteGetRequest = new BaseRequest(),
                         ImGetRequest = new BaseRequest()
                     });
-                //new[] {CiviEntity.Phone, CiviEntity.Email, CiviEntity.Website, CiviEntity.Im}
-                Assert.IsTrue(contact.PhoneResult.Values.Any(src => src.Id == _myPhone.Id));
-                Assert.IsTrue(contact.EmailResult.Values.Any(src => src.Id == _myEmail.Id));
-                Assert.IsTrue(contact.WebsiteResult.Values.Any(src => src.Id == _myWebsite.Id));
-                Assert.IsTrue(contact.ImResult.Values.Any(src => src.Id == _myIm.Id));
+                Assert.IsTrue(contact.PhoneResult.Values.Any(src => src.Id == _myPhoneId));
+                Assert.IsTrue(contact.EmailResult.Values.Any(src => src.Id == _myEmailId));
+                Assert.IsTrue(contact.WebsiteResult.Values.Any(src => src.Id == _myWebsiteId));
+                Assert.IsTrue(contact.ImResult.Values.Any(src => src.Id == _myImId));
             }
         }
 
