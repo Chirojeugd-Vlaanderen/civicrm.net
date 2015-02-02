@@ -13,7 +13,10 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+
+using System.Linq;
 using System.Runtime.Serialization;
+using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
@@ -25,10 +28,36 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     // be almost impossible.
     public partial class Relationship
     {
-        ///// <summary>
-        ///// Bind the member 'Afdeling' to the custom field custom_22.
-        ///// </summary>
-        //[DataMember(Name = "custom_22")]
-        //public string Afdeling { get; set; }
+        /// <summary>
+        /// Exact 1 afdeling. Als het om leiding of kader gaat,
+        /// is de afdeling 'Leiding'.
+        /// </summary>
+        /// <remarks>
+        /// Deze property is toch nullable, omdat we in CiviCRM niet kunnen
+        /// afdwingen dat er precies 1 afdeling is.
+        /// </remarks>
+        [JsonConverter(typeof(EnumCharConverter))]
+        [DataMember(Name = "custom_22"), JsonProperty]
+        public Afdeling? Afdeling { get; set; }
+
+        /// <summary>
+        /// Als de afdeling Leiding is, dan bepaalt deze property over welke
+        /// afelingen de persoon leiding is.
+        /// </summary>
+        [JsonIgnore]
+        public Afdeling[] LeidingVan { get; set; }
+
+        [DataMember(Name = "custom_23"), JsonProperty]
+        public char[] LeidingVanAfdelingChar
+        {
+            set { LeidingVan = value.Select(v => (Afdeling)((int)v)).ToArray(); }
+        }
+
+
+        /// <summary>
+        /// Functies van het lid.
+        /// </summary>
+        [DataMember(Name = "custom_24"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public string[] Functies { get; set; } 
     }
 }

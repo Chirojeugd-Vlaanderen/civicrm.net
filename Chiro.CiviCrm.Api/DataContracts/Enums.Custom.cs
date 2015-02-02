@@ -13,19 +13,30 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
-using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.Requests
+namespace Chiro.CiviCrm.Api.DataContracts
 {
-    // If you want to use custom fields of contacts, please add them here.
-    // There is an example in the comments.
-    // You could inherit from ContactRequest as well.
-    public partial class ContactRequest
+    public enum Afdeling
     {
-        /// <summary>
-        /// Bind the member 'GapId' to the custom field custom_1.
-        /// </summary>
-        [JsonProperty("custom_10", NullValueHandling = NullValueHandling.Ignore)]
-        public int? GapId { get; set; }
+        Ribbels = 'P',
+        Speelclub = 'S',
+        Rakwis = 'R',
+        Titos = 'T',
+        Ketis = 'K',
+        Aspis = 'A',
+        Leiding = 'L',
+        Speciaal = 'X'
+    }
+
+    public enum RelatieType
+    {
+        WerknemerBij = 5,
+        GezinshoofdVan = 7,
+        GezinslidVan = 8,
+        BovenliggendePloegVan = 11,
+        OpvolgerVan = 12,
+        LidVan = 13,
+        HeeftFunctieBijNationaal = 14,
+        StagebegeleiderVan = 15
     }
 }

@@ -13,6 +13,9 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+
+using System.Linq;
+using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -24,10 +27,37 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     // be almost impossible.
     public partial class RelationshipRequest
     {
-        ///// <summary>
-        ///// Bind the member 'Afdeling' to the custom field custom_22.
-        ///// </summary>
-        //[DataMember(Name = "custom_22"), JsonProperty]
-        //public string Afdeling { get; set; }
+        /// <summary>
+        /// Exact 1 afdeling. Als het om leiding of kader gaat,
+        /// is de afdeling 'Leiding'.
+        /// </summary>
+        /// <remarks>
+        /// Deze property is toch nullable, omdat we in CiviCRM niet kunnen
+        /// afdwingen dat er precies 1 afdeling is.
+        /// </remarks>
+        [JsonProperty("custom_22", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(EnumCharConverter))]
+        public Afdeling? Afdeling { get; set; }
+
+        /// <summary>
+        /// Als de afdeling Leiding is, dan bepaalt deze property over welke
+        /// afelingen de persoon leiding is.
+        /// </summary>
+        [JsonIgnore]
+        public Afdeling[] LeidingVan { get; set; }
+
+        [JsonProperty("custom_23", NullValueHandling = NullValueHandling.Ignore)]
+        public char[] LeidingVanAfdelingChar
+        {
+            // Het zou leuker zijn moest ik die EnumCharConverter kunnen gebruiken
+            // op de elementen van een array. Maar dat kreeg ik niet aan de praat.
+            get { return LeidingVan == null ? null : LeidingVan.Select(lv => (char) (int) (lv)).ToArray(); }
+        }
+
+        /// <summary>
+        /// Functies van het lid.
+        /// </summary>
+        [JsonProperty("custom_24", NullValueHandling = NullValueHandling.Ignore)]
+        public string[] Functies { get; set; } 
     }
 }
