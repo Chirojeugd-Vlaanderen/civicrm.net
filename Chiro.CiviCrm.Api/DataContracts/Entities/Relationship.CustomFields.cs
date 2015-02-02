@@ -16,7 +16,7 @@
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     // If you want to use custom fields of contacts, please add them here.
     // There is an example in the comments.
@@ -28,7 +28,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
         ///// <summary>
         ///// Bind the member 'Afdeling' to the custom field custom_22.
         ///// </summary>
-        //[DataMember(Name = "custom_22"), JsonProperty]
+        //[DataMember(Name = "custom_22")]
         //public string Afdeling { get; set; }
     }
 }

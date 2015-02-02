@@ -64,7 +64,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 _myCompanyId = _myCompany.Id.Value;
 
                 var result3 = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new Relationship
+                    new RelationshipRequest
                     {
                         RelationshipTypeId = 5,             // Works for
                         ContactIdA = _myContactId,
@@ -93,7 +93,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myRelationshipId));
+                    new RelationshipRequest{Id = _myRelationshipId});
                 var relationship = result.Values.First();
 
                 Assert.AreEqual(_myRelationship.ContactIdA, relationship.ContactIdA);
@@ -111,7 +111,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var relationship = new Relationship
+                var relationshipRequest = new RelationshipRequest
                 {
                     RelationshipTypeId = 5, // Works for
                     ContactIdA = _myContactId,
@@ -121,15 +121,15 @@ namespace Chiro.CiviCrm.Wcf.Test
                     IsActive = true
                 };
 
-                var result = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey, relationship);
+                var result = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey, relationshipRequest);
                 var newRelationship = result.Values.First();
 
-                Assert.AreEqual(relationship.ContactIdA, newRelationship.ContactIdA);
-                Assert.AreEqual(relationship.ContactIdB, newRelationship.ContactIdB);
-                Assert.AreEqual(relationship.StartDate, newRelationship.StartDate);
-                Assert.AreEqual(relationship.EndDate, newRelationship.EndDate);
-                Assert.AreEqual(relationship.IsActive, newRelationship.IsActive);
-                Assert.AreEqual(relationship.RelationshipTypeId, newRelationship.RelationshipTypeId);
+                Assert.AreEqual(relationshipRequest.ContactIdA, newRelationship.ContactIdA);
+                Assert.AreEqual(relationshipRequest.ContactIdB, newRelationship.ContactIdB);
+                Assert.AreEqual(relationshipRequest.StartDate, newRelationship.StartDate);
+                Assert.AreEqual(relationshipRequest.EndDate, newRelationship.EndDate);
+                Assert.AreEqual(relationshipRequest.IsActive, newRelationship.IsActive);
+                Assert.AreEqual(relationshipRequest.RelationshipTypeId, newRelationship.RelationshipTypeId);
             }
         }
     }

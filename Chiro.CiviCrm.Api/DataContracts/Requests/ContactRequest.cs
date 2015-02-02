@@ -106,6 +106,13 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonConverter(typeof(Crm15815Converter))]
         [JsonProperty("api.im.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> ImSaveRequest { get; set; }
+
+        [JsonProperty("api.relationship.get", NullValueHandling = NullValueHandling.Ignore)]
+        public RelationshipRequest RelationshipGetRequest { get; set; }
+
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.relationship.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<RelationshipRequest> RelationshipSaveRequest { get; set; }
         #endregion
     }
 }

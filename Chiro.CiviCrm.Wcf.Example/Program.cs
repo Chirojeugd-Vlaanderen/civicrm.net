@@ -409,7 +409,7 @@ namespace Chiro.CiviCrm.Wcf.Example
         {
             using (var client = _factory.CreateChannel())
             {
-                var result = client.RelationshipGet(ApiKey, SiteKey, new IdRequest(12388));
+                var result = client.RelationshipGet(ApiKey, SiteKey, new RelationshipRequest {Id = 12388});
                 var relationship = result.Values.FirstOrDefault();
 
                 if (relationship == null)

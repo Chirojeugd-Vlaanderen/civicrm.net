@@ -126,7 +126,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=get&json={request}&sequential=1")]
-        ApiResultValues<Relationship> RelationshipGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Relationship> RelationshipGet(string apiKey, string key, RelationshipRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="relationship"/>.
@@ -138,7 +138,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=create&sequential=1&json={relationship}")]
-        ApiResultValues<Relationship> RelationshipSave(string apiKey, string key, Relationship relationship);
+        ApiResultValues<Relationship> RelationshipSave(string apiKey, string key, RelationshipRequest relationship);
 
         /// <summary>
         /// Deletes a relationship.

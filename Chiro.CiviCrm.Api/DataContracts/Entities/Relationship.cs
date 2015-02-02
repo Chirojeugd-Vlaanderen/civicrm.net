@@ -17,47 +17,45 @@
 using System;
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     [DataContract]
-    [CiviRequest]
-    public partial class Relationship: BaseRequest
+    public partial class Relationship
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "id")]
         public int? Id { get; set; }
 
-        [DataMember(Name="contact_id_a"), JsonProperty]
+        [DataMember(Name="contact_id_a")]
         public int ContactIdA { get; set; }
 
-        [DataMember(Name="contact_id_b"), JsonProperty]
+        [DataMember(Name="contact_id_b")]
         public int ContactIdB { get; set; }
 
-        [DataMember(Name="relationship_type_id"), JsonProperty]
+        [DataMember(Name="relationship_type_id")]
         public int RelationshipTypeId { get; set; }
 
-        [DataMember(Name = "start_date"), JsonProperty]
+        [DataMember(Name = "start_date")]
         [JsonConverter(typeof(Crm15863Converter))]
         public DateTime? StartDate { get; set; }
 
-        [DataMember(Name = "end_date"), JsonProperty]
+        [DataMember(Name = "end_date")]
         [JsonConverter(typeof(Crm15863Converter))]
         public DateTime? EndDate { get; set; }
 
-        [DataMember(Name = "is_active"), JsonProperty]
+        [DataMember(Name = "is_active")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsActive { get; set; }
 
-        [DataMember(Name = "description"), JsonProperty]
+        [DataMember(Name = "description")]
         public string Description { get; set; }
 
-        [DataMember(Name = "is_permission_a_b"), JsonProperty]
+        [DataMember(Name = "is_permission_a_b")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsPermissionAb { get; set; }
 
-        [DataMember(Name = "is_permission_b_a"), JsonProperty]
+        [DataMember(Name = "is_permission_b_a")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsPermissionBa { get; set; }
     }

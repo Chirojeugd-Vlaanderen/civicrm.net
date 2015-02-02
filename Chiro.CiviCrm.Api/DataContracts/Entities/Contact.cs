@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013, 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2013-2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -213,8 +213,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "country"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
 
-        // I think chaining should be handled in a more elegant way.
-        // But I am not sure how it can be done.
+        #region Chaining
         [DataMember(Name = "api.Address.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ApiResultValues<Address> AddressResult { get; set; }
         [DataMember(Name = "api.Phone.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
@@ -225,5 +224,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public ApiResultValues<Website> WebsiteResult { get; set; }
         [DataMember(Name = "api.Im.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public ApiResultValues<Im> ImResult { get; set; }
+        [DataMember(Name = "api.Relationship.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        public ApiResultValues<Relationship> RelationshipResult { get; set; }
+        #endregion
     }
 }

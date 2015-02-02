@@ -153,6 +153,51 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
+        public void CreateWithChainedRelationship()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var relationshipSaveRequest = new RelationshipRequest
+                {
+                    RelationshipTypeId = 5,
+                    ContactIdB = 1,
+                    ContactIdAValueExpression = "$value.id"
+                };
+
+                var contact = new ContactRequest
+                {
+                    ContactType = ContactType.Individual,
+                    FirstName = "Lucky",
+                    LastName = "Luke",
+                    BirthDate = new DateTime(1946, 3, 3),
+                    Gender = Gender.Male,
+                    ExternalIdentifier = "test_ext_id_yep",
+                    RelationshipSaveRequest = new[] {relationshipSaveRequest},
+                    ApiOptions = new ApiOptions {Match = "external_identifier"}
+                };
+
+                var saveResult = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+                var getResult = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        Id = saveResult.Id,
+                        RelationshipGetRequest = new RelationshipRequest {ContactIdAValueExpression = "$value.id"}
+                    });
+
+                // Delete first (cleanup), check afterward.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+
+                Assert.AreEqual(0, saveResult.IsError);
+                Assert.AreEqual(1, getResult.RelationshipResult.Count);
+
+                var relationShip = getResult.RelationshipResult.Values.First();
+
+                Assert.AreEqual(relationshipSaveRequest.RelationshipTypeId, relationShip.RelationshipTypeId);
+                Assert.AreEqual(relationshipSaveRequest.ContactIdB, relationShip.ContactIdB);
+            }
+        }
+
+        [TestMethod]
         public void ChainedCommunicationGet()
         {
             using (var client = TestHelper.ClientGet())
