@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     public partial class Relationship
     {
         [DataMember(Name = "id")]
-        public int? Id { get; set; }
+        public int Id { get; set; }
 
         [DataMember(Name="contact_id_a")]
         public int ContactIdA { get; set; }

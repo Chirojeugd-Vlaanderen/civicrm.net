@@ -15,12 +15,8 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Linq;
-using System.ServiceModel;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -32,9 +28,6 @@ namespace Chiro.CiviCrm.Wcf.Test
         private int _myContactId;
         private int _myRelationshipId;
         private int _myCompanyId;
-        private Contact _myContact;
-        private Relationship _myRelationship;
-        private Contact _myCompany;
 
         [TestInitialize]
         public void InitializeTest()
@@ -49,9 +42,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         BirthDate = new DateTime(1980, 2, 9),
                         ContactType = ContactType.Individual
                     });
-                _myContact = result1.Values.First();
-                Debug.Assert(_myContact.Id.HasValue);
-                _myContactId = _myContact.Id.Value;
+                _myContactId = result1.Values.First().Id;
 
                 var result2 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -59,9 +50,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ContactType = ContactType.Organization,
                         OrganizationName = "Schmoe inc."
                     });
-                _myCompany = result2.Values.First();
-                Debug.Assert(_myCompany.Id.HasValue);
-                _myCompanyId = _myCompany.Id.Value;
+                _myCompanyId = result2.Values.First().Id;
 
                 var result3 = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new RelationshipRequest
@@ -71,9 +60,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ContactIdB = _myCompanyId,
                         IsActive = true
                     });
-                _myRelationship = result3.Values.First();
-                Debug.Assert(_myRelationship.Id.HasValue);
-                _myRelationshipId = _myRelationship.Id.Value;
+                _myRelationshipId = result3.Values.First().Id;
             }
         }
 
@@ -83,7 +70,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContact.Id ?? 0),
+                    new IdRequest(_myContactId),
                     1);
             }
         }
@@ -96,13 +83,9 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new RelationshipRequest{Id = _myRelationshipId});
                 var relationship = result.Values.First();
 
-                Assert.AreEqual(_myRelationship.ContactIdA, relationship.ContactIdA);
-                Assert.AreEqual(_myRelationship.ContactIdB, relationship.ContactIdB);
-                Assert.AreEqual(_myRelationship.Description, relationship.Description);
-                Assert.AreEqual(_myRelationship.StartDate, relationship.StartDate);
-                Assert.AreEqual(_myRelationship.EndDate, relationship.EndDate);
-                Assert.AreEqual(_myRelationship.IsActive, relationship.IsActive);
-                Assert.AreEqual(_myRelationship.RelationshipTypeId, relationship.RelationshipTypeId);
+                Assert.AreEqual(_myContactId, relationship.ContactIdA);
+                Assert.AreEqual(_myCompanyId, relationship.ContactIdB);
+                Assert.AreEqual(5, relationship.RelationshipTypeId);
             }
         }
 

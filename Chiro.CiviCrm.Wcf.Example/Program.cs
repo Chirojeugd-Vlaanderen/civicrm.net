@@ -127,7 +127,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 });
 
                 // Keep the contact Id for later reference.
-                int contactId = contact.Id.Value;
+                int contactId = contact.Id;
 
                 // Exit if contact is not found.
                 if (contact == null)
@@ -208,7 +208,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 }
 
                 // Keep the contact Id for later reference.
-                int contactId = contact.Id.Value;
+                int contactId = contact.Id;
 
                 ShowContact(contact);
 

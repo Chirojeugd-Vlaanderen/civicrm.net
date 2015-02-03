@@ -17,7 +17,6 @@
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -27,8 +26,8 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class AddressTest
     {
-        private Contact _myContact;
-        private Address _myAddress;
+        private int _myContactId;
+        private int _myAddressId;
 
         [TestInitialize]
         public void InitializeTest()
@@ -39,12 +38,12 @@ namespace Chiro.CiviCrm.Wcf.Test
                 // contact api.
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest {ContactType = ContactType.Individual, FirstName = "Joe", LastName = "Schmoe"});
-                _myContact = result.Values.First();
+                _myContactId = result.Values.First().Id;
                 // TODO: chain this address creation.
                 // (As soon as write chaining is supported.)
-                var address = new Address
+                var addressRequest = new Address
                 {
-                    ContactId = _myContact.Id,
+                    ContactId = _myContactId,
                     StreetAddress = "Kipdorp 30",
                     PostalCode = "2000",
                     City = "Antwerpen",
@@ -53,8 +52,10 @@ namespace Chiro.CiviCrm.Wcf.Test
                 };
                 // If this fails, please turn off map and geocode services.
                 // (Adminis, System Settings, Maps)
-                var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, address);
-                _myAddress = addressResult.Values.First();
+                var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, addressRequest);
+                var address = addressResult.Values.First();
+                Debug.Assert(address.Id.HasValue);
+                _myAddressId = address.Id.Value;
             }
         }
 
@@ -64,7 +65,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContact.Id ?? 0),
+                    new IdRequest(_myContactId),
                     1);
             }
         }
@@ -76,7 +77,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             {
                 var newAddress = new Address
                 {
-                    ContactId = _myContact.Id,
+                    ContactId = _myContactId,
                     StreetAddress = "Hoefslagstraatje 2",
                     PostalCode = "9000",
                     City = "Gent",
@@ -103,8 +104,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                Debug.Assert(_myAddress.Id.HasValue);
-                var request = new IdRequest(_myAddress.Id.Value);
+                var request = new IdRequest(_myAddressId);
 
                 var result = client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, request);
 

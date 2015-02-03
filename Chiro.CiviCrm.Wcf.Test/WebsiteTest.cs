@@ -14,11 +14,8 @@
    limitations under the License.
  */
 
-using System;
-using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -28,8 +25,6 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class WebsiteTest
     {
-        private Contact _myContact;
-
         private int _myContactId;
 
         [TestInitialize]
@@ -49,9 +44,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ApiOptions = new ApiOptions {Match = "external_identifier"}
                     });
 
-                _myContact = result.Values.First();
-                Debug.Assert(_myContact.Id.HasValue);
-                _myContactId = _myContact.Id.Value;
+                _myContactId = result.Values.First().Id;
             }
         }
 
@@ -61,7 +54,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContact.Id ?? 0),
+                    new IdRequest(_myContactId),
                     1);
             }
         }

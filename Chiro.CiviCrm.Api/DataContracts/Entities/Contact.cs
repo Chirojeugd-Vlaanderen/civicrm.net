@@ -30,8 +30,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     [CiviRequest]
     public partial class Contact
     {
-        [DataMember(Name="id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        [DataMember(Name="id")]
+        public int Id { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]
         [DataMember(Name="contact_type"), JsonProperty]
@@ -81,9 +81,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name="image_URL"), JsonProperty]
         public string ImageUrl { get; set; }
 
-        // preferred communication method is too much hassle.
-        //[DataMember, JsonProperty]
-        //public IEnumerable<int> preferred_communication_method { get; set; }
+        [DataMember(Name="preferred_communication_method"), JsonProperty]
+        public int[] PreferredCommunicationMethod { get; set; }
 
         [DataMember(Name="preferred_language"), JsonProperty]
         public string PreferredLanguage { get; set; }
@@ -141,90 +140,90 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name="current_employer"), JsonProperty]
         public string CurrentEmployer { get; set; }
 
-        [DataMember(Name = "address_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "address_id")]
         public int? AddressId { get; set; }
 
-        [DataMember(Name = "street_address"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "street_address")]
         public string StreetAddress { get; set; }
 
-        [DataMember(Name = "supplemental_address_1"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "supplemental_address_1")]
         public string SupplementalAddress1 { get; set; }
 
-        [DataMember(Name = "supplemental_address_2"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "supplemental_address_2")]
         public string SupplementalAddress2 { get; set; }
 
-        [DataMember(Name = "city"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "city")]
         public string City { get; set; }
 
-        [DataMember(Name = "postal_code_suffix"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "postal_code_suffix")]
         public string PostalCodeSuffix { get; set; }
 
-        [DataMember(Name = "postal_code"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "postal_code")]
         public string PostalCode { get; set; }
 
-        [DataMember(Name = "geo_code_1"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "geo_code_1")]
         public string GeoCode1 { get; set; }
 
-        [DataMember(Name = "geo_code_2"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "geo_code_2")]
         public string GeoCode2 { get; set; }
 
-        [DataMember(Name = "phone_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "phone_id")]
         public int? PhoneId { get; set; }
 
-        [DataMember(Name = "phone_type_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "phone_type_id")]
         [JsonConverter(typeof(NullableEnumConverter))]
         public PhoneType? PhoneType { get; set; }
 
-        [DataMember(Name = "phone"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "phone")]
         public string Phone { get; set; }
 
-        [DataMember(Name = "email_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "email_id")]
         public int? EmailId { get; set; }
 
-        [DataMember(Name = "email"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "email")]
         public string Email { get; set; }
 
-        [DataMember(Name = "on_hold"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "on_hold")]
         [JsonConverter(typeof(BoolConverter))]
         public bool OnHold { get; set; }
 
-        [DataMember(Name = "im_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "im_id")]
         public int? ImId { get; set; }
 
-        [DataMember(Name = "provider_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "provider_id")]
         [JsonConverter(typeof(NullableEnumConverter))]
         public Provider? Provider { get; set; }
 
-        [DataMember(Name = "im"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "im")]
         public string Im { get; set; }
 
-        [DataMember(Name="world_region"), JsonProperty]
+        [DataMember(Name="world_region")]
         public string WorldRegion { get; set; }
 
-        [DataMember(Name="individual_prefix"), JsonProperty]
+        [DataMember(Name="individual_prefix")]
         public string IndividualPrefix { get; set; }
 
-        [DataMember(Name="individual_suffix"), JsonProperty]
+        [DataMember(Name="individual_suffix")]
         public string IndividualSuffix { get; set; }
 
-        [DataMember(Name = "state_province_name"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "state_province_name")]
         public string StateProvinceName { get; set; }
 
-        [DataMember(Name = "country"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "country")]
         public string Country { get; set; }
 
         #region Chaining
-        [DataMember(Name = "api.Address.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Address.get")]
         public ApiResultValues<Address> AddressResult { get; set; }
-        [DataMember(Name = "api.Phone.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Phone.get")]
         public ApiResultValues<Phone> PhoneResult { get; set; }
-        [DataMember(Name = "api.Email.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Email.get")]
         public ApiResultValues<Email> EmailResult { get; set; }
-        [DataMember(Name = "api.Website.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Website.get")]
         public ApiResultValues<Website> WebsiteResult { get; set; }
-        [DataMember(Name = "api.Im.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Im.get")]
         public ApiResultValues<Im> ImResult { get; set; }
-        [DataMember(Name = "api.Relationship.get"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "api.Relationship.get")]
         public ApiResultValues<Relationship> RelationshipResult { get; set; }
         #endregion
     }

@@ -19,7 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -30,13 +29,14 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class ContactTest
     {
-        private Contact _myContact;
         private int _myContactId;
         private int _myAddressId;
         private int _myPhoneId;
         private int _myEmailId;
         private int _myImId;
         private int _myWebsiteId;
+
+        private const string MyExternalId = "Unit_Test_External_ID";
 
         [TestInitialize]
         public void InitializeTest()
@@ -49,7 +49,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ContactType = ContactType.Individual,
                         FirstName = "Joe",
                         LastName = "Schmoe",
-                        ExternalIdentifier = "Unit_Test_External_ID",
+                        ExternalIdentifier = MyExternalId,
                         AddressSaveRequest = new[]
                         {
                             new Address
@@ -77,9 +77,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ApiOptions = new ApiOptions {Match = "external_identifier"}
                     });
 
-                _myContact = result.Values.First();
-                Debug.Assert(_myContact.Id.HasValue);
-                _myContactId = _myContact.Id.Value;
+                _myContactId = result.Values.First().Id;
 
                 // Fetch contact again, because chaining, sequential and reload option don't play well
                 // together. See https://issues.civicrm.org/jira/browse/CRM-15904.
@@ -124,7 +122,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContact.Id ?? 0),
+                    new IdRequest(_myContactId),
                     1);
 
                 Debug.Assert(result.IsError == 0,
@@ -205,7 +203,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
                     {
-                        ExternalIdentifier = _myContact.ExternalIdentifier,
+                        ExternalIdentifier = MyExternalId,
                         PhoneGetRequest = new BaseRequest(),
                         EmailGetRequest = new BaseRequest(),
                         WebsiteGetRequest = new BaseRequest(),
@@ -406,7 +404,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Clean up first (delete contact), then do other assertions.
                 // (So the contact gets deleted even if the assertions fail.)
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
 
                 Assert.IsNotNull(contact.Id);
                 Assert.AreEqual(newContact.ExternalIdentifier, contact.ExternalIdentifier);
@@ -475,7 +473,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var contact = new ContactRequest
                 {
                     ContactType = ContactType.Individual,
-                    ExternalIdentifier = _myContact.ExternalIdentifier,
+                    ExternalIdentifier = MyExternalId,
                     FirstName = "Wesley",
                     LastName = "Decabooter",
                     // use external ID to find the contact, instead of contact id.
@@ -485,8 +483,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
 
                 Assert.AreEqual(0, result.IsError);
-                Assert.AreEqual(_myContact.Id, result.Id);
-                Assert.AreEqual(_myContact.Id, result.Values.First().Id);
+                Assert.AreEqual(_myContactId, result.Id);
+                Assert.AreEqual(_myContactId, result.Values.First().Id);
                 Assert.AreEqual(contact.FirstName, result.Values.First().FirstName);
                 Assert.AreEqual(contact.LastName, result.Values.First().LastName);
             }
@@ -498,7 +496,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new ContactRequest {ExternalIdentifier = _myContact.ExternalIdentifier});
+                    new ContactRequest {ExternalIdentifier = MyExternalId});
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -510,8 +508,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 Assert.AreEqual(0, result.IsError);
-                Assert.AreEqual(_myContact.Id, result.Id);
-                Assert.AreEqual(_myContact.Id, result.Values.First().Id);
+                Assert.AreEqual(_myContactId, result.Id);
+                Assert.AreEqual(_myContactId, result.Values.First().Id);
                 Assert.AreNotEqual(contact.Gender, result.Values.First().Gender);
                 Assert.AreNotEqual(contact.PreferredMailFormat, result.Values.First().PreferredMailFormat);
             }
@@ -550,7 +548,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Clean up first (delete contact), then do other assertions.
                 // (So the contact gets deleted even if the assertions fail.)
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
 
                 Assert.IsTrue(contact.WebsiteResult.Values.All(w => w.WebsiteType == WebsiteType.Main));
                 Assert.IsTrue(contact.WebsiteResult.Values.Any(w => w.Url == my1StWebsite.Url));
