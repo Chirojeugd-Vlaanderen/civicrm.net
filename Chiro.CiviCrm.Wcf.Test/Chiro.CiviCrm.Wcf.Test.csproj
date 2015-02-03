@@ -80,13 +80,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Chiro.CiviCrm.Api\Chiro.CiviCrm.Api.csproj">
+      <Project>{c27c0fb3-740a-4705-98df-3b237984c44f}</Project>
+      <Name>Chiro.CiviCrm.Api</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj">
       <Project>{F39A9E29-95E9-4304-A42D-1266F81B5ECF}</Project>
       <Name>Chiro.CiviCrm.BehaviorExtension</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Chiro.CiviCrm.Api\Chiro.CiviCrm.Api.csproj">
-      <Project>{C27C0FB3-740A-4705-98DF-3B237984C44F}</Project>
-      <Name>Chiro.CiviCrm.Api</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

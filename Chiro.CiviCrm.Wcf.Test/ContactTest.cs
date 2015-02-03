@@ -447,6 +447,27 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
+        public void SortAndLimit()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contactRequest = new ContactRequest
+                {
+                    // Because of upstream issue CRM-15905, you cannot search contacts on 'id'.
+                    // A workaround is writing 'contact_a.id'.
+                    // https://issues.civicrm.org/jira/browse/CRM-15905
+                    ApiOptions = new ApiOptions {Sort = "contact_a.id DESC", Limit = 2}
+                };
+
+                var result = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, contactRequest);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(2, result.Count);
+                Assert.IsTrue(result.Values.First().Id > result.Values.Last().Id);
+            }            
+        }
+
+        [TestMethod]
         public void ApiOptions()
         {
             using (var client = TestHelper.ClientGet())

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014-2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,20 +15,24 @@
  */
 
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
     /// <summary>
     /// Options to pass to the CiviCRM API.
     /// </summary>
+    /// <remarks>
+    /// match and sort work with field names from civicrm. (lower case and underscores)
+    /// </remarks>
     public class ApiOptions
     {
-        [JsonProperty("match")]
+        [JsonProperty("match", NullValueHandling = NullValueHandling.Ignore)]
         public string Match { get; set; }
+
+        [JsonProperty("sort", NullValueHandling = NullValueHandling.Ignore)]
+        public string Sort { get; set; }
+
+        [JsonProperty("limit", NullValueHandling = NullValueHandling.Ignore)]
+        public int Limit { get; set; }
     }
 }
