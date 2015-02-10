@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
@@ -113,6 +114,34 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonConverter(typeof(Crm15815Converter))]
         [JsonProperty("api.relationship.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<RelationshipRequest> RelationshipSaveRequest { get; set; }
+        #endregion
+
+        #region CRM-15815
+        // To lower the chance of hitting CRM-15815, don't pass empty create chains.
+        public bool ShouldSerializeAddressSaveRequest()
+        {
+            return AddressSaveRequest != null && AddressSaveRequest.Any();
+        }
+        public bool ShouldSerializePhoneSaveRequest()
+        {
+            return PhoneSaveRequest != null && PhoneSaveRequest.Any();
+        }
+        public bool ShouldSerializeEmailSaveRequest()
+        {
+            return EmailSaveRequest != null && EmailSaveRequest.Any();
+        }
+        public bool ShouldSerializeWebsiteSaveRequest()
+        {
+            return WebsiteSaveRequest != null && WebsiteSaveRequest.Any();
+        }
+        public bool ShouldSerializeImSaveRequest()
+        {
+            return ImSaveRequest != null && ImSaveRequest.Any();
+        }
+        public bool ShouldSerializeRelationshipSaveRequest()
+        {
+            return RelationshipSaveRequest != null && RelationshipSaveRequest.Any();
+        }
         #endregion
     }
 }
