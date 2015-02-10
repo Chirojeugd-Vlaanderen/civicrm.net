@@ -322,6 +322,53 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         /// <summary>
+        /// Unit test for avoiding upstream issue:
+        /// https://issues.civicrm.org/jira/browse/CRM-15815
+        /// </summary>
+        /// <remarks>
+        /// See also: https://github.com/johanv/civicrm.net/issues/39
+        /// </remarks>
+        [TestMethod]
+        public void EmptyChainedPhoneAndWebsiteCreate()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ContactType = ContactType.Individual,
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        // empty requests, try to hit CRM-15815.
+                        PhoneSaveRequest = new List<Phone>(),
+                        WebsiteSaveRequest = new List<Website>()
+                    });
+
+                // TODO: New workaround for upstream issue CRM-15815:
+                Assert.IsNotNull(result.Id);
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        Id = result.Id.Value,
+                        PhoneGetRequest = new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
+                    });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+
+                Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(0, contact.PhoneResult.Count);
+                Assert.AreEqual(0, contact.WebsiteResult.Count);
+            }
+        }
+
+        /// <summary>
         /// Unit test for upstream issue:
         /// https://issues.civicrm.org/jira/browse/CRM-15815
         /// </summary>
