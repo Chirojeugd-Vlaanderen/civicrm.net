@@ -43,6 +43,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Linq">
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.5\Facades\System.Linq.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
@@ -51,7 +54,8 @@
     <Compile Include="Converters\BoolConverter.cs" />
     <Compile Include="Converters\Crm15863Converter.cs" />
     <Compile Include="Converters\Crm15815Converter.cs" />
-    <Compile Include="Converters\EnumIntConverter.cs" />
+    <Compile Include="Converters\EnumCharConverter.cs" />
+    <Compile Include="Converters\NullableEnumConverter.cs" />
     <Compile Include="DataContracts\CiviRequestAttribute.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\EntityRequests\Address.cs" />

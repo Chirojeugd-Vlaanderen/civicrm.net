@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,20 +14,15 @@
    limitations under the License.
  */
 
-using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.Converters
 {
     /// <summary>
-    /// Converter from (nullable) enum to (nullable) int and vice versa.
-    /// 
-    /// Should work for nullable enums as well.
+    /// Converter from enum to char and vice versa.
     /// </summary>
-    public class NullableEnumConverter: JsonConverter
+    public class EnumCharConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -36,23 +31,12 @@ namespace Chiro.CiviCrm.Api.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            var underlyingType = Nullable.GetUnderlyingType(objectType);
-            if (underlyingType != null)
-            {
-                // convert to nullable enum
-                if (String.IsNullOrEmpty(reader.Value as string))
-                {
-                    return null;
-                }
-                var result = Enum.ToObject(underlyingType, Convert.ToInt32(reader.Value));
-                return result;
-            }
-            return Enum.ToObject(objectType, Convert.ToInt32(reader.Value));
+            return Enum.ToObject(objectType, (int)(Convert.ToChar(reader.Value)));
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            writer.WriteValue((int)value);
+            writer.WriteValue((char)(int)value);
         }
     }
 }
