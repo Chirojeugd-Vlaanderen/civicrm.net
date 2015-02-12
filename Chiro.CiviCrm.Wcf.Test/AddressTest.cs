@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Johan Vervloet
+   Copyright 2014, 2015 Johan Vervloet
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -96,6 +96,16 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(newAddress.PostalCode, resultAddress.PostalCode);
                 Assert.AreEqual(1020, resultAddress.CountryId);
                 Assert.AreEqual(newAddress.LocationTypeId, resultAddress.LocationTypeId);
+            }
+        }
+
+        [TestMethod]
+        public void GetAddress()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.AdressGet(TestHelper.ApiKey, TestHelper.SiteKey, new Address{PostalCode = "2000"});
+                Assert.IsTrue(result.Values.Any(ad => ad.Id == _myAddressId));
             }
         }
 

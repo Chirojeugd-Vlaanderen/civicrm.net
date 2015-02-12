@@ -90,7 +90,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}&sequential=1")]
-        ApiResultValues<Address> AdressesGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Address> AdressGet(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
