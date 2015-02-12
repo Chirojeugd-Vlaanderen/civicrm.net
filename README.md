@@ -13,6 +13,22 @@ as the master branch moves on.
 
 I will keep you informed when this project becomes more or less stable.
 
+## Entities, Requests, EntityRequests
+
+The datacontracts in Chiro.CiviCrm.Api are divided into 3 types:
+
+* Entities: Complete entities that are returned by the API as results.
+* Requests: Things you send to the api. In most cases, properties that are null are
+			ignored. This makes it easy to search on certain properties, or to 
+			update certain properties. But it will be hard to reset nullable
+			properties.
+* EntityRequests: Entities that are requests as well. Null-properties are passed to
+				  the API, so EntityRequests are not that useful for searching.
+
+The handling of the null properties depends on the attributes of the data members.
+The way this is implemented, is not very transparent. I am not sure yet how to fix
+this.
+
 ## How to get the examples/unit tests to work
 
 The example program is a console application: Chiro.CiviCrm.Wcf.Example. It contains

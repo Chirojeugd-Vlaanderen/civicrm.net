@@ -104,8 +104,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.AdressGet(TestHelper.ApiKey, TestHelper.SiteKey, new Address{PostalCode = "2000"});
-                Assert.IsTrue(result.Values.Any(ad => ad.Id == _myAddressId));
+                var result = client.AdressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
+                Assert.AreEqual(_myAddressId, result.Id);
             }
         }
 
