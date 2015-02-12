@@ -64,6 +64,7 @@
     <Compile Include="DataContracts\EntityRequests\Email.cs" />
     <Compile Include="DataContracts\Entities\Relationship.cs" />
     <Compile Include="DataContracts\Entities\Relationship.CustomFields.cs" />
+    <Compile Include="DataContracts\EntityRequests\Membership.cs" />
     <Compile Include="DataContracts\Requests\ContactRequest.cs" />
     <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="DataContracts\EntityRequests\Im.cs" />
