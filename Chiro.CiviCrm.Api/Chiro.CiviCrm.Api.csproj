@@ -54,7 +54,7 @@
     <Compile Include="Converters\BoolConverter.cs" />
     <Compile Include="Converters\Crm15863Converter.cs" />
     <Compile Include="Converters\Crm15815Converter.cs" />
-    <Compile Include="Converters\EnumCharConverter.cs" />
+    <Compile Include="Converters\NullableEnumCharConverter.cs" />
     <Compile Include="Converters\NullableEnumConverter.cs" />
     <Compile Include="DataContracts\CiviRequestAttribute.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />

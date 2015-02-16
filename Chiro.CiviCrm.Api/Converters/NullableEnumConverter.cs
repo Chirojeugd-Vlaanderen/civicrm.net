@@ -34,17 +34,14 @@ namespace Chiro.CiviCrm.Api.Converters
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
             var underlyingType = Nullable.GetUnderlyingType(objectType);
-            if (underlyingType != null)
+            if (underlyingType == null) return Enum.ToObject(objectType, Convert.ToInt32(reader.Value));
+            // convert to nullable enum
+            if (String.IsNullOrEmpty(reader.Value as string))
             {
-                // convert to nullable enum
-                if (String.IsNullOrEmpty(reader.Value as string))
-                {
-                    return null;
-                }
-                var result = Enum.ToObject(underlyingType, Convert.ToInt32(reader.Value));
-                return result;
+                return null;
             }
-            return Enum.ToObject(objectType, Convert.ToInt32(reader.Value));
+            var result = Enum.ToObject(underlyingType, Convert.ToInt32(reader.Value));
+            return result;
         }
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
