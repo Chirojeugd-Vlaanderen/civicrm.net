@@ -39,4 +39,10 @@ namespace Chiro.CiviCrm.Api.DataContracts
         HeeftFunctieBijNationaal = 14,
         StagebegeleiderVan = 15
     }
+
+    public enum MembershipType
+    {
+        Aansluiting = 1,
+        DubbelpuntAbonnement = 2
+    }
 }
