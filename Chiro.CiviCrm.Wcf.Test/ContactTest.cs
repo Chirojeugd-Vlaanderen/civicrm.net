@@ -602,6 +602,108 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        [TestMethod]
+        public void ChainedOptionsWebsite()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact with two websites.
+                var myWebsite1 = new Website { Url = "http://smurf1.com" };
+                var myWebsite2 = new Website { Url = "http://smurf2.com" };
+
+                var saveResult = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ContactType = ContactType.Individual,
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        WebsiteSaveRequest = new List<BaseRequest> { myWebsite1, myWebsite2 },
+                    });
+                Assert.IsNotNull(saveResult.Id);
+
+                // Get contact with websites, order them backwards, and retrieve only one.
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        Id = saveResult.Id.Value,
+                        WebsiteGetRequest = new BaseRequest
+                        {
+                            ApiOptions = new ApiOptions {Sort = "url DESC", Limit = 1}
+                        }
+                    });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+
+                Assert.AreEqual(1, contact.WebsiteResult.Count);
+                Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.First().Url);
+            }
+        }
+
+        /// <summary>
+        /// Unit test for upstream issue:
+        /// https://issues.civicrm.org/jira/browse/CRM-15983
+        /// </summary>
+        [TestMethod]
+        public void ChainedOptionsRelationships()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact with two relationships.
+
+                var relationshipRequest1 = new RelationshipRequest
+                {
+                    RelationshipTypeId = 5, // Works for
+                    ContactIdAValueExpression = "$value.id",
+                    ContactIdB = 1,         // Default organization
+                    StartDate = DateTime.Now.Date.AddYears(-2),
+                    EndDate = DateTime.Now.Date.AddYears(-1),
+                    IsActive = false
+                };
+                var relationshipRequest2 = new RelationshipRequest
+                {
+                    RelationshipTypeId = 5, // Works for
+                    ContactIdAValueExpression = "$value.id",
+                    ContactIdB = 1,         // Default organization
+                    StartDate = DateTime.Now.Date,
+                    EndDate = DateTime.Now.Date.AddYears(1),
+                    IsActive = true
+                };
+
+                var saveResult = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ContactType = ContactType.Individual,
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = "Test_External_Smurf",
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        RelationshipSaveRequest = new List<RelationshipRequest> { relationshipRequest1, relationshipRequest2 },
+                    });
+                Assert.IsNotNull(saveResult.Id);
+
+                // Get contact with websites, order them backwards, and retrieve only one.
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        Id = saveResult.Id.Value,
+                        RelationshipGetRequest = new RelationshipRequest
+                        {
+                            ContactIdAValueExpression = "$value.id",
+                            ApiOptions = new ApiOptions {Sort = "url DESC", Limit = 1}
+                        }
+                    });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+
+                Assert.AreEqual(1, contact.RelationshipResult.Count);
+                Assert.AreEqual(relationshipRequest2.StartDate, contact.RelationshipResult.Values.First().StartDate);
+            }
+        }
+
     }
 
     /// <summary>
