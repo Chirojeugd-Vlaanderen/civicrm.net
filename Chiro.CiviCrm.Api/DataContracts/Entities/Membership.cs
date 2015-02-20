@@ -20,20 +20,19 @@ using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
     /// A CiviCRM membership.
     /// </summary>
     [DataContract]
-    [CiviRequest]
     public class Membership
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
 
         [DataMember(Name = "contact_id")]
-        public int? ContactId { get; set; }
+        public int ContactId { get; set; }
 
         [DataMember(Name = "membership_type_id"), JsonProperty]
         public int MembershipTypeId { get; set; }
@@ -51,18 +50,19 @@ namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
         public DateTime? EndDate { get; set; }
 
         [DataMember(Name = "status_id")]
-        public int? StatusId { get; set; }
+        [JsonConverter(typeof(NullableEnumConverter))]
+        public MembershipStatus Status { get; set; }
 
         [JsonConverter(typeof(BoolConverter))]
-        [DataMember(Name = "is_override"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "is_override")]
         public bool? IsOverride { get; set; }
 
         [JsonConverter(typeof(BoolConverter))]
-        [DataMember(Name = "is_test"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "is_test")]
         public bool? IsTest { get; set; }
 
         [JsonConverter(typeof(BoolConverter))]
-        [DataMember(Name = "is_pay_later"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "is_pay_later")]
         public bool? IsPayLater { get; set; }
     }
 }

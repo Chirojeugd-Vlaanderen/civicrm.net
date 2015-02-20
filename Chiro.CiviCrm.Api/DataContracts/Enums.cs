@@ -46,6 +46,18 @@ namespace Chiro.CiviCrm.Api.DataContracts
     }
 
     [DataContract]
+    public enum MembershipStatus
+    {
+        [EnumMember] New,
+        [EnumMember] Current,
+        [EnumMember] Grace,
+        [EnumMember] Expired,
+        [EnumMember] Pending,
+        [EnumMember] Cancelled,
+        [EnumMember] Deceased
+    }
+
+    [DataContract]
     public enum CommunicationMethod
     {
         [EnumMember] Phone = 1,
