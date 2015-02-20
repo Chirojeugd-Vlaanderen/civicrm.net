@@ -26,7 +26,7 @@ namespace Chiro.CiviCrm.Api.Converters
     /// </summary>
     public class Crm15863Converter: JsonConverter
     {
-        public static Regex LotsOfDigitsExpression = new Regex("([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})");
+        public static Regex LotsOfDigitsExpression = new Regex("([0-9]{4})([0-9]{2})([0-9]{2})(([0-9]{2})([0-9]{2})([0-9]{2}))?");
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -51,8 +51,15 @@ namespace Chiro.CiviCrm.Api.Converters
                 return null;
             }
             var parts = LotsOfDigitsExpression.Match(input).Groups;
-            return new DateTime(int.Parse(parts[1].Value), int.Parse(parts[2].Value), int.Parse(parts[3].Value),
-                int.Parse(parts[4].Value), int.Parse(parts[5].Value), int.Parse(parts[6].Value));
+
+            if (!String.IsNullOrEmpty(parts[6].ToString()))
+            {
+                // If there are seconds, create date and time
+                return new DateTime(int.Parse(parts[1].Value), int.Parse(parts[2].Value), int.Parse(parts[3].Value),
+                    int.Parse(parts[4].Value), int.Parse(parts[5].Value), int.Parse(parts[6].Value));
+            }
+            // Only a date.
+            return new DateTime(int.Parse(parts[1].Value), int.Parse(parts[2].Value), int.Parse(parts[3].Value));
         }
 
         public override bool CanConvert(Type objectType)
