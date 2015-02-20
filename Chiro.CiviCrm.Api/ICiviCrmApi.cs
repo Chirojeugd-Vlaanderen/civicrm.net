@@ -336,7 +336,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An API-result containing the requested memberships.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}&sequential=1")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Membership&action=get&json={request}&sequential=1")]
         ApiResultValues<Membership> MembershipGet(string apiKey, string key, MembershipRequest request);
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An API-result</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&sequential=1")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Membership&action=delete&json={request}&sequential=1")]
         ApiResult MembershipDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace Chiro.CiviCrm.Api
         /// <returns>An API-result</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={request}")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Membership&action=create&sequential=1&json={request}")]
         ApiResultValues<Membership> MembershipSave(string apiKey, string key, MembershipRequest request);
     }
 }
