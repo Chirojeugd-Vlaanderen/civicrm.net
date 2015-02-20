@@ -16,17 +16,16 @@
 
 
 using System;
-using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     /// <summary>
-    /// A CiviCRM membership.
+    /// A CiviCRM membership request.
     /// </summary>
     [CiviRequest]
-    public class MembershipRequest
+    public class MembershipRequest: BaseRequest
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
