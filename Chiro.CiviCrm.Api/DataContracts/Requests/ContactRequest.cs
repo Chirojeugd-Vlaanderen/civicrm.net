@@ -31,7 +31,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// are all nullable, and all have NullValueHandling.Ignore.
     /// </remarks>
     [CiviRequest]
-    public partial class ContactRequest: BaseRequest
+    public partial class ContactRequest : BaseRequest
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -39,7 +39,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("external_identifier", NullValueHandling = NullValueHandling.Ignore)]
         public string ExternalIdentifier { get; set; }
 
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof (StringEnumConverter))]
         [JsonProperty("contact_type", NullValueHandling = NullValueHandling.Ignore)]
         public ContactType? ContactType { get; set; }
 
@@ -56,64 +56,73 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public string OrganizationName { get; set; }
 
         [JsonProperty("gender_id", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(NullableEnumConverter))]
+        [JsonConverter(typeof (NullableEnumConverter))]
         public Gender? Gender { get; set; }
 
         [JsonProperty("birth_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? BirthDate { get; set; }
 
         [JsonProperty("is_deceased", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(BoolConverter))]
+        [JsonConverter(typeof (BoolConverter))]
         public bool IsDeceased { get; set; }
+
         [JsonProperty("deceased_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DeceasedDate { get; set; }
 
         [JsonProperty("preferred_mail_format", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(StringEnumConverter))]
+        [JsonConverter(typeof (StringEnumConverter))]
         public MailFormat? PreferredMailFormat { get; set; }
 
         #region chaining
+
         [JsonProperty("api.address.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest AddressGetRequest { get; set; }
 
-        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.address.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> AddressSaveRequest { get; set; }
 
         [JsonProperty("api.phone.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest PhoneGetRequest { get; set; }
 
-        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.phone.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> PhoneSaveRequest { get; set; }
 
         [JsonProperty("api.email.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest EmailGetRequest { get; set; }
-        
-        [JsonConverter(typeof(Crm15815Converter))]
+
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.email.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> EmailSaveRequest { get; set; }
 
         [JsonProperty("api.website.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest WebsiteGetRequest { get; set; }
 
-        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.website.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> WebsiteSaveRequest { get; set; }
 
         [JsonProperty("api.im.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest ImGetRequest { get; set; }
 
-        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.im.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> ImSaveRequest { get; set; }
 
         [JsonProperty("api.relationship.get", NullValueHandling = NullValueHandling.Ignore)]
         public RelationshipRequest RelationshipGetRequest { get; set; }
 
-        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.relationship.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<RelationshipRequest> RelationshipSaveRequest { get; set; }
+
+        [JsonProperty("api.membership.get", NullValueHandling = NullValueHandling.Ignore)]
+        public BaseRequest MembershipGetRequest { get; set; }
+
+        [JsonProperty("ap.membership.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<BaseRequest> MembershipSaveRequest { get; set; }
+    
         #endregion
 
         #region CRM-15815

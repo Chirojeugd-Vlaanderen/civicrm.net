@@ -225,6 +225,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public ApiResultValues<Im> ImResult { get; set; }
         [DataMember(Name = "api.Relationship.get")]
         public ApiResultValues<Relationship> RelationshipResult { get; set; }
+        [DataMember(Name = "api.Membership.get")]
+        public ApiResultValues<Membership> MembershipResult { get; set; }
         #endregion
     }
 }

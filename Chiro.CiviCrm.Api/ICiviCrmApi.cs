@@ -326,5 +326,42 @@ namespace Chiro.CiviCrm.Api
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action=getsingle&json={request}&sequential=1")]
         Object GetSingle(string apiKey, string key, CiviEntity entity, BaseRequest request);
+
+        /// <summary>
+        /// Find one or more memberships.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for memberships to find.</param>
+        /// <returns>An API-result containing the requested memberships.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=get&json={request}&sequential=1")]
+        ApiResultValues<Membership> MembershipGet(string apiKey, string key, BaseRequest request);
+
+        /// <summary>
+        /// Deletes a membership.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Request containing the MembershipId</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&sequential=1")]
+        ApiResult MembershipDelete(string apiKey, string key, IdRequest request);
+
+        /// <summary>
+        /// Saves or updates the given <paramref name="membership"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="membership">Membership to be saved. If the membership has an ID, the existing contact
+        /// will be overwritten. If it hasn't, a new contact is created.</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={membership}")]
+        ApiResultValues<Membership> MembershipSave(string apiKey, string key, Membership membership);
     }
 }
