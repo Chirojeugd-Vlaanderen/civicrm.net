@@ -53,9 +53,12 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// Only if IsOverride is true, the resulting membership will have the requested
         /// status. I will set this by default if Status != null.
         /// </summary>
-        [JsonConverter(typeof(BoolConverter))]
+        [JsonConverter(typeof (BoolConverter))]
         [JsonProperty("is_override", NullValueHandling = NullValueHandling.Ignore)]
-        public bool? IsOverride { get { return Status.HasValue; } }
+        public bool? IsOverride
+        {
+            get { return Status.HasValue ? true : (bool?) null; }
+        }
 
         [JsonConverter(typeof(BoolConverter))]
         [JsonProperty("is_test", NullValueHandling = NullValueHandling.Ignore)]
