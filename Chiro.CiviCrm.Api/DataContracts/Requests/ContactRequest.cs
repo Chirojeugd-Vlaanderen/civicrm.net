@@ -120,7 +120,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.membership.get", NullValueHandling = NullValueHandling.Ignore)]
         public BaseRequest MembershipGetRequest { get; set; }
 
-        [JsonProperty("ap.membership.create", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.membership.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<BaseRequest> MembershipSaveRequest { get; set; }
     
         #endregion
