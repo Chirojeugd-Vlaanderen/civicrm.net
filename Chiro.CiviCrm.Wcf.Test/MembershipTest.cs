@@ -16,6 +16,7 @@
 
 using System;
 using System.Linq;
+using System.ServiceModel;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -26,8 +27,10 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class MembershipTest
     {
         // We assume that the membershiptype with ID 1 exists in the CiviCRM instance.
-        private int _someMembershipTypeId = 1;
-        private int _myContactId;
+        private const int SomeMembershipTypeId = 1;
+
+        private int _myContactId1;
+        private int _myContactId2;
 
         [TestInitialize]
         public void InitializeTests()
@@ -42,7 +45,19 @@ namespace Chiro.CiviCrm.Wcf.Test
                         BirthDate = new DateTime(1980, 2, 9),
                         ContactType = ContactType.Individual
                     });
-                _myContactId = result1.Values.First().Id;                
+                _myContactId1 = result1.Values.First().Id;
+
+                var result2 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        FirstName = "Jesse",
+                        LastName = "Schmoe",
+                        BirthDate = new DateTime(1980, 2, 9),
+                        ContactType = ContactType.Individual,
+                        MembershipSaveRequest = new[] {new MembershipRequest {MembershipTypeId = 1}}
+                    });
+                _myContactId2 = result2.Values.First().Id;                
+
             }
         }
 
@@ -51,8 +66,11 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId),
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest(_myContactId1),
+                    1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest(_myContactId2),
                     1);
             }
         }
@@ -64,8 +82,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             {
                 var membershipRequest = new MembershipRequest
                 {
-                    MembershipTypeId = _someMembershipTypeId,
-                    ContactId = _myContactId,
+                    MembershipTypeId = SomeMembershipTypeId,
+                    ContactId = _myContactId1,
                     JoinDate = DateTime.Now.Date,
                     StartDate = DateTime.Now.Date,
                     Status = MembershipStatus.Pending
@@ -79,6 +97,21 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(membershipRequest.JoinDate, newMembership.JoinDate);
                 Assert.AreEqual(membershipRequest.StartDate, newMembership.StartDate);
                 Assert.AreEqual(membershipRequest.Status, newMembership.Status);
+            }
+        }
+
+        [TestMethod]
+        public void GetMembership()
+        {
+            var membershipRequest = new MembershipRequest
+            {
+                ContactId = _myContactId2
+            };
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
+
+                Assert.AreEqual(1, result.Count);
             }
         }
     }
