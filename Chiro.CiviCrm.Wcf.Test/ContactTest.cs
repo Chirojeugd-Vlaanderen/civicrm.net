@@ -378,7 +378,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain phone and website.
-                var myPhone = new Phone { PhoneNumber = "03-100 20 00" };
+                var myPhone1 = new Phone { PhoneNumber = "03-100 20 00" }; 
+                var myPhone2 = new Phone { PhoneNumber = "03-100 20 01" };
                 var myWebsite1 = new Website { Url = "http://smurf.com" };
                 var myWebsite2 = new Website { Url = "http://smurf.org" };
 
@@ -391,7 +392,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions {Match = "external_identifier"},
                         WebsiteSaveRequest = new List<BaseRequest> {myWebsite1, myWebsite2},
-                        PhoneSaveRequest = new List<BaseRequest> {myPhone},
+                        PhoneSaveRequest = new List<BaseRequest> {myPhone1, myPhone2},
                     });
 
                 // This crashes because of upstream issue CRM-15815:
@@ -410,11 +411,58 @@ namespace Chiro.CiviCrm.Wcf.Test
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
+                Assert.AreEqual(2, contact.PhoneResult.Count);
+                Assert.AreEqual(myPhone1.PhoneNumber, contact.PhoneResult.Values.First().PhoneNumber);
+                Assert.AreEqual(myPhone2.PhoneNumber, contact.PhoneResult.Values.Last().PhoneNumber);
+                Assert.AreEqual(2, contact.WebsiteResult.Count);
+                Assert.AreEqual(myWebsite1.Url, contact.WebsiteResult.Values.First().Url);
+                Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.Last().Url);
+            }
+        }
+
+        /// <summary>
+        /// Test for ContactSaveWorkaroundCrm15815
+        /// </summary>
+        [TestMethod]
+        public void WorkaroundCrm15815()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // Create a contact, chain phone and website.
+                var myPhone = new Phone { PhoneNumber = "03-100 20 00" };
+                var myWebsite1 = new Website { Url = "http://smurf.com" };
+                var myWebsite2 = new Website { Url = "http://smurf.org" };
+                const string myExternalId = "Test_External_Smurf";
+
+                client.ContactSaveWorkaroundCrm15815(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ContactType = ContactType.Individual,
+                        LastName = "Smurf",
+                        FirstName = "Smul",
+                        ExternalIdentifier = myExternalId,
+                        ApiOptions = new ApiOptions { Match = "external_identifier" },
+                        WebsiteSaveRequest = new List<BaseRequest> { myWebsite1, myWebsite2 },
+                        PhoneSaveRequest = new List<BaseRequest> { myPhone },
+                    });
+
+                // Get contact with websites
+                var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ExternalIdentifier = myExternalId,
+                        PhoneGetRequest = new BaseRequest(),
+                        WebsiteGetRequest = new BaseRequest(),
+                    });
+
+                // Delete contact before doing assertions.
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
+
                 Assert.AreEqual(1, contact.PhoneResult.Count);
                 Assert.AreEqual(myPhone.PhoneNumber, contact.PhoneResult.Values.First().PhoneNumber);
-                Assert.AreEqual(1, contact.WebsiteResult.Count);
+                Assert.AreEqual(2, contact.WebsiteResult.Count);
                 Assert.AreEqual(myWebsite1.Url, contact.WebsiteResult.Values.First().Url);
-                Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.First().Url);
+                Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.Last().Url);
             }
         }
 

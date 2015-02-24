@@ -57,6 +57,7 @@
     <Compile Include="Converters\NullableEnumCharConverter.cs" />
     <Compile Include="Converters\NullableEnumConverter.cs" />
     <Compile Include="DataContracts\CiviRequestAttribute.cs" />
+    <Compile Include="DataContracts\EmptyResult.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Membership.cs" />
     <Compile Include="DataContracts\EntityRequests\Address.cs" />

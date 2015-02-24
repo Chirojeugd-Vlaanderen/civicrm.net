@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Chiro.CiviCrm.Api.DataContracts;
@@ -79,6 +80,19 @@ namespace Chiro.CiviCrm.Api
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&sequential=1&json={contact}")]
         ApiResultValues<Contact> ContactSave(string apiKey, string key, ContactRequest contact);
+
+        /// <summary>
+        /// Saves or updates the given <paramref name="contact"/>. This call works around upstream
+        /// issue CRM-15815 by omitting sequential=1. Which causes the result to be unparsable.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="contact">Contact to be saved. If the contact has an ID, the existing contact
+        /// will be overwritten. If it hasn't, a new contact is created.</param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebInvoke(UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=create&json={contact}")]
+        EmptyResult ContactSaveWorkaroundCrm15815(string apiKey, string key, ContactRequest contact);
 
         /// <summary>
         /// Returns one or more addresses.

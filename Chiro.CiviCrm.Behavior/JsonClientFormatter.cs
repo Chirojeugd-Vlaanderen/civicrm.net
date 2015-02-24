@@ -26,6 +26,7 @@ using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
 using System.Text;
 using System.Text.RegularExpressions;
+using Chiro.CiviCrm.Api.DataContracts;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.BehaviorExtension
@@ -72,6 +73,12 @@ namespace Chiro.CiviCrm.BehaviorExtension
                 using (var sr = new StreamReader(ms))
                 {
                     Type returnType = this._operation.Messages[1].Body.ReturnValue.Type;
+                    if (returnType == typeof (EmptyResult))
+                    {
+                        // If the result of the API cannot be parsed, you can use EmptyResult
+                        // as a result. In this case the body is ignored.
+                        return new EmptyResult();
+                    }
                     var result = serializer.Deserialize(sr, returnType);
                     return result;
                 }
