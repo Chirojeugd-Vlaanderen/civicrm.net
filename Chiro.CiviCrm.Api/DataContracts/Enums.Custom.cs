@@ -45,4 +45,38 @@ namespace Chiro.CiviCrm.Api.DataContracts
         Aansluiting = 1,
         DubbelpuntAbonnement = 2
     }
+
+    public enum EvenementType
+    {
+        Bivak = 100,
+        Sb = 1,
+        Afdelingsboost = 2,
+        Tochtenbivak = 3,
+        Groepsleidingsweekend1 = 4,
+        Groepsleidingsweekend2 = 5,
+        Prikkel = 6,
+        Expressiebivak = 7,
+        Kic1 = 8,
+        Kic2 = 9,
+        Kic3 = 10,
+        VoortgezetteKadervorming = 11,
+        Atd = 12,
+        K3d = 17,
+        VbDag = 15,
+        RegionaleStartdag = 16,
+        Ik = 19,
+        NationaleStartdag = 22,
+        KrinkelWeekend = 25,
+        ChiroScoutsCursus = 20,
+        Aspitrant = 23,
+        Techniekendag = 26,
+        Hoofdanimator = 27,
+        Krinkel = 28,
+        Expressieweekend = 29,
+        Jbc = 30,
+        Workshopweekend = 31,
+        Aspibivak = 32,
+        Animatorcursus = 33,
+        Werkweek = 101
+    }
 }

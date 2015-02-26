@@ -60,6 +60,7 @@
     <Compile Include="DataContracts\EmptyResult.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Event.cs" />
+    <Compile Include="DataContracts\Entities\Event.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Membership.cs" />
     <Compile Include="DataContracts\EntityRequests\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\Requests\EventRequest.CustomFields.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
