@@ -366,16 +366,53 @@ namespace Chiro.CiviCrm.Api
         ApiResult MembershipDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
-        /// Saves or updates the given <paramref name="membership"/>.
+        /// Saves or updates the membership defined by <paramref name="request"/>.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
         /// <param name="key">Key of the CiviCRM-instance</param>
-        /// <param name="membership">Membership to be saved. If the membership has an ID, the existing contact
+        /// <param name="request">Membership to be saved. If the membership has an ID, the existing contact
         /// will be overwritten. If it hasn't, a new contact is created.</param>
         /// <returns>An API-result</returns>
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Membership&action=create&sequential=1&json={request}")]
         ApiResultValues<Membership> MembershipSave(string apiKey, string key, MembershipRequest request);
+
+        /// <summary>
+        /// Find one or more events.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for events to find.</param>
+        /// <returns>An API-result containing the requested events.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=get&json={request}&sequential=1")]
+        ApiResultValues<Event> EventGet(string apiKey, string key, EventRequest request);
+
+        /// <summary>
+        /// Deletes an event.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Request containing the EventId</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=delete&json={request}&sequential=1")]
+        ApiResult EventDelete(string apiKey, string key, IdRequest request);
+
+        /// <summary>
+        /// Saves or updates the event defined by <paramref name="request"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Event to be saved. If the event has an ID, the existing event
+        /// will be overwritten. If it hasn't, a new event is created.</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=create&sequential=1&json={request}")]
+        ApiResultValues<Event> EventSave(string apiKey, string key, EventRequest request);
     }
 }

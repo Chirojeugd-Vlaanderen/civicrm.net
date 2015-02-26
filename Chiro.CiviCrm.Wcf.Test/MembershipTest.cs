@@ -78,6 +78,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         [TestMethod]
         public void CreateMembership()
         {
+            // If this test fails, check whether your API user has the permissions
+            // access civimember and edit memberships.
             using (var client = TestHelper.ClientGet())
             {
                 var membershipRequest = new MembershipRequest
