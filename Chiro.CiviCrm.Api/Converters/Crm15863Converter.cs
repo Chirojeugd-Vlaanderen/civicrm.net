@@ -56,7 +56,7 @@ namespace Chiro.CiviCrm.Api.Converters
             {
                 // If there are seconds, create date and time
                 return new DateTime(int.Parse(parts[1].Value), int.Parse(parts[2].Value), int.Parse(parts[3].Value),
-                    int.Parse(parts[4].Value), int.Parse(parts[5].Value), int.Parse(parts[6].Value));
+                    int.Parse(parts[5].Value), int.Parse(parts[6].Value), int.Parse(parts[7].Value));
             }
             // Only a date.
             return new DateTime(int.Parse(parts[1].Value), int.Parse(parts[2].Value), int.Parse(parts[3].Value));
