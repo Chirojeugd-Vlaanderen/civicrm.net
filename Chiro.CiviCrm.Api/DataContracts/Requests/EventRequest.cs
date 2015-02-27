@@ -15,9 +15,6 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -32,6 +29,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
+
+        [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
+        public string Description { get; set; }
 
         [JsonProperty("participant_listing_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ParticipantListingId { get; set; }

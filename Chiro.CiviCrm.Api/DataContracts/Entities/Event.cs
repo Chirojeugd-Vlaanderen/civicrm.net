@@ -31,6 +31,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
+        [DataMember(Name = "description")]
+        public string Description { get; set; }
+
         [DataMember(Name = "participant_listing_id")]
         public int ParticipantListingId { get; set; }
 
