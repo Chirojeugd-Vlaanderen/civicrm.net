@@ -391,6 +391,18 @@ namespace Chiro.CiviCrm.Api
         ApiResultValues<Event> EventGet(string apiKey, string key, EventRequest request);
 
         /// <summary>
+        /// Find one event.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the event to find.</param>
+        /// <returns>The requested event.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=getsingle&json={request}&sequential=1")]
+        Event EventGetSingle(string apiKey, string key, EventRequest request);
+
+        /// <summary>
         /// Deletes an event.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
