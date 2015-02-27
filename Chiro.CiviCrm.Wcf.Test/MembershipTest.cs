@@ -16,7 +16,6 @@
 
 using System;
 using System.Linq;
-using System.ServiceModel;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

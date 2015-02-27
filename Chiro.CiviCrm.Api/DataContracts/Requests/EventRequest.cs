@@ -33,6 +33,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
 
+        [JsonProperty("event_type_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? EventTypeId { get; set; }
+
         [JsonProperty("participant_listing_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ParticipantListingId { get; set; }
 
