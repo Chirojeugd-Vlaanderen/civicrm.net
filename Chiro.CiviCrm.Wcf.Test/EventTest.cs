@@ -15,6 +15,8 @@
  */
 
 using System;
+using System.Diagnostics;
+using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -25,6 +27,30 @@ namespace Chiro.CiviCrm.Wcf.Test
     {
         // Make sure that you have an event type with given ID:
         private const int MyEventTypeId = 1;
+
+        private int _myEventId;
+
+        [TestInitialize]
+        public void InitializeTest()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var eventRequest = new EventRequest
+                {
+                    Title = "Belgian Beer Event",
+                    Description = "Best event ever.",
+                    StartDate = new DateTime(2016, 02, 05),
+                    EndDate = new DateTime(2016, 02, 05),
+                    EventTypeId = MyEventTypeId
+                };
+
+                var saveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
+                Debug.Assert(saveResult != null);
+                Debug.Assert(saveResult.Id.HasValue);
+
+                _myEventId = saveResult.Id.Value;
+            }
+        }
 
         [TestMethod]
         public void CreateEvent()
@@ -51,6 +77,42 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new IdRequest(saveResult.Id.Value));
 
                 Assert.AreEqual(0, saveResult.IsError);                
+            }
+        }
+
+        [TestCleanup]
+        public void CleanupTest()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new IdRequest(_myEventId));
+
+                Debug.Assert(result.IsError == 0,
+                    "Could not delete event. Maybe your API user needs more permissions.");
+            }
+
+        }
+
+        [TestMethod]
+        public void UpdateEvent()
+        {
+            // Make sure that your API user has permissions
+            // 'access CiviEvent', 'view event info',
+            // and 'edit all events'.
+            using (var client = TestHelper.ClientGet())
+            {
+                var eventRequest = new EventRequest
+                {
+                    Id = _myEventId,
+                    Title = "O bierbaar Belgie"
+                };
+
+                var saveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
+
+                Assert.AreEqual(_myEventId, saveResult.Id);
+                Assert.AreEqual(eventRequest.Title, saveResult.Values.First().Title);
+                Assert.AreEqual(0, saveResult.IsError);
             }
         }
     }
