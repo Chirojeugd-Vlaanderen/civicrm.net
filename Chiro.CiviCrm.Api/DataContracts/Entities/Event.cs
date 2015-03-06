@@ -37,7 +37,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public string Description { get; set; }
 
         [DataMember(Name = "event_type_id")]
-        public int EventTypeId { get; set; }
+        public int? EventTypeId { get; set; }
 
         [DataMember(Name = "participant_listing_id")]
         public int? ParticipantListingId { get; set; }
@@ -48,11 +48,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
 
         [JsonConverter(typeof(Crm15863Converter))]
         [DataMember(Name = "start_date")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [JsonConverter(typeof(Crm15863Converter))]
         [DataMember(Name = "end_date")]
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         [JsonConverter(typeof(BoolConverter))]
         [DataMember(Name = "is_online_registration")]
@@ -122,7 +122,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
 
         [JsonConverter(typeof(Crm15863Converter))]
         [DataMember(Name = "created_date")]
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
 
         [DataMember(Name = "currency")]
         public string Currency { get; set; }
