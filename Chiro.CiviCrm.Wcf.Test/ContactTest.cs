@@ -759,7 +759,10 @@ namespace Chiro.CiviCrm.Wcf.Test
     /// </summary>
     internal class CustomWebsiteRequest : BaseRequest
     {
-        [JsonProperty(PropertyName = "website_type_id")]
-        public WebsiteType WebsiteType { get; set; }
+        [JsonProperty(PropertyName = "website_type_id", NullValueHandling = NullValueHandling.Ignore)]
+        public WebsiteType? WebsiteType { get; set; }
+
+        [JsonProperty(PropertyName = "contact_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? ContactId { get; set; }
     }
 }

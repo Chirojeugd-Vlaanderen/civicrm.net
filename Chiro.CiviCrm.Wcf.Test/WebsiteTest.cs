@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Johan Vervloet
+   Copyright 2014,2015 Johan Vervloet
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -76,6 +76,44 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(website.ContactId, result.Values.First().ContactId);
                 Assert.AreEqual(website.Url, result.Values.First().Url);
                 Assert.AreEqual(website.WebsiteType, result.Values.First().WebsiteType);
+            }
+        }
+
+        [TestMethod]
+        public void OffsetOption()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var website1 = new Website
+                {
+                    ContactId = _myContactId,
+                    Url = "http://blog.johanv.org",
+                    WebsiteType = WebsiteType.Main
+                };
+                var website2 = new Website
+                {
+                    ContactId = _myContactId,
+                    Url = "http://civicrm.org",
+                    WebsiteType = WebsiteType.Main
+                };
+                var website3 = new Website
+                {
+                    ContactId = _myContactId,
+                    Url = "http://www.chiro.be",
+                    WebsiteType = WebsiteType.Main
+                };
+
+
+                client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey, website1);
+                client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey, website2);
+                client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey, website3);
+
+                var result = client.WebsiteGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new CustomWebsiteRequest {ContactId = _myContactId, ApiOptions = new ApiOptions{Sort = "url", Offset = 2}});
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(1, result.Count);
+                Assert.AreEqual(website3.Url, result.Values.First().Url);
             }
         }
     }
