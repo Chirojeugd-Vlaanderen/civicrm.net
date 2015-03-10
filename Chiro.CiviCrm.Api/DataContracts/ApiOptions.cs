@@ -33,6 +33,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public string Sort { get; set; }
 
         [JsonProperty("limit", NullValueHandling = NullValueHandling.Ignore)]
-        public int Limit { get; set; }
+        public int? Limit { get; set; }
+
+        [JsonProperty("offset", NullValueHandling = NullValueHandling.Ignore)]
+        public int? Offset { get; set; }
     }
 }
