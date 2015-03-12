@@ -36,7 +36,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         /// Deze property is toch nullable, omdat we in CiviCRM niet kunnen
         /// afdwingen dat er precies 1 afdeling is.
         /// </remarks>
-        [JsonConverter(typeof(EnumCharConverter))]
+        [JsonConverter(typeof(NullableEnumCharConverter))]
         [DataMember(Name = "custom_22"), JsonProperty]
         public Afdeling? Afdeling { get; set; }
 

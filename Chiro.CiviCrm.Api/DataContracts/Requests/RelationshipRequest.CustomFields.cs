@@ -36,7 +36,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// afdwingen dat er precies 1 afdeling is.
         /// </remarks>
         [JsonProperty("custom_22", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(EnumCharConverter))]
+        [JsonConverter(typeof(NullableEnumCharConverter))]
         public Afdeling? Afdeling { get; set; }
 
         /// <summary>
