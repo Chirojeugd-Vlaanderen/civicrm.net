@@ -43,6 +43,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("contact_type", NullValueHandling = NullValueHandling.Ignore)]
         public ContactType? ContactType { get; set; }
 
+        [JsonProperty("contact_sub_type", NullValueHandling = NullValueHandling.Ignore)]
+        public string ContactSubType { get; set; }
+
         [JsonProperty("first_name", NullValueHandling = NullValueHandling.Ignore)]
         public string FirstName { get; set; }
 

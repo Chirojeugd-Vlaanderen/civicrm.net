@@ -540,6 +540,34 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         [TestMethod]
+        public void CreateWithContactSubType()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var contact = new ContactRequest
+                {
+                    ContactType = ContactType.Organization,
+                    // this should be an existing subtype:
+                    // I am not sure why the subtype should be an array.
+                    ContactSubType = "ploeg",
+                    OrganizationName = "Organization X",
+                    ExternalIdentifier = "test_ext_id_subtype",
+                    ApiOptions = new ApiOptions { Match = "external_identifier" }
+                };
+
+                var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, contact);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.IsNotNull(result.Id);
+                Assert.AreEqual(result.Id, result.Values.First().Id);
+                Assert.AreEqual(contact.OrganizationName, result.Values.First().OrganizationName);
+                Assert.AreEqual(contact.ContactSubType, result.Values.First().ContactSubType.First());
+
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+            }
+        }
+
+        [TestMethod]
         public void SortAndLimit()
         {
             using (var client = TestHelper.ClientGet())
@@ -732,7 +760,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
                 Assert.IsNotNull(saveResult.Id);
 
-                // Get contact with websites, order them backwards, and retrieve only one.
+                // Get contact with relationships, order them backwards, and retrieve only one.
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
                     {
@@ -740,7 +768,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         RelationshipGetRequest = new RelationshipRequest
                         {
                             ContactIdAValueExpression = "$value.id",
-                            ApiOptions = new ApiOptions {Sort = "url DESC", Limit = 1}
+                            ApiOptions = new ApiOptions {Sort = "end_date DESC", Limit = 1}
                         }
                     });
 

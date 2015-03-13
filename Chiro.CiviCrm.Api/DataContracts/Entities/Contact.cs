@@ -38,7 +38,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public ContactType ContactType { get; set; }
 
         [DataMember(Name="contact_sub_type"), JsonProperty]
-        public string ContactSubType { get; set; }
+        public string[] ContactSubType { get; set; }
 
         [DataMember(Name="sort_name"), JsonProperty]
         public string SortName { get; set; }
