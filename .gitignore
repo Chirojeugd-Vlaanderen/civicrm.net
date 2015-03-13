@@ -28,3 +28,4 @@ _ReSharper*/
 
 # Ignore downloaded NuGet packages
 packages/*
+*.orig
