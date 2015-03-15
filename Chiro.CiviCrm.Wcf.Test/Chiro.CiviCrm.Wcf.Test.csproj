@@ -71,6 +71,7 @@
     <Compile Include="RelationshipTest.cs" />
     <Compile Include="MembershipTest.cs" />
     <Compile Include="EventTest.cs" />
+    <Compile Include="ChiroTest.cs" />
     <Compile Include="WebsiteTest.cs" />
   </ItemGroup>
   <ItemGroup>
