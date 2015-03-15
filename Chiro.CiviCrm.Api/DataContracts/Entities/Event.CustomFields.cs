@@ -32,22 +32,22 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "custom_52")]
         public string AnalytischeCode { get; set; }
 
-        [DataMember(Name = "custom_53")]
+        [DataMember(Name = "custom_53_id")]
         public int? OrganiserendePersoon1Id { get; set; }
 
-        [DataMember(Name = "custom_54")]
+        [DataMember(Name = "custom_54_id")]
         public int? OrganiserendePersoon2Id { get; set; }
 
-        [DataMember(Name = "custom_55")]
+        [DataMember(Name = "custom_55_id")]
         public int? OrganiserendePersoon3Id { get; set; }
 
-        [DataMember(Name = "custom_56")]
+        [DataMember(Name = "custom_56_id")]
         public int? OrganiserendePloeg1Id { get; set; }
 
-        [DataMember(Name = "custom_57")]
+        [DataMember(Name = "custom_57_id")]
         public int? OrganiserendePloeg2Id { get; set; }
 
-        [DataMember(Name = "custom_58")]
+        [DataMember(Name = "custom_58_id")]
         public int? OrganiserendePloeg3Id { get; set; }
 
         [DataMember(Name = "custom_59")]
