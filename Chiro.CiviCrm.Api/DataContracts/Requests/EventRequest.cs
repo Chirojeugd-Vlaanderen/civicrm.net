@@ -15,6 +15,8 @@
  */
 
 using System;
+using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -42,11 +44,13 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("is_public", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsPublic { get; set; }
 
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? StartDate { get; set; }
+        public Filter<DateTime?> StartDate { get; set; }
 
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        public DateTime? EndDate { get; set; }
+        public Filter<DateTime?> EndDate { get; set; }
 
         [JsonProperty("is_online_registration", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsOnlineRegistration { get; set; }

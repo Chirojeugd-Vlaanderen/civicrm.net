@@ -17,6 +17,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,8 +40,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                 {
                     Title = "Belgian Beer Event",
                     Description = "Best event ever.",
-                    StartDate = new DateTime(2016, 02, 05),
-                    EndDate = new DateTime(2016, 02, 05),
+                    StartDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
+                    EndDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
                     EventTypeId = MyEventTypeId
                 };
 
@@ -49,6 +50,22 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Debug.Assert(saveResult.Id.HasValue);
 
                 _myEventId = saveResult.Id.Value;
+            }
+        }
+
+        [TestMethod]
+        public void GetEventDateFilter()
+        {
+            DateTime someDate = new DateTime(2015, 3, 14);
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new EventRequest
+                {
+                    StartDate = new Filter<DateTime?> {Operator = WhereOperator.Gt, Value = someDate}
+                };
+
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+                Assert.IsTrue(result.Values.All(v => v.StartDate > someDate));
             }
         }
 
@@ -64,8 +81,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                 {
                     Title = "My mighty event",
                     Description = "It will be fun.",
-                    StartDate = new DateTime(2015, 07, 01),
-                    EndDate = new DateTime(2015, 07, 10),
+                    StartDate = new Filter<DateTime?>(new DateTime(2015, 07, 01)),
+                    EndDate = new Filter<DateTime?>(new DateTime(2015, 07, 10)),
                     EventTypeId = MyEventTypeId
                 };
 
