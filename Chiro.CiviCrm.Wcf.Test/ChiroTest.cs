@@ -18,6 +18,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -39,8 +40,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var eventRequest = new EventRequest
                 {
                     Title = "Kamp 2015",
-                    StartDate = new DateTime(2015, 07, 01),
-                    EndDate = new DateTime(2015, 07, 11),
+                    StartDate = new Filter<DateTime?>(new DateTime(2015, 07, 01)),
+                    EndDate = new Filter<DateTime?>(new DateTime(2015, 07, 11)),
                     EventTypeId = (int) EvenementType.Bivak,
                     // Default organisation
                     OrganiserendePloeg1Id = 1
