@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Web;
 using Chiro.CiviCrm.Api.DataContracts;
@@ -141,6 +140,18 @@ namespace Chiro.CiviCrm.Api
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=get&json={request}&sequential=1")]
         ApiResultValues<Relationship> RelationshipGet(string apiKey, string key, RelationshipRequest request);
+
+        /// <summary>
+        /// Returns one relationship.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the relationships to find.</param>
+        /// <returns>The requested relationship</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=getsingle&json={request}&sequential=1")]
+        Relationship RelationshipGetSingle(string apiKey, string key, RelationshipRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="relationship"/>.

@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
@@ -100,5 +101,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("is_permission_b_a", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
         public bool? IsPermissionBa { get; set; }
+
+        #region chaining
+        [JsonProperty("api.contact.get", NullValueHandling = NullValueHandling.Ignore)]
+        public ContactRequest ContactGetRequest { get; set; }
+
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.contact.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<ContactRequest> ContactSaveRequest { get; set; }
+        #endregion
     }
 }
