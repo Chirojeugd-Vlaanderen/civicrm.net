@@ -62,14 +62,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public AddressRequest Address { get; set; }
 
         #region Chaining
-        [JsonProperty("api.address.get", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.Address.get", NullValueHandling = NullValueHandling.Ignore)]
         public AddressRequest AddressGetRequest { get; set; }
 
-        [JsonProperty("api.event.get", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.Event.get", NullValueHandling = NullValueHandling.Ignore)]
         public EventRequest EventGetRequest { get; set; }
 
         [JsonConverter(typeof(Crm15815Converter))]
-        [JsonProperty("api.event.create", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.Event.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<EventRequest> EventSaveRequest { get; set; }
         #endregion
     }

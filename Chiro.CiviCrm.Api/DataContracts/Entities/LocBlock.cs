@@ -48,10 +48,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public int? Im2Id { get; set; }
 
         #region Chaining
-        [DataMember(Name = "api.address.get")]
+        [DataMember(Name = "api.Address.get")]
         public ApiResultValues<Address>  AddressResult { get; set; }
 
-        [DataMember(Name = "api.event.get")]
+        [DataMember(Name = "api.Event.get")]
         public ApiResultValues<Event> EventResult { get; set; }
         #endregion
     }
