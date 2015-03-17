@@ -144,6 +144,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         #region Chaining
         [DataMember(Name = "api.LocBlock.get")]
         public ApiResultValues<LocBlock> LocBlockResult { get; set; }
+
+        [DataMember(Name = "api.Contact.get")]
+        public ApiResultValues<Contact> ContactResult { get; set; }
         #endregion
     }
 }

@@ -132,6 +132,13 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonConverter(typeof(Crm15815Converter))]
         [JsonProperty("api.LocBlock.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<LocBlockRequest> LocBlockSaveRequest { get; set; }
+
+        [JsonProperty("api.Contact.get", NullValueHandling = NullValueHandling.Ignore)]
+        public ContactRequest ContactGetRequest { get; set; }
+
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.Contact.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<ContactRequest> ContactSaveRequest { get; set; }
         #endregion
     }
 }
