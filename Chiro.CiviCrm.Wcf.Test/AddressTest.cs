@@ -40,8 +40,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest {ContactType = ContactType.Individual, FirstName = "Joe", LastName = "Schmoe"});
                 _myContactId = result.Values.First().Id;
                 // TODO: chain this address creation.
-                // (As soon as write chaining is supported.)
-                var addressRequest = new Address
+                var addressRequest = new AddressRequest
                 {
                     ContactId = _myContactId,
                     StreetAddress = "Kipdorp 30",
@@ -54,8 +53,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 // (Adminis, System Settings, Maps)
                 var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, addressRequest);
                 var address = addressResult.Values.First();
-                Debug.Assert(address.Id.HasValue);
-                _myAddressId = address.Id.Value;
+                _myAddressId = address.Id;
             }
         }
 
@@ -75,7 +73,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var newAddress = new Address
+                var newAddress = new AddressRequest
                 {
                     ContactId = _myContactId,
                     StreetAddress = "Hoefslagstraatje 2",

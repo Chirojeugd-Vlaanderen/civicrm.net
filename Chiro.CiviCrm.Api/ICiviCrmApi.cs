@@ -115,7 +115,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=create&sequential=1&json={address}")]
-        ApiResultValues<Address> AddressSave(string apiKey, string key, Address address);
+        ApiResultValues<Address> AddressSave(string apiKey, string key, AddressRequest address);
 
         /// <summary>
         /// Deletes an address.
