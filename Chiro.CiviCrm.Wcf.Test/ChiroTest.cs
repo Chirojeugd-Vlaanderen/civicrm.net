@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
@@ -73,6 +72,26 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 Assert.AreEqual(1, result.OrganiserendePloeg1Id);
             }            
+        }
+
+        [TestMethod]
+        public void ChainedCallOrganiserendePloeg()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new EventRequest
+                    {
+                        Id = _myEventId,
+                        ContactGetRequest = new ContactRequest {IdValueExpression = "$value.custom_56_id"}
+                    });
+
+                Assert.AreEqual(1, result.Count);
+                var myEvent = result.Values.First();
+                Assert.AreEqual(1, myEvent.ContactResult.Count);
+                var organiserendePloeg1 = myEvent.ContactResult.Values.First();
+                Assert.AreEqual(1, organiserendePloeg1.Id); // Default organisation
+            }
         }
     }
 }
