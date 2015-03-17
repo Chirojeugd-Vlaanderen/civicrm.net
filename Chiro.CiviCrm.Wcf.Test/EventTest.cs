@@ -153,7 +153,10 @@ namespace Chiro.CiviCrm.Wcf.Test
                     LocBlockGetRequest = new LocBlockRequest
                     {
                         IdValueExpression = "$value.loc_block_id",
-                        AddressGetRequest = new AddressRequest()
+                        AddressGetRequest = new AddressRequest
+                        {
+                            IdValueExpression = "$value.address_id"
+                        }
                     }
                 };
                 var getResult = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, eventGetRequest);

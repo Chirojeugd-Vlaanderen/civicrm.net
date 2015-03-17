@@ -25,8 +25,15 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// </summary>
     public partial class AddressRequest: BaseRequest
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         public int? Id { get; set; }
+        [JsonIgnore]
+        public string IdValueExpression { get; set; }
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public string IdString
+        {
+            get { return Id.HasValue ? Id.ToString() : IdValueExpression; }
+        }
         [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
         [JsonProperty("location_type_id", NullValueHandling = NullValueHandling.Ignore)]
