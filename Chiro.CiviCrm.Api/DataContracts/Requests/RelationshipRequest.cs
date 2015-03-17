@@ -103,11 +103,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public bool? IsPermissionBa { get; set; }
 
         #region chaining
-        [JsonProperty("api.contact.get", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.Contact.get", NullValueHandling = NullValueHandling.Ignore)]
         public ContactRequest ContactGetRequest { get; set; }
 
         [JsonConverter(typeof(Crm15815Converter))]
-        [JsonProperty("api.contact.create", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("api.Contact.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<ContactRequest> ContactSaveRequest { get; set; }
         #endregion
     }

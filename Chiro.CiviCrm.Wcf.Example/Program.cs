@@ -123,7 +123,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    AddressGetRequest = new BaseRequest()
+                    AddressGetRequest = new AddressRequest()
                 });
 
                 // Keep the contact Id for later reference.
@@ -140,7 +140,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 ShowAddresses(contact);
 
                 // Add an address to the contact.
-                var newAddress = new Address
+                var newAddress = new AddressRequest
                 {
                     ContactId = contact.Id,
                     StreetAddress = "Hoefslagstraatje 2",
@@ -151,7 +151,8 @@ namespace Chiro.CiviCrm.Wcf.Example
                 };
 
                 var result = client.AddressSave(ApiKey, SiteKey, newAddress);
-                newAddress.Id = result.Id;
+                Debug.Assert(result.Id != null);
+                newAddress.Id = result.Id.Value;
 
                 // Get contact again, to find out whether the address 
                 // has been added.
@@ -165,7 +166,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    AddressGetRequest = new BaseRequest()
+                    AddressGetRequest = new AddressRequest()
                 });
 
                 // Show adresses
@@ -179,7 +180,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 {
                     Id = contactId,
                     ReturnFields = "id",
-                    AddressGetRequest = new BaseRequest()
+                    AddressGetRequest = new AddressRequest()
                 });
 
                 ShowAddresses(contact);
@@ -197,7 +198,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        AddressGetRequest = new BaseRequest()
+                        AddressGetRequest = new AddressRequest()
                     });
 
                 // Exit if contact is not found.
@@ -222,7 +223,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
                 {
                     ExternalIdentifier = ExternalId,
-                    AddressGetRequest = new BaseRequest()
+                    AddressGetRequest = new AddressRequest()
                 });
                 ShowContact(contact);
             }

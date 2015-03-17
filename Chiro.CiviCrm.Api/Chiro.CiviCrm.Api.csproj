@@ -59,11 +59,12 @@
     <Compile Include="Converters\NullableEnumConverter.cs" />
     <Compile Include="DataContracts\CiviRequestAttribute.cs" />
     <Compile Include="DataContracts\EmptyResult.cs" />
+    <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Event.cs" />
     <Compile Include="DataContracts\Entities\Event.CustomFields.cs" />
+    <Compile Include="DataContracts\Entities\LocBlock.cs" />
     <Compile Include="DataContracts\Entities\Membership.cs" />
-    <Compile Include="DataContracts\EntityRequests\Address.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
     <Compile Include="DataContracts\EntityRequests\Email.cs" />
@@ -72,8 +73,10 @@
     <Compile Include="DataContracts\Filters\Filter.cs" />
     <Compile Include="DataContracts\Filters\IFilter.cs" />
     <Compile Include="DataContracts\Filters\WhereOperator.cs" />
+    <Compile Include="DataContracts\Requests\AddressRequest.cs" />
     <Compile Include="DataContracts\Requests\EventRequest.cs" />
     <Compile Include="DataContracts\Enums.Custom.cs" />
+    <Compile Include="DataContracts\Requests\LocBlockRequest.cs" />
     <Compile Include="DataContracts\Requests\MembershipRequest.cs" />
     <Compile Include="DataContracts\Requests\ContactRequest.cs" />
     <Compile Include="DataContracts\Enums.cs" />

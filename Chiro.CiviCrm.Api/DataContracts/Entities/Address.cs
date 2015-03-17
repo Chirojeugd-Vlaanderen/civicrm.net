@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014, 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -16,50 +16,46 @@
 
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
-    /// A CiviCRM address.
+    /// A CiviCRM Address.
     /// </summary>
     [DataContract]
-    [CiviRequest]
-    public class Address: BaseRequest
+    public partial class Address
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-        [DataMember(Name = "contact_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+        [DataMember(Name = "contact_id")]
         public int? ContactId { get; set; }
-        [DataMember(Name="location_type_id"), JsonProperty]
+        [DataMember(Name = "location_type_id")]
         public int LocationTypeId { get; set; }
-        [DataMember(Name="is_primary"), JsonProperty]
         [JsonConverter(typeof(BoolConverter))]
+        [DataMember(Name = "is_primary")]
         public bool IsPrimary { get; set; }
-        [DataMember(Name="is_billing"), JsonProperty]
+        [DataMember(Name = "is_billing")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsBilling { get; set; }
-        [DataMember(Name="street_address"), JsonProperty]
+        [DataMember(Name = "street_address")]
         public string StreetAddress { get; set; }
-        [DataMember(Name="city"), JsonProperty]
+        [DataMember(Name = "city")]
         public string City { get; set; }
-        [DataMember(Name="postal_code"), JsonProperty]
+        [DataMember(Name = "postal_code")]
         public string PostalCode { get; set; }
-        [DataMember(Name="postal_code_suffix"), JsonProperty]
+        [DataMember(Name = "postal_code_suffix")]
         public string PostalCodeSuffix { get; set; }
-        [DataMember(Name="state_province_id"), JsonProperty]
+        [DataMember(Name = "state_province_id")]
         public int? StateProvinceId { get; set; }
-        [DataMember(Name="country_id"), JsonProperty]
+        [DataMember(Name = "country_id")]
         public int? CountryId { get; set; }
-        /// <summary>
-        /// Name of country, or ISO-code
-        /// </summary>
-        /// <remarks>
-        /// You can use this to create/update the country of an address.
-        /// The CiviCRM address API doesn't seem to fetch the country.
-        /// </remarks>
-        [DataMember(Name="country"), JsonProperty]
+        [DataMember(Name = "country")]
         public string Country { get; set; }
+
+        #region Chaining
+        [DataMember(Name = "api.LocBlock.get")]
+        public ApiResultValues<LocBlock> LocBlockResult { get; set; }
+        #endregion
     }
 }

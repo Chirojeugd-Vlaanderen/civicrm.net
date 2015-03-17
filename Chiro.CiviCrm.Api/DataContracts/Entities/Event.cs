@@ -30,6 +30,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
+        [DataMember(Name = "loc_block_id")]
+        public int? LocBlockId { get; set; }
+
         [DataMember(Name = "title")]
         public string Title { get; set; }
 
@@ -137,5 +140,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
 
         [DataMember(Name = "contribution_type_id")]
         public int ContributionTypeId { get; set; }
+
+        #region Chaining
+        [DataMember(Name = "api.LocBlock.get")]
+        public ApiResultValues<LocBlock> LocBlockResult { get; set; }
+        #endregion
     }
 }

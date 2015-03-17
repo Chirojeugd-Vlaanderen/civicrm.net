@@ -17,6 +17,7 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
+using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -108,7 +109,72 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Debug.Assert(result.IsError == 0,
                     "Could not delete event. Maybe your API user needs more permissions.");
             }
+        }
 
+        [TestMethod]
+        public void EventWithAddress()
+        {
+            // Make sure that your API user has permissions
+            // 'access CiviEvent', 'view event info',
+            // and 'edit all events'.
+
+            var myAddressRequest = new AddressRequest
+            {
+                LocationTypeId = 1,
+                StreetAddress = "Kipdorp 30",
+                PostalCode = "2000",
+                City = "Antwerpen"
+            };
+
+            var myEventRequest = new EventRequest
+            {
+                Title = "My mighty event",
+                Description = "It will be fun.",
+                StartDate = new Filter<DateTime?>(new DateTime(2015, 07, 01)),
+                EndDate = new Filter<DateTime?>(new DateTime(2015, 07, 10)),
+                EventTypeId = MyEventTypeId,
+            };
+
+            using (var client = TestHelper.ClientGet())
+            {
+                // Save the event by chaining everything to the loc block.
+                var saveResult = client.LocBlockSave(TestHelper.ApiKey, TestHelper.SiteKey, new LocBlockRequest
+                {
+                    Address = myAddressRequest,
+                    EventSaveRequest = new[] {myEventRequest}
+                });
+                Assert.IsNotNull(saveResult.Id);
+
+                int myLocBlockId = saveResult.Id.Value;
+
+                var eventGetRequest = new EventRequest
+                {
+                    LocBlockId = myLocBlockId,
+                    LocBlockGetRequest = new LocBlockRequest
+                    {
+                        IdValueExpression = "$value.loc_block_id",
+                        AddressGetRequest = new AddressRequest
+                        {
+                            IdValueExpression = "$value.address_id"
+                        }
+                    }
+                };
+                var getResult = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, eventGetRequest);
+                Assert.AreEqual(1, getResult.Count);
+
+                var savedEvent = getResult.Values.First();
+                Assert.AreEqual(1, savedEvent.LocBlockResult.Count);
+                Assert.AreEqual(1, savedEvent.LocBlockResult.Values.First().AddressResult.Count);
+                var savedAddress = savedEvent.LocBlockResult.Values.First().AddressResult.Values.First();
+
+                // Delete first. Then assert.
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(savedEvent.Id));
+                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myLocBlockId));
+                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(savedAddress.Id));
+
+                Assert.AreEqual(myEventRequest.Title, savedEvent.Title);
+                Assert.AreEqual(myAddressRequest.StreetAddress, savedAddress.StreetAddress);
+            }
         }
 
         [TestMethod]

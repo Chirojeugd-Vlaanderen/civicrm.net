@@ -52,7 +52,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ExternalIdentifier = MyExternalId,
                         AddressSaveRequest = new[]
                         {
-                            new Address
+                            new AddressRequest
                             {
                                 StreetAddress = "Kipdorp 30",
                                 PostalCode = "2000",
@@ -86,7 +86,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 {
                     Id = _myContactId,
                     WebsiteGetRequest = new BaseRequest(),
-                    AddressGetRequest = new BaseRequest(),
+                    AddressGetRequest = new AddressRequest(),
                     PhoneGetRequest = new BaseRequest(),
                     EmailGetRequest = new BaseRequest(),
                     ImGetRequest = new BaseRequest()
@@ -144,7 +144,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     // ReturnFields are still in civicrm notation, meaning lowercase and
                     // underscores (see issue #19)
                     ReturnFields = "id",
-                    AddressGetRequest =  new BaseRequest()
+                    AddressGetRequest =  new AddressRequest()
                 });
                 Assert.IsTrue(contact.AddressResult.Values.Any(adr => adr.Id == _myAddressId));
             }

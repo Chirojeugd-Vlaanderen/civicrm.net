@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
@@ -28,6 +29,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
+
+        [JsonProperty("loc_block_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? LocBlockId { get; set; }
 
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
@@ -120,5 +124,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
         [JsonProperty("contribution_type_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContributionTypeId { get; set; }
+
+        #region Chaining
+        [JsonProperty("api.LocBlock.get", NullValueHandling = NullValueHandling.Ignore)]
+        public LocBlockRequest LocBlockGetRequest { get; set; }
+
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.LocBlock.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<LocBlockRequest> LocBlockSaveRequest { get; set; }
+        #endregion
     }
 }

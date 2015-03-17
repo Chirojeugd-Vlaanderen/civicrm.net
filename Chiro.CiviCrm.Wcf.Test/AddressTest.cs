@@ -14,10 +14,12 @@
    limitations under the License.
  */
 
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,6 +28,9 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class AddressTest
     {
+        // Make sure that you have an event type with given ID:
+        private const int MyEventTypeId = 1;
+
         private int _myContactId;
         private int _myAddressId;
 
@@ -40,8 +45,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest {ContactType = ContactType.Individual, FirstName = "Joe", LastName = "Schmoe"});
                 _myContactId = result.Values.First().Id;
                 // TODO: chain this address creation.
-                // (As soon as write chaining is supported.)
-                var addressRequest = new Address
+                var addressRequest = new AddressRequest
                 {
                     ContactId = _myContactId,
                     StreetAddress = "Kipdorp 30",
@@ -54,8 +58,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 // (Adminis, System Settings, Maps)
                 var addressResult = client.AddressSave(TestHelper.ApiKey, TestHelper.SiteKey, addressRequest);
                 var address = addressResult.Values.First();
-                Debug.Assert(address.Id.HasValue);
-                _myAddressId = address.Id.Value;
+                _myAddressId = address.Id;
             }
         }
 
@@ -75,7 +78,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var newAddress = new Address
+                var newAddress = new AddressRequest
                 {
                     ContactId = _myContactId,
                     StreetAddress = "Hoefslagstraatje 2",
@@ -104,7 +107,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.AdressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
+                var result = client.AddressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
                 Assert.AreEqual(_myAddressId, result.Id);
             }
         }
