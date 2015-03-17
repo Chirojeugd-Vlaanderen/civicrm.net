@@ -14,10 +14,12 @@
    limitations under the License.
  */
 
+using System;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,6 +28,9 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class AddressTest
     {
+        // Make sure that you have an event type with given ID:
+        private const int MyEventTypeId = 1;
+
         private int _myContactId;
         private int _myAddressId;
 
@@ -102,7 +107,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.AdressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
+                var result = client.AddressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
                 Assert.AreEqual(_myAddressId, result.Id);
             }
         }

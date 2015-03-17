@@ -103,7 +103,19 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=get&json={request}&sequential=1")]
-        ApiResultValues<Address> AdressGet(string apiKey, string key, BaseRequest request);
+        ApiResultValues<Address> AddressGet(string apiKey, string key, BaseRequest request);
+
+        /// <summary>
+        /// Returns one address.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the addresses to find.</param>
+        /// <returns>The requested address</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=getsingle&json={request}&sequential=1")]
+        Address AddressGetSingle(string apiKey, string key, BaseRequest request);
 
         /// <summary>
         /// Creates or updates the given <paramref name="address"/>.
@@ -437,5 +449,54 @@ namespace Chiro.CiviCrm.Api
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=create&sequential=1&json={request}")]
         ApiResultValues<Event> EventSave(string apiKey, string key, EventRequest request);
+
+        /// <summary>
+        /// Find one or more locblocks.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for locblocks to find.</param>
+        /// <returns>An API-result containing the requested locblocks.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=LocBlock&action=get&json={request}&sequential=1")]
+        ApiResultValues<LocBlock> LocBlockGet(string apiKey, string key, LocBlockRequest request);
+
+        /// <summary>
+        /// Find one locblock.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the locblock to find.</param>
+        /// <returns>The requested locblock.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=LocBlock&action=getsingle&json={request}&sequential=1")]
+        LocBlock LocBlockGetSingle(string apiKey, string key, LocBlockRequest request);
+
+        /// <summary>
+        /// Deletes a locblock.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Request containing the EventId</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=LocBlock&action=delete&json={request}&sequential=1")]
+        ApiResult LocBlockDelete(string apiKey, string key, IdRequest request);
+
+        /// <summary>
+        /// Saves or updates the locblock defined by <paramref name="request"/>.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Locblock to be saved. If the locblock has an ID, the existing one
+        /// will be overwritten. If it hasn't, a new locblock is created.</param>
+        /// <returns>An API-result</returns>
+        [OperationContract]
+        [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=LocBlock&action=create&sequential=1&json={request}")]
+        ApiResultValues<LocBlock> LocBlockSave(string apiKey, string key, LocBlockRequest request);
     }
 }

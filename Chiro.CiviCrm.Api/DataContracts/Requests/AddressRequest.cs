@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
@@ -48,5 +49,13 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public int? CountryId { get; set; }
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
+
+        #region Chaining
+        [JsonProperty("api.LocBlock.get", NullValueHandling = NullValueHandling.Ignore)]
+        public LocBlockRequest LocBlockGetRequest { get; set; }
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.LocBlock.create", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<LocBlockRequest> LocBlockSaveRequest { get; set; }
+        #endregion
     }
 }
