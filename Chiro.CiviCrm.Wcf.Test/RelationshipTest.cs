@@ -115,5 +115,27 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(relationshipRequest.RelationshipTypeId, newRelationship.RelationshipTypeId);
             }
         }
+
+        [TestMethod]
+        public void RelationshipChainedContact()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new RelationshipRequest
+                {
+                    Id = _myRelationshipId,
+                    ContactGetRequest = new ContactRequest
+                    {
+                        IdValueExpression = "$value.contact_id_a"
+                    }
+                };
+
+                var result = client.RelationshipGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                Assert.IsNotNull(result.ContactResult);
+                Assert.AreEqual(1, result.ContactResult.Count);
+                Assert.AreEqual(_myContactId, result.ContactResult.Values.First().Id);
+            }
+        }
     }
 }

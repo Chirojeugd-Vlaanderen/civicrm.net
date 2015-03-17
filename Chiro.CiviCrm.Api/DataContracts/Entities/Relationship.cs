@@ -58,5 +58,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "is_permission_b_a")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsPermissionBa { get; set; }
+
+        #region Chaining
+        [DataMember(Name = "api.Contact.get")]
+        public ApiResultValues<Contact> ContactResult { get; set; } 
+        #endregion
     }
 }
