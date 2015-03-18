@@ -15,12 +15,13 @@
  */
 
 using System;
+using System.Collections.Generic;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Filters
 {
     public interface IFilter
     {
         WhereOperator Operator { get; set; }
-        Object Object { get; }
+        IEnumerable<Object> Objects { get; }
     }
 }

@@ -62,7 +62,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             {
                 var request = new EventRequest
                 {
-                    StartDate = new Filter<DateTime?> {Operator = WhereOperator.Gt, Value = someDate}
+                    StartDate = new Filter<DateTime?> (WhereOperator.Gt, someDate)
                 };
 
                 var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
