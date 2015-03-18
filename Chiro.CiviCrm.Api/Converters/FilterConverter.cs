@@ -16,6 +16,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
 
@@ -25,14 +26,50 @@ namespace Chiro.CiviCrm.Api.Converters
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            var source = value as IFilter;
+            var filter = value as IFilter;
             string civiOperator;
+            string rhs;
 
-            Debug.Assert(source != null);
-            switch (source.Operator)
+            Debug.Assert(filter != null);
+
+            var first = filter.Objects.FirstOrDefault();
+            if (first == null)
+            {
+                if (filter.Operator != WhereOperator.IsNotNull && filter.Operator != WhereOperator.IsNull)
+                {
+                    // no RHS only possible for is (not) null.
+                    throw new InvalidOperationException();
+                }
+                rhs = String.Empty;
+            }
+            else if (filter.Objects.Skip(1).FirstOrDefault() == null)
+            {
+                // Only one object. Easy.
+                rhs = JsonConvert.SerializeObject(filter.Objects.First());
+            }
+            else
+            {
+                // More than one object. Check for (not) in and (not) between.
+                if (filter.Operator == WhereOperator.Between || filter.Operator == WhereOperator.NotBetween)
+                {
+                    if (filter.Objects.Skip(2).FirstOrDefault() != null)
+                    {
+                        // More than 2 objects does not make sense for between.
+                        throw new InvalidOperationException();
+                    }
+                }
+                else if (filter.Operator != WhereOperator.In && filter.Operator != WhereOperator.NotIn)
+                {
+                    throw new InvalidOperationException();
+                }
+                // This will not work for strings:
+                rhs = JsonConvert.SerializeObject(String.Join(",", filter.Objects.Select(o => o.ToString())));
+            }
+
+            switch (filter.Operator)
             {
                 case WhereOperator.None:
-                    writer.WriteValue(source.Object);
+                    writer.WriteRawValue(rhs);
                     return;
                 case WhereOperator.Eq:
                     civiOperator = "=";
@@ -59,15 +96,17 @@ namespace Chiro.CiviCrm.Api.Converters
                     civiOperator = "NOT LIKE";
                     break;
                 case WhereOperator.In:
-                    // We cannot do this (yet), because
-                    // we have only one value for the moment.
-                    throw new NotSupportedException();
+                    civiOperator = "IN";
+                    break;
                 case WhereOperator.NotIn:
-                    throw new NotSupportedException();
+                    civiOperator = "NOT IN";
+                    break;
                 case WhereOperator.Between:
-                    throw new NotSupportedException();
+                    civiOperator = "BETWEEN";
+                    break;
                 case WhereOperator.NotBetween:
-                    throw new NotSupportedException();
+                    civiOperator = "NOT BETWEEN";
+                    break;
                 case WhereOperator.IsNotNull:
                     writer.WriteRawValue("{{\"IS NOT NULL\":1}}");
                     return;
@@ -77,7 +116,7 @@ namespace Chiro.CiviCrm.Api.Converters
                 default:
                     throw new InvalidOperationException();
             }
-            writer.WriteRawValue(String.Format("{{\"{0}\":{1}}}", civiOperator, JsonConvert.SerializeObject(source.Object)));
+            writer.WriteRawValue(String.Format("{{\"{0}\":{1}}}", civiOperator, rhs));
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)

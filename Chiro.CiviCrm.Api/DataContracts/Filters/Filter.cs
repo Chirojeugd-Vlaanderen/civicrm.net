@@ -15,6 +15,8 @@
  */
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Filters
 {
@@ -26,15 +28,20 @@ namespace Chiro.CiviCrm.Api.DataContracts.Filters
         }
         public Filter(T value): this()
         {
-            Value = value;
+            Values = new [] {value};
         }
-        public WhereOperator Operator { get; set; }
-
-        public object Object
+        public Filter(WhereOperator op, params T[] values): this()
         {
-            get { return Value; }
+            Operator = op;
+            Values = values;
         }
 
-        public T Value { get; set; }
+        public WhereOperator Operator { get; set; }
+        public T[] Values { get; private set; }
+
+        IEnumerable<Object> IFilter.Objects
+        {
+            get { return Values.Cast<Object>(); }
+        }
     }
 }
