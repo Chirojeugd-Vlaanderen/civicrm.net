@@ -3,33 +3,9 @@
 This project provides interfaces and a behavior that allow communication with the CiviCRM
 API using WCF.
 
-## Warning!
+Please read the extended documentation in [the civicrm.net wiki](https://github.com/johanv/civicrm.net/wiki/).
 
-### Volatile interface
-
-This is a young project, and therefore it is still changing a lot. So if you use this
-in your own software projects, chances are high that you will have to refactor things
-as the master branch moves on.
-
-I will keep you informed when this project becomes more or less stable.
-
-## Entities, Requests, EntityRequests
-
-The datacontracts in Chiro.CiviCrm.Api are divided into 3 types:
-
-* Entities: Complete entities that are returned by the API as results.
-* Requests: Things you send to the api. In most cases, properties that are null are
-			ignored. This makes it easy to search on certain properties, or to 
-			update certain properties. But it will be hard to reset nullable
-			properties.
-* EntityRequests: Entities that are requests as well. Null-properties are passed to
-				  the API, so EntityRequests are not that useful for searching.
-
-The handling of the null properties depends on the attributes of the data members.
-The way this is implemented, is not very transparent. I am not sure yet how to fix
-this.
-
-## How to get the examples/unit tests to work
+## How to get the examples/unit tests working
 
 The example program is a console application: Chiro.CiviCrm.Wcf.Example. It contains
 various examples.
@@ -82,6 +58,3 @@ in your CiviCRM instance.
 
 Make sure that Chiro.CiviCrm.Wcf.Example is the solutions startup project. Now you should be able to run the example
 by pressing F5. To run the unit tests, press Ctrl-R, followed by A.
-
-You will notice that one unit test will fail. This is because of upstream issue
-[CRM-15815](https://issues.civicrm.org/jira/browse/CRM-15815).
