@@ -56,6 +56,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public int? CountryId { get; set; }
         [JsonProperty("country", NullValueHandling = NullValueHandling.Ignore)]
         public string Country { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
+        public string Name { get; set; }
 
         #region Chaining
         [JsonProperty("api.LocBlock.get", NullValueHandling = NullValueHandling.Ignore)]

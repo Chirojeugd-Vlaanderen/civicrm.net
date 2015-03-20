@@ -52,6 +52,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public int? CountryId { get; set; }
         [DataMember(Name = "country")]
         public string Country { get; set; }
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
 
         #region Chaining
         [DataMember(Name = "api.LocBlock.get")]
