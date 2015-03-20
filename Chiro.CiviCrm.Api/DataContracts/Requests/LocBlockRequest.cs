@@ -37,8 +37,15 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         {
             get { return Id.HasValue ? Id.ToString() : IdValueExpression; }
         }
-        [JsonProperty("address_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         public int? AddressId { get; set; }
+        [JsonIgnore]
+        public string AddressIdValueExpression { get; set; }
+        [JsonProperty("address_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string AddressIdString
+        {
+            get { return AddressId.HasValue ? AddressId.ToString() : AddressIdValueExpression; }
+        }
         [JsonProperty("email_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? EmailId { get; set; }
         [JsonProperty("phone_id", NullValueHandling = NullValueHandling.Ignore)]
