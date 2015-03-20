@@ -72,6 +72,7 @@
     <Compile Include="MembershipTest.cs" />
     <Compile Include="EventTest.cs" />
     <Compile Include="ChiroTest.cs" />
+    <Compile Include="LocBlockTest.cs" />
     <Compile Include="WebsiteTest.cs" />
   </ItemGroup>
   <ItemGroup>
