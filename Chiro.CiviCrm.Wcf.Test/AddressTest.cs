@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014, 2015 Johan Vervloet
+   Copyright 2014, 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,12 +14,8 @@
    limitations under the License.
  */
 
-using System;
-using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
-using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -28,8 +24,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class AddressTest
     {
-        // Make sure that you have an event type with given ID:
-        private const int MyEventTypeId = 1;
+        private const string MyAddressName = "Nationaal Secretariaat";
 
         private int _myContactId;
         private int _myAddressId;
@@ -53,6 +48,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     City = "Antwerpen",
                     CountryId = 1020,   // Belgium
                     LocationTypeId = 1,
+                    Name = MyAddressName
                 };
                 // If this fails, please turn off map and geocode services.
                 // (Adminis, System Settings, Maps)
@@ -107,8 +103,9 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.AddressGet(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
+                var result = client.AddressGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
                 Assert.AreEqual(_myAddressId, result.Id);
+                Assert.AreEqual(MyAddressName, result.Name);
             }
         }
 
