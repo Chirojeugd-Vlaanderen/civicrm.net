@@ -18,6 +18,7 @@ using System;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -26,6 +27,8 @@ namespace Chiro.CiviCrm.Wcf.Test
     [TestClass]
     public class LocBlockTest
     {
+        // Make sure that you have an event type with given ID:
+        private const int MyEventTypeId = 1;
         private const string MyAddressName = "Regionaal Testscretariaat";
 
         private LocBlock _myLocBlock;
@@ -81,6 +84,68 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.AddressGet(TestHelper.ApiKey, TestHelper.SiteKey, addressRequest);
                 Assert.AreEqual(1, result.Count);
                 Assert.AreEqual(_myLocBlock.Id, result.Values.First().LocBlockResult.Id);
+            }
+        }
+
+        /// <summary>
+        /// Test getting a lockblock with events.
+        /// </summary>
+        [TestMethod]
+        public void GetLocBlockWithEvents()
+        {
+            // Make sure that your API user has permissions
+            // 'access CiviEvent', 'view event info',
+            // and 'edit all events'.
+
+            var myAddressRequest = new AddressRequest
+            {
+                LocationTypeId = 1,
+                StreetAddress = "Kipdorp 30",
+                PostalCode = "2000",
+                City = "Antwerpen"
+            };
+
+            var myEventRequest = new EventRequest
+            {
+                Title = "My mighty unit test event",
+                Description = "It will be fun.",
+                StartDate = new Filter<DateTime?>(new DateTime(2015, 07, 01)),
+                EndDate = new Filter<DateTime?>(new DateTime(2015, 07, 10)),
+                EventTypeId = MyEventTypeId,
+            };
+
+            using (var client = TestHelper.ClientGet())
+            {
+                // Save the event by chaining everything to the loc block.
+                var saveResult = client.LocBlockSave(TestHelper.ApiKey, TestHelper.SiteKey, new LocBlockRequest
+                {
+                    Address = myAddressRequest,
+                    EventSaveRequest = new[] { myEventRequest }
+                });
+                Assert.IsNotNull(saveResult.Id);
+
+                int myLocBlockId = saveResult.Id.Value;
+                int? myAddressId = saveResult.Values.First().AddressId;
+                Assert.IsNotNull(myAddressId);
+
+                var locBlockGetRequest = new LocBlockRequest
+                {
+                    Id = myLocBlockId,
+                    EventGetRequest = new EventRequest
+                    {
+                        LocBlockIdValueExpression = "$value.id",
+                    }
+                };
+                var getResult = client.LocBlockGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, locBlockGetRequest);
+
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(getResult.EventResult.Values.First().Id));
+                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myLocBlockId));
+                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myAddressId.Value));
+
+                Assert.AreEqual(myLocBlockId, getResult.Id);
+                Assert.AreEqual(1, getResult.EventResult.Count);
+                var retrievedEvent = getResult.EventResult.Values.First();
+                Assert.AreEqual(myEventRequest.Title, retrievedEvent.Title);
             }
         }
     }

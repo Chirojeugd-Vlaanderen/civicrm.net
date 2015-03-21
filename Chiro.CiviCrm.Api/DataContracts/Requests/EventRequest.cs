@@ -30,8 +30,17 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
 
-        [JsonProperty("loc_block_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         public int? LocBlockId { get; set; }
+
+        [JsonIgnore]
+        public string LocBlockIdValueExpression { get; set; }
+
+        [JsonProperty("loc_block_id", NullValueHandling = NullValueHandling.Ignore)]
+        public string LocBlockIdString
+        {
+            get { return LocBlockId.HasValue ? LocBlockId.ToString() : LocBlockIdValueExpression; }
+        }
 
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
         public string Title { get; set; }
