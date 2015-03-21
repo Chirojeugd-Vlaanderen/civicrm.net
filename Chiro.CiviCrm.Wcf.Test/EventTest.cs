@@ -17,7 +17,6 @@
 using System;
 using System.Diagnostics;
 using System.Linq;
-using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -111,6 +110,9 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Test getting an event with locblock and address
+        /// </summary>
         [TestMethod]
         public void EventWithAddress()
         {
