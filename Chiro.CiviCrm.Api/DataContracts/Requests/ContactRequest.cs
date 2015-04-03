@@ -100,32 +100,32 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public IEnumerable<AddressRequest> AddressSaveRequest { get; set; }
 
         [JsonProperty("api.Phone.get", NullValueHandling = NullValueHandling.Ignore)]
-        public BaseRequest PhoneGetRequest { get; set; }
+        public PhoneRequest PhoneGetRequest { get; set; }
 
         [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.Phone.create", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<BaseRequest> PhoneSaveRequest { get; set; }
+        public IEnumerable<PhoneRequest> PhoneSaveRequest { get; set; }
 
         [JsonProperty("api.Email.get", NullValueHandling = NullValueHandling.Ignore)]
-        public BaseRequest EmailGetRequest { get; set; }
+        public EmailRequest EmailGetRequest { get; set; }
 
         [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.Email.create", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<BaseRequest> EmailSaveRequest { get; set; }
+        public IEnumerable<EmailRequest> EmailSaveRequest { get; set; }
 
         [JsonProperty("api.Website.get", NullValueHandling = NullValueHandling.Ignore)]
-        public BaseRequest WebsiteGetRequest { get; set; }
+        public WebsiteRequest WebsiteGetRequest { get; set; }
 
         [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.Website.create", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<BaseRequest> WebsiteSaveRequest { get; set; }
+        public IEnumerable<WebsiteRequest> WebsiteSaveRequest { get; set; }
 
         [JsonProperty("api.Im.get", NullValueHandling = NullValueHandling.Ignore)]
-        public BaseRequest ImGetRequest { get; set; }
+        public ImRequest ImGetRequest { get; set; }
 
         [JsonConverter(typeof (Crm15815Converter))]
         [JsonProperty("api.Im.create", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<BaseRequest> ImSaveRequest { get; set; }
+        public IEnumerable<ImRequest> ImSaveRequest { get; set; }
 
         [JsonProperty("api.Relationship.get", NullValueHandling = NullValueHandling.Ignore)]
         public RelationshipRequest RelationshipGetRequest { get; set; }
@@ -135,10 +135,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public IEnumerable<RelationshipRequest> RelationshipSaveRequest { get; set; }
 
         [JsonProperty("api.Membership.get", NullValueHandling = NullValueHandling.Ignore)]
-        public BaseRequest MembershipGetRequest { get; set; }
+        public MembershipRequest MembershipGetRequest { get; set; }
 
         [JsonProperty("api.Membership.create", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<BaseRequest> MembershipSaveRequest { get; set; }
+        public IEnumerable<MembershipRequest> MembershipSaveRequest { get; set; }
     
         #endregion
 

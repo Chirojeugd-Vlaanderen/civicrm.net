@@ -16,25 +16,23 @@
 
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
     /// A CiviCRM Website.
     /// </summary>
     [DataContract]
-    [CiviRequest]
-    public class Website : BaseRequest
+    public class Website
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-        [DataMember(Name = "contact_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+        [DataMember(Name = "contact_id")]
         public int? ContactId { get; set; }
-        [DataMember(Name = "url"), JsonProperty]
+        [DataMember(Name = "url")]
         public string Url { get; set; }
-        [DataMember(Name = "website_type_id"), JsonProperty]
+        [DataMember(Name = "website_type_id")]
         [JsonConverter(typeof(NullableEnumConverter))]
         public WebsiteType? WebsiteType { get; set; }
     }

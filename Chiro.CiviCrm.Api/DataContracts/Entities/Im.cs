@@ -16,38 +16,32 @@
 
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     /// <summary>
-    /// A CiviCRM e-mail address.
+    /// CiviCRM IM.
     /// </summary>
     [DataContract]
-    [CiviRequest]
-    public class Email : BaseRequest
+    public class Im
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-        [DataMember(Name = "contact_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "id")]
+        public int Id { get; set; }
+        [DataMember(Name = "contact_id")]
         public int? ContactId { get; set; }
-        [DataMember(Name = "location_type_id"), JsonProperty]
+        [DataMember(Name = "location_type_id")]
         public int LocationTypeId { get; set; }
-        [DataMember(Name = "email"), JsonProperty]
-        public string EmailAddress { get; set; }
-        [DataMember(Name = "is_primary"), JsonProperty]
+        [DataMember(Name = "name")]
+        public string Name { get; set; }
+        [DataMember(Name = "provider_id")]
+        [JsonConverter(typeof(NullableEnumConverter))]
+        public Provider? Provider { get; set; }
+        [DataMember(Name = "is_primary")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsPrimary { get; set; }
-        [DataMember(Name = "is_billing"), JsonProperty]
+        [DataMember(Name = "is_billing")]
         [JsonConverter(typeof(BoolConverter))]
         public bool IsBilling { get; set; }
-        [DataMember(Name = "on_hold"), JsonProperty]
-        [JsonConverter(typeof(BoolConverter))]
-        public bool OnHold { get; set; }
-        [DataMember(Name = "is_bulkmail"), JsonProperty]
-        [JsonConverter(typeof(BoolConverter))]
-        public bool IsBulkMail { get; set; }
-
     }
 }

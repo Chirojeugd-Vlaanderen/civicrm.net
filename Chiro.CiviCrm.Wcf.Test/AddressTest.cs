@@ -103,7 +103,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.AddressGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myAddressId));
+                var result = client.AddressGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new AddressRequest {Id = _myAddressId});
                 Assert.AreEqual(_myAddressId, result.Id);
                 Assert.AreEqual(MyAddressName, result.Name);
             }

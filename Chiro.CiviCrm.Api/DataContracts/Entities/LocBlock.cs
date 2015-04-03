@@ -15,7 +15,6 @@
  */
 
 using System.Runtime.Serialization;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {

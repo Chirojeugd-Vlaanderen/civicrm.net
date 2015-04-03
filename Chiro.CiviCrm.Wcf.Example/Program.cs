@@ -22,7 +22,6 @@ using System.ServiceModel;
 using Chiro.CiviCrm.Api;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Chiro.CiviCrm.Wcf.Example.Properties;
 using Newtonsoft.Json.Linq;
@@ -326,7 +325,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 var contactResult = client.ContactGet(ApiKey, SiteKey,
                     new ContactRequest {ExternalIdentifier = ExternalId});
 
-                var website = new Website
+                var website = new WebsiteRequest
                 {
                     ContactId = contactResult.Id,
                     Url = "http://blog.johanv.org",
@@ -358,10 +357,10 @@ namespace Chiro.CiviCrm.Wcf.Example
                     new ContactRequest
                     {
                         ExternalIdentifier = ExternalId,
-                        PhoneGetRequest = new BaseRequest(),
-                        EmailGetRequest = new BaseRequest(),
-                        ImGetRequest = new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
+                        PhoneGetRequest = new PhoneRequest(),
+                        EmailGetRequest = new EmailRequest(),
+                        ImGetRequest = new ImRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
                     });
                 ShowContact(contact);
                 ShowCommunication(contact);
@@ -382,7 +381,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                         ContactType = ContactType.Individual,
                         LastName = "Smurf",
                         FirstName = "Smul",
-                        WebsiteSaveRequest = new List<BaseRequest> {new Website {Url = "http://smurf.com"}}
+                        WebsiteSaveRequest = new List<WebsiteRequest> {new WebsiteRequest {Url = "http://smurf.com"}}
                     });
                 Debug.Assert(result.Id.HasValue);
 
@@ -391,7 +390,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        WebsiteGetRequest = new BaseRequest()
+                        WebsiteGetRequest = new WebsiteRequest()
                     });
 
                 ShowContact(contact);

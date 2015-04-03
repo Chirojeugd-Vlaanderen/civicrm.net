@@ -16,34 +16,33 @@
 
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Newtonsoft.Json;
 
-namespace Chiro.CiviCrm.Api.DataContracts.EntityRequests
+namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     /// <summary>
     /// CiviCRM IM.
     /// </summary>
     [DataContract]
     [CiviRequest]
-    public class Im : BaseRequest
+    public class ImRequest : BaseRequest
     {
-        [DataMember(Name = "id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
-        [DataMember(Name = "contact_id"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
-        [DataMember(Name = "location_type_id"), JsonProperty]
-        public int LocationTypeId { get; set; }
-        [DataMember(Name = "name"), JsonProperty]
+        [JsonProperty("location_type_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? LocationTypeId { get; set; }
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
-        [DataMember(Name = "provider_id"), JsonProperty]
+        [JsonProperty("provider_id", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumConverter))]
         public Provider? Provider { get; set; }
-        [DataMember(Name = "is_primary"), JsonProperty]
+        [JsonProperty("is_primary", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
-        public bool IsPrimary { get; set; }
-        [DataMember(Name = "is_billing"), JsonProperty]
+        public bool? IsPrimary { get; set; }
+        [JsonProperty("is_billing", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
-        public bool IsBilling { get; set; }
+        public bool? IsBilling { get; set; }
     }
 }

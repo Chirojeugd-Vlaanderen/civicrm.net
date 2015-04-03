@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
+using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
@@ -61,17 +61,17 @@ namespace Chiro.CiviCrm.Wcf.Test
                                 LocationTypeId = 1,
                             }
                         },
-                        PhoneSaveRequest = new[] {new Phone {PhoneNumber = "02-345 67 89", PhoneType = PhoneType.Phone}},
-                        EmailSaveRequest = new[] {new Email {EmailAddress = "joe@schmoe.com"}},
+                        PhoneSaveRequest = new[] {new PhoneRequest {PhoneNumber = "02-345 67 89", PhoneType = PhoneType.Phone}},
+                        EmailSaveRequest = new[] {new EmailRequest {EmailAddress = "joe@schmoe.com"}},
                         WebsiteSaveRequest = new[]
                         {
-                            new Website
+                            new WebsiteRequest
                             {
                                 Url = "https://twitter.com/jschmoe",
                                 WebsiteType = WebsiteType.Twitter
                             }
                         },
-                        ImSaveRequest = new[] {new Im {Name = "joe.schmoe@facebook.com", Provider = Provider.Jabber}},
+                        ImSaveRequest = new[] {new ImRequest {Name = "joe.schmoe@facebook.com", Provider = Provider.Jabber}},
                         // If the contact with given external identifier already exists,
                         // reuse it.
                         ApiOptions = new ApiOptions {Match = "external_identifier"}
@@ -85,11 +85,11 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var request = new ContactRequest
                 {
                     Id = _myContactId,
-                    WebsiteGetRequest = new BaseRequest(),
+                    WebsiteGetRequest = new WebsiteRequest(),
                     AddressGetRequest = new AddressRequest(),
-                    PhoneGetRequest = new BaseRequest(),
-                    EmailGetRequest = new BaseRequest(),
-                    ImGetRequest = new BaseRequest()
+                    PhoneGetRequest = new PhoneRequest(),
+                    EmailGetRequest = new EmailRequest(),
+                    ImGetRequest = new ImRequest()
                 };
 
                 var result2 = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
@@ -204,10 +204,10 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         ExternalIdentifier = MyExternalId,
-                        PhoneGetRequest = new BaseRequest(),
-                        EmailGetRequest = new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
-                        ImGetRequest = new BaseRequest()
+                        PhoneGetRequest = new PhoneRequest(),
+                        EmailGetRequest = new EmailRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
+                        ImGetRequest = new ImRequest()
                     });
                 Assert.IsTrue(contact.PhoneResult.Values.Any(src => src.Id == _myPhoneId));
                 Assert.IsTrue(contact.EmailResult.Values.Any(src => src.Id == _myEmailId));
@@ -241,7 +241,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain website.
-                var myWebsite = new Website {Url = "http://smurf.com"};
+                var myWebsite = new WebsiteRequest {Url = "http://smurf.com"};
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -251,13 +251,13 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions {Match = "external_identifier"},
-                        WebsiteSaveRequest = new List<Website> { myWebsite }
+                        WebsiteSaveRequest = new List<WebsiteRequest> { myWebsite }
                     });
                 Debug.Assert(result.Id.HasValue);
 
                 // Get contact with websites
                 var contact = client.ContactGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new ContactRequest {Id = result.Id.Value, WebsiteGetRequest = new BaseRequest()});
+                    new ContactRequest { Id = result.Id.Value, WebsiteGetRequest = new WebsiteRequest() });
 
                 Assert.AreEqual(result.Id, contact.Id);
                 Assert.AreEqual(1, contact.WebsiteResult.Count);
@@ -283,8 +283,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain phone and website.
-                var myPhone = new Phone { PhoneNumber = "03-100 20 00"};
-                var myWebsite = new Website { Url = "http://smurf.com" };
+                var myPhone = new PhoneRequest { PhoneNumber = "03-100 20 00"};
+                var myWebsite = new WebsiteRequest { Url = "http://smurf.com" };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -294,8 +294,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions { Match = "external_identifier" },
-                        PhoneSaveRequest = new List<Phone> {myPhone},
-                        WebsiteSaveRequest = new List<Website> { myWebsite }
+                        PhoneSaveRequest = new List<PhoneRequest> {myPhone},
+                        WebsiteSaveRequest = new List<WebsiteRequest> { myWebsite }
                     });
 
                 // TODO: New workaround for upstream issue CRM-15815:
@@ -306,8 +306,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        PhoneGetRequest =  new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
+                        PhoneGetRequest =  new PhoneRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
                     });
 
                 // Delete contact before doing assertions.
@@ -343,8 +343,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions { Match = "external_identifier" },
                         // empty requests, try to hit CRM-15815.
-                        PhoneSaveRequest = new List<Phone>(),
-                        WebsiteSaveRequest = new List<Website>()
+                        PhoneSaveRequest = new List<PhoneRequest>(),
+                        WebsiteSaveRequest = new List<WebsiteRequest>()
                     });
 
                 // TODO: New workaround for upstream issue CRM-15815:
@@ -355,8 +355,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        PhoneGetRequest = new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
+                        PhoneGetRequest = new PhoneRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
                     });
 
                 // Delete contact before doing assertions.
@@ -378,10 +378,10 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain phone and website.
-                var myPhone1 = new Phone { PhoneNumber = "03-100 20 00" }; 
-                var myPhone2 = new Phone { PhoneNumber = "03-100 20 01" };
-                var myWebsite1 = new Website { Url = "http://smurf.com" };
-                var myWebsite2 = new Website { Url = "http://smurf.org" };
+                var myPhone1 = new PhoneRequest { PhoneNumber = "03-100 20 00" }; 
+                var myPhone2 = new PhoneRequest { PhoneNumber = "03-100 20 01" };
+                var myWebsite1 = new WebsiteRequest { Url = "http://smurf.com" };
+                var myWebsite2 = new WebsiteRequest { Url = "http://smurf.org" };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -391,8 +391,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions {Match = "external_identifier"},
-                        WebsiteSaveRequest = new List<BaseRequest> {myWebsite1, myWebsite2},
-                        PhoneSaveRequest = new List<BaseRequest> {myPhone1, myPhone2},
+                        WebsiteSaveRequest = new List<WebsiteRequest> {myWebsite1, myWebsite2},
+                        PhoneSaveRequest = new List<PhoneRequest> {myPhone1, myPhone2},
                     });
 
                 // This crashes because of upstream issue CRM-15815:
@@ -403,8 +403,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        PhoneGetRequest = new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
+                        PhoneGetRequest = new PhoneRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
                     });
 
                 // Delete contact before doing assertions.
@@ -429,9 +429,9 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain phone and website.
-                var myPhone = new Phone { PhoneNumber = "03-100 20 00" };
-                var myWebsite1 = new Website { Url = "http://smurf.com" };
-                var myWebsite2 = new Website { Url = "http://smurf.org" };
+                var myPhone = new PhoneRequest { PhoneNumber = "03-100 20 00" };
+                var myWebsite1 = new WebsiteRequest { Url = "http://smurf.com" };
+                var myWebsite2 = new WebsiteRequest { Url = "http://smurf.org" };
                 const string myExternalId = "Test_External_Smurf";
 
                 client.ContactSaveWorkaroundCrm15815(TestHelper.ApiKey, TestHelper.SiteKey,
@@ -442,8 +442,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Smul",
                         ExternalIdentifier = myExternalId,
                         ApiOptions = new ApiOptions { Match = "external_identifier" },
-                        WebsiteSaveRequest = new List<BaseRequest> { myWebsite1, myWebsite2 },
-                        PhoneSaveRequest = new List<BaseRequest> { myPhone },
+                        WebsiteSaveRequest = new List<WebsiteRequest> { myWebsite1, myWebsite2 },
+                        PhoneSaveRequest = new List<PhoneRequest> { myPhone },
                     });
 
                 // Get contact with websites
@@ -451,8 +451,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         ExternalIdentifier = myExternalId,
-                        PhoneGetRequest = new BaseRequest(),
-                        WebsiteGetRequest = new BaseRequest(),
+                        PhoneGetRequest = new PhoneRequest(),
+                        WebsiteGetRequest = new WebsiteRequest(),
                     });
 
                 // Delete contact before doing assertions.
@@ -472,8 +472,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain website.
-                var my1StWebsite = new Website { Url = "http://smurf.com" };
-                var my2NdWebsite = new Website {Url = "http://salsaparilla.org"};
+                var my1StWebsite = new WebsiteRequest { Url = "http://smurf.com" };
+                var my2NdWebsite = new WebsiteRequest {Url = "http://salsaparilla.org"};
 
                 var newContact = new ContactRequest
                 {
@@ -482,7 +482,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     FirstName = "Smul",
                     ExternalIdentifier = "Test_External_Smurf",
                     ApiOptions = new ApiOptions {Match = "external_identifier"},
-                    WebsiteSaveRequest = new List<BaseRequest> {my1StWebsite, my2NdWebsite},
+                    WebsiteSaveRequest = new List<WebsiteRequest> {my1StWebsite, my2NdWebsite},
                 };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
@@ -493,7 +493,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        WebsiteGetRequest = new BaseRequest()
+                        WebsiteGetRequest = new WebsiteRequest()
                     });
                 Assert.IsNotNull(contact.Id);
 
@@ -644,8 +644,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact, chain website.
-                var my1StWebsite = new Website { Url = "http://smurf.com", WebsiteType = WebsiteType.Main};
-                var my2NdWebsite = new Website { Url = "http://salsaparilla.org", WebsiteType = WebsiteType.Work};
+                var my1StWebsite = new WebsiteRequest { Url = "http://smurf.com", WebsiteType = WebsiteType.Main};
+                var my2NdWebsite = new WebsiteRequest { Url = "http://salsaparilla.org", WebsiteType = WebsiteType.Work};
 
                 var newContact = new ContactRequest
                 {
@@ -654,7 +654,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     FirstName = "Smul",
                     ExternalIdentifier = "Test_External_Smurf",
                     ApiOptions = new ApiOptions { Match = "external_identifier" },
-                    WebsiteSaveRequest = new List<BaseRequest> { my1StWebsite, my2NdWebsite }
+                    WebsiteSaveRequest = new List<WebsiteRequest> { my1StWebsite, my2NdWebsite }
                 };
 
                 var result = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, newContact);
@@ -665,7 +665,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = result.Id.Value,
-                        WebsiteGetRequest = new Website {WebsiteType = WebsiteType.Main}
+                        WebsiteGetRequest = new WebsiteRequest {WebsiteType = WebsiteType.Main}
                     });
                 Assert.IsNotNull(contact.Id);
 
@@ -684,8 +684,8 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 // Create a contact with two websites.
-                var myWebsite1 = new Website { Url = "http://smurf1.com" };
-                var myWebsite2 = new Website { Url = "http://smurf2.com" };
+                var myWebsite1 = new WebsiteRequest { Url = "http://smurf1.com" };
+                var myWebsite2 = new WebsiteRequest { Url = "http://smurf2.com" };
 
                 var saveResult = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
@@ -695,7 +695,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         FirstName = "Smul",
                         ExternalIdentifier = "Test_External_Smurf",
                         ApiOptions = new ApiOptions { Match = "external_identifier" },
-                        WebsiteSaveRequest = new List<BaseRequest> { myWebsite1, myWebsite2 },
+                        WebsiteSaveRequest = new List<WebsiteRequest> { myWebsite1, myWebsite2 },
                     });
                 Assert.IsNotNull(saveResult.Id);
 
@@ -704,7 +704,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new ContactRequest
                     {
                         Id = saveResult.Id.Value,
-                        WebsiteGetRequest = new BaseRequest
+                        WebsiteGetRequest = new WebsiteRequest
                         {
                             ApiOptions = new ApiOptions {Sort = "url DESC", Limit = 1}
                         }
@@ -780,17 +780,5 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-    }
-
-    /// <summary>
-    /// Some custom request for testing.
-    /// </summary>
-    internal class CustomWebsiteRequest : BaseRequest
-    {
-        [JsonProperty(PropertyName = "website_type_id", NullValueHandling = NullValueHandling.Ignore)]
-        public WebsiteType? WebsiteType { get; set; }
-
-        [JsonProperty(PropertyName = "contact_id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? ContactId { get; set; }
     }
 }
