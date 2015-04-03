@@ -17,7 +17,6 @@
 using System;
 using System.Runtime.Serialization;
 using Chiro.CiviCrm.Api.Converters;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 

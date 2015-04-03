@@ -16,7 +16,6 @@
 
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.EntityRequests;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -63,7 +62,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var website = new Website
+                var website = new WebsiteRequest
                 {
                     ContactId = _myContactId,
                     Url = "http://blog.johanv.org",
@@ -84,19 +83,19 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var website1 = new Website
+                var website1 = new WebsiteRequest
                 {
                     ContactId = _myContactId,
                     Url = "http://blog.johanv.org",
                     WebsiteType = WebsiteType.Main
                 };
-                var website2 = new Website
+                var website2 = new WebsiteRequest
                 {
                     ContactId = _myContactId,
                     Url = "http://civicrm.org",
                     WebsiteType = WebsiteType.Main
                 };
-                var website3 = new Website
+                var website3 = new WebsiteRequest
                 {
                     ContactId = _myContactId,
                     Url = "http://www.chiro.be",
@@ -109,7 +108,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 client.WebsiteSave(TestHelper.ApiKey, TestHelper.SiteKey, website3);
 
                 var result = client.WebsiteGet(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new CustomWebsiteRequest {ContactId = _myContactId, ApiOptions = new ApiOptions{Sort = "url", Offset = 2}});
+                    new WebsiteRequest {ContactId = _myContactId, ApiOptions = new ApiOptions{Sort = "url", Offset = 2}});
 
                 Assert.AreEqual(0, result.IsError);
                 Assert.AreEqual(1, result.Count);
