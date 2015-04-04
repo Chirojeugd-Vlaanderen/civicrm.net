@@ -88,5 +88,12 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(MyLastName, contact.LastName);
             }
         }
+
+        [TestMethod]
+        public void RequestEntityType()
+        {
+            var request = new ContactRequest();
+            Assert.AreEqual(CiviEntity.Contact, request.EntityType);
+        }
     }
 }

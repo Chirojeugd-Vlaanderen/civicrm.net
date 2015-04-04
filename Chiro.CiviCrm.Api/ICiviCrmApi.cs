@@ -357,7 +357,7 @@ namespace Chiro.CiviCrm.Api
         /// <param name="key">Site key of your CiviCRM-instance.</param>
         /// <param name="entity">Entity type for request.</param>
         /// <param name="request">Generic request</param>
-        /// <param name="result">This will contain the result.</param>
+        /// <returns>This will contain the result.</returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity={entity}&action=getsingle&json={request}&sequential=1")]

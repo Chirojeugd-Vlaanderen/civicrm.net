@@ -169,5 +169,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
             return RelationshipSaveRequest != null && RelationshipSaveRequest.Any();
         }
         #endregion
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Contact; }
+        }
     }
 }

@@ -34,5 +34,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         {
             this.Id = id;
         }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Any; }
+        }
     }
 }

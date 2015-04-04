@@ -67,5 +67,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonConverter(typeof(BoolConverter))]
         [JsonProperty("is_pay_later", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsPayLater { get; set; }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Membership; }
+        }
     }
 }

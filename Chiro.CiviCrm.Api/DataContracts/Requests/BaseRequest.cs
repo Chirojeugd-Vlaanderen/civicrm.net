@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// CiviRequest. (See e.g. CiviExternalIdentifierRequest.)
     /// </summary>
     [CiviRequest]
-    public class BaseRequest
+    public abstract class BaseRequest
     {
         /// <summary>
         /// Fields to return after the call.
@@ -38,5 +38,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// </summary>
         [JsonProperty("options", NullValueHandling = NullValueHandling.Ignore)]
         public ApiOptions ApiOptions { get; set; }
+
+        /// <summary>
+        /// The entity type this request is referring to.
+        /// </summary>
+        [JsonIgnore]
+        public abstract CiviEntity EntityType { get; }
     }
 }
