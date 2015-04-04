@@ -36,5 +36,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("website_type_id", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumConverter))]
         public WebsiteType? WebsiteType { get; set; }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Website; }
+        }
     }
 }

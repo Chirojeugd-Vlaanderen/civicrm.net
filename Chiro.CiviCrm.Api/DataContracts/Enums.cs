@@ -20,6 +20,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
     [DataContract]
     public enum CiviEntity
     {
+        [EnumMember] Any = 0,
         [EnumMember] Contact,
         [EnumMember] Address,
         [EnumMember] Phone,
@@ -27,6 +28,9 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] Website,
         [EnumMember] Im,
         [EnumMember] Relationship,
+        [EnumMember] Membership,
+        [EnumMember] Event,
+        [EnumMember] LocBlock,
     }
 
     [DataContract]

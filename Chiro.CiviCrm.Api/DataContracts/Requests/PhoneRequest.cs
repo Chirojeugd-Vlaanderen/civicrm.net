@@ -46,5 +46,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("phone_type_id", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumConverter))]
         public PhoneType? PhoneType { get; set; }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Phone; }
+        }
     }
 }

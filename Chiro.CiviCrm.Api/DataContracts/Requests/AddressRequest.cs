@@ -66,5 +66,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.LocBlock.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<LocBlockRequest> LocBlockSaveRequest { get; set; }
         #endregion
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Address; }
+        }
     }
 }

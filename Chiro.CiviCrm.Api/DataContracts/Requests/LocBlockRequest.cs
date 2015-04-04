@@ -79,5 +79,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.Event.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<EventRequest> EventSaveRequest { get; set; }
         #endregion
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.LocBlock; }
+        }
     }
 }

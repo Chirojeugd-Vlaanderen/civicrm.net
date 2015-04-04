@@ -149,5 +149,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.Contact.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<ContactRequest> ContactSaveRequest { get; set; }
         #endregion
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Event; }
+        }
     }
 }

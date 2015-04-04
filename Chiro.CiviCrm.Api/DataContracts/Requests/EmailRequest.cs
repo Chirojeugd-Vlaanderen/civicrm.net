@@ -47,5 +47,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("is_bulkmail", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
         public bool? IsBulkMail { get; set; }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Email; }
+        }
     }
 }

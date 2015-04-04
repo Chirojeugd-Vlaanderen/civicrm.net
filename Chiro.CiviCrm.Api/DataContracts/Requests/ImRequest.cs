@@ -44,5 +44,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("is_billing", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
         public bool? IsBilling { get; set; }
+
+        public override CiviEntity EntityType
+        {
+            get { return CiviEntity.Im; }
+        }
     }
 }
