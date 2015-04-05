@@ -38,7 +38,8 @@ namespace Chiro.CiviCrm.Api.DataContracts
     {
         [EnumMember] Create,
         [EnumMember] Get,
-        [EnumMember] GetSingle
+        [EnumMember] GetSingle,
+        [EnumMember] Delete
     }
 
     [DataContract]
