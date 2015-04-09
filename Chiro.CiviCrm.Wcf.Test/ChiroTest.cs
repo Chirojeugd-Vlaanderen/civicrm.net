@@ -74,6 +74,25 @@ namespace Chiro.CiviCrm.Wcf.Test
             }            
         }
 
+        /// <summary>
+        /// Controleer of mijn patch voor CRM-16036 wel goed is geapplyd.
+        /// </summary>
+        [TestMethod]
+        public void ZoekOpCustomFieldCrm16036()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new EventRequest
+                    {
+                        OrganiserendePloeg1Id = 1,
+                    });
+
+                Assert.AreNotEqual(0, result.Count);
+                Assert.AreEqual(1, result.Values.First().OrganiserendePloeg1Id);
+            }
+        }
+
         [TestMethod]
         public void ChainedCallOrganiserendePloeg()
         {
