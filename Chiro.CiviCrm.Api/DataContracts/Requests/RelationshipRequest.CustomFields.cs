@@ -35,7 +35,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// Deze property is toch nullable, omdat we in CiviCRM niet kunnen
         /// afdwingen dat er precies 1 afdeling is.
         /// </remarks>
-        [JsonProperty("custom_22", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_13", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(NullableEnumCharConverter))]
         public Afdeling? Afdeling { get; set; }
 
@@ -46,7 +46,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonIgnore]
         public Afdeling[] LeidingVan { get; set; }
 
-        [JsonProperty("custom_23", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_14", NullValueHandling = NullValueHandling.Ignore)]
         public char[] LeidingVanAfdelingChar
         {
             // Het zou leuker zijn moest ik die EnumCharConverter kunnen gebruiken
@@ -57,7 +57,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// <summary>
         /// Functies van het lid.
         /// </summary>
-        [JsonProperty("custom_24", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_15", NullValueHandling = NullValueHandling.Ignore)]
         public string[] Functies { get; set; } 
     }
 }

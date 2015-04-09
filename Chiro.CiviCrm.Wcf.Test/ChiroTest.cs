@@ -83,7 +83,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     new EventRequest
                     {
                         Id = _myEventId,
-                        ContactGetRequest = new ContactRequest {IdValueExpression = "$value.custom_56_id"}
+                        ContactGetRequest = new ContactRequest {IdValueExpression = "$value.custom_47_id"}
                     });
 
                 Assert.AreEqual(1, result.Count);

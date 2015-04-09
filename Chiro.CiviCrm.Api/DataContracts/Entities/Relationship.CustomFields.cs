@@ -37,7 +37,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         /// afdwingen dat er precies 1 afdeling is.
         /// </remarks>
         [JsonConverter(typeof(NullableEnumCharConverter))]
-        [DataMember(Name = "custom_22"), JsonProperty]
+        [DataMember(Name = "custom_13"), JsonProperty]
         public Afdeling? Afdeling { get; set; }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [JsonIgnore]
         public Afdeling[] LeidingVan { get; set; }
 
-        [DataMember(Name = "custom_23"), JsonProperty]
+        [DataMember(Name = "custom_14"), JsonProperty]
         public char[] LeidingVanAfdelingChar
         {
             set { LeidingVan = value.Select(v => (Afdeling)((int)v)).ToArray(); }
@@ -57,7 +57,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         /// <summary>
         /// Functies van het lid.
         /// </summary>
-        [DataMember(Name = "custom_24"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
+        [DataMember(Name = "custom_15"), JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string[] Functies { get; set; } 
     }
 }

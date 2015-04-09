@@ -26,9 +26,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     public partial class Contact
     {
         /// <summary>
-        /// Bind the member 'GapId' to the custom field custom_10.
+        /// Bind the member 'GapId' to the correct custom ID.
         /// </summary>
-        [DataMember(Name = "custom_10"), JsonProperty]
+        [DataMember(Name = "custom_1"), JsonProperty]
         public int? GapId { get; set; }
     }
 }
