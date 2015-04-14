@@ -549,7 +549,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     ContactType = ContactType.Organization,
                     // this should be an existing subtype:
                     // I am not sure why the subtype should be an array.
-                    ContactSubType = "ploeg",
+                    ContactSubType = "Ploeg",
                     OrganizationName = "Organization X",
                     ExternalIdentifier = "test_ext_id_subtype",
                     ApiOptions = new ApiOptions { Match = "external_identifier" }
