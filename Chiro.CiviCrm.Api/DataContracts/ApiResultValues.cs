@@ -31,6 +31,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
         public ApiResultValues(T[] values) : this()
         {
             Values = values;
+            Count = values.Length;
+        }
+
+        public ApiResultValues(T value) : this()
+        {
+            Values = new[] {value};
+            Count = 1;
         }
     }
 }
