@@ -69,6 +69,7 @@
     <Compile Include="DataContracts\Entities\Membership.cs" />
     <Compile Include="DataContracts\ApiOptions.cs" />
     <Compile Include="DataContracts\ApiResult.cs" />
+    <Compile Include="DataContracts\Entities\Membership.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Phone.cs" />
     <Compile Include="DataContracts\Entities\Website.cs" />
     <Compile Include="DataContracts\Entities\Relationship.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="DataContracts\Requests\IdRequest.cs" />
     <Compile Include="DataContracts\Entities\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
+    <Compile Include="DataContracts\Requests\MembershipRequest.CustomFields.cs" />
     <Compile Include="DataContracts\Requests\PhoneRequest.cs" />
     <Compile Include="DataContracts\Requests\RelationshipRequest.cs" />
     <Compile Include="DataContracts\Requests\RelationshipRequest.CustomFields.cs" />
