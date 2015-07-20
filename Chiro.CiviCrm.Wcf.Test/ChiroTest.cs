@@ -30,6 +30,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class ChiroTest
     {
         private int _myEventId;
+        private int _myMembershipId;
 
         [TestInitialize]
         public void InitializeTest()
@@ -46,9 +47,21 @@ namespace Chiro.CiviCrm.Wcf.Test
                     OrganiserendePloeg1Id = 1
                 };
 
-                var saveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
-                Assert.IsNotNull(saveResult.Id);
-                _myEventId = saveResult.Id.Value;
+                var eventSaveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
+                Assert.IsNotNull(eventSaveResult.Id);
+                _myEventId = eventSaveResult.Id.Value;
+
+                var membershipRequest = new MembershipRequest
+                {
+                    ContactId = 2,
+                    MembershipTypeId = 1,
+                    VerzekeringLoonverlies = true
+                };
+                var membershipSaveResult = client.MembershipSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    membershipRequest);
+                Assert.IsNotNull(membershipSaveResult.Id);
+                _myMembershipId = membershipSaveResult.Id.Value;
+
             }
         }
 
@@ -57,8 +70,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var deleteResult = client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myEventId));
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myEventId));
+                client.MembershipDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myMembershipId));
             }
         }
 
@@ -110,6 +123,25 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(1, myEvent.ContactResult.Count);
                 var organiserendePloeg1 = myEvent.ContactResult.Values.First();
                 Assert.AreEqual(1, organiserendePloeg1.Id); // Default organisation
+            }
+        }
+
+        /// <summary>
+        /// Kijkt na of het veld 'loonverlies' wordt gevonden.
+        /// 
+        /// Zie #3970.
+        /// </summary>
+        [TestMethod]
+        public void CustomFieldLoonverlies()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new MembershipRequest {Id = _myMembershipId});
+
+                Assert.AreEqual(1, result.Count);
+                var myMembership = result.Values.First();
+                Assert.AreEqual(true, myMembership.VerzekeringLoonverlies);
             }
         }
     }
