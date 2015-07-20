@@ -26,6 +26,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     {
         [JsonProperty("custom_63", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
-        public bool VerzekeringLoonverlies { get; set; }
+        public bool? VerzekeringLoonverlies { get; set; }
     }
 }
