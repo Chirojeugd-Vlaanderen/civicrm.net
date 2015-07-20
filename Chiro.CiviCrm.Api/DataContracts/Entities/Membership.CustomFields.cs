@@ -26,7 +26,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     public partial class Membership
     {
         [JsonConverter(typeof(BoolConverter))]
-        [DataMember(Name="custom_63"), JsonProperty]
+        [DataMember(Name="custom_62"), JsonProperty]
         public bool VerzekeringLoonverlies { get; set; }
     }
 }
