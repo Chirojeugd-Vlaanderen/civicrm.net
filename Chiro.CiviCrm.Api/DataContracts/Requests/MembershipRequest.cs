@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// A CiviCRM membership request.
     /// </summary>
     [CiviRequest]
-    public class MembershipRequest: BaseRequest
+    public partial class MembershipRequest: BaseRequest
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
