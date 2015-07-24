@@ -28,5 +28,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [JsonConverter(typeof(BoolConverter))]
         [DataMember(Name="custom_62"), JsonProperty]
         public bool VerzekeringLoonverlies { get; set; }
+
+        [DataMember(Name="custom_64_id")]
+        public int? AangemaaktDoorPloegId { get; set; }
     }
 }
