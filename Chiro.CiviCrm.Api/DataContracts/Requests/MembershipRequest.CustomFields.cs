@@ -27,6 +27,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("custom_62", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
         public bool? VerzekeringLoonverlies { get; set; }
+
+        [JsonProperty("custom_63", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(NullableEnumConverter))]
+        public FactuurStatus? FactuurStatus { get; set; }
+
         [JsonProperty("custom_64", NullValueHandling = NullValueHandling.Ignore)]
         public int? AangemaaktDoorPloegId { get; set; }
     }

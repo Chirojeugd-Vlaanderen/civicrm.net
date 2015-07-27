@@ -14,6 +14,8 @@
    limitations under the License.
  */
 
+using System.Runtime.Serialization;
+
 namespace Chiro.CiviCrm.Api.DataContracts
 {
     public enum Afdeling
@@ -78,5 +80,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
         Aspibivak = 32,
         Animatorcursus = 33,
         Werkweek = 101
+    }
+
+    [DataContract]
+    public enum FactuurStatus
+    {
+        [EnumMember] VolledigTeFactureren = 1,
+        [EnumMember] ExtraVerzekeringTeFactureren = 2,
+        [EnumMember] FactuurOk = 3
     }
 }
