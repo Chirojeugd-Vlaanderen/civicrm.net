@@ -13,6 +13,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
  */
+using Chiro.CiviCrm.Api.Converters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -27,5 +28,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// </summary>
         [JsonProperty("custom_1", NullValueHandling = NullValueHandling.Ignore)]
         public int? GapId { get; set; }
+
+        [JsonProperty("custom_2", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(NullableEnumConverter))]
+        public KaderNiveau? KaderNiveau { get; set; }
     }
 }

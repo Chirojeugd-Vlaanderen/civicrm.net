@@ -15,6 +15,7 @@
  */
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using Chiro.CiviCrm.Api.Converters;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
@@ -30,5 +31,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         /// </summary>
         [DataMember(Name = "custom_1"), JsonProperty]
         public int? GapId { get; set; }
+
+        [JsonConverter(typeof(NullableEnumConverter))]
+        [DataMember(Name = "custom_2"), JsonProperty]
+        public KaderNiveau? KaderNiveau { get; set; }
     }
 }

@@ -89,4 +89,13 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] ExtraVerzekeringTeFactureren = 2,
         [EnumMember] FactuurOk = 3
     }
+
+    [DataContract]
+    public enum KaderNiveau
+    {
+        [EnumMember] PlaatselijkeGroep = 2,
+        [EnumMember] Gewest = 4,
+        [EnumMember] Verbond = 6,
+        [EnumMember] NationalePloeg = 8
+    }
 }
