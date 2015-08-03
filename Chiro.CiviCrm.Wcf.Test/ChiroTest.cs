@@ -106,6 +106,30 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Combinatie zoeken op custom field en chaining lukt niet meer sinds iets
+        /// dat ze upstream deden. Zie #4062.
+        /// </summary>
+        [TestMethod]
+        public void ZoekOpCustomFieldMetChaining()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new EventRequest
+                    {
+                        OrganiserendePloeg1Id = 1,
+                        LocBlockGetRequest = new LocBlockRequest
+                        {
+                            IdValueExpression = "$value.loc_block_id"
+                        }
+                    });
+
+                Assert.AreNotEqual(0, result.Count);
+                Assert.AreEqual(1, result.Values.First().OrganiserendePloeg1Id);
+            }
+        }
+
         [TestMethod]
         public void ChainedCallOrganiserendePloeg()
         {
