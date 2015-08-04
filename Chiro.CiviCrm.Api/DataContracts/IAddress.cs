@@ -29,5 +29,6 @@ namespace Chiro.CiviCrm.Api.DataContracts
         int? StateProvinceId { get; set; }
         int? CountryId { get; set; }
         string Country { get; set; }
+        string Name { get; set; }
     }
 }
