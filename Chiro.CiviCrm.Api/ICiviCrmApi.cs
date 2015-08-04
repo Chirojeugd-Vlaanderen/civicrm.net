@@ -141,6 +141,31 @@ namespace Chiro.CiviCrm.Api
         ApiResult AddressDelete(string apiKey, string key, IdRequest request);
 
         /// <summary>
+        /// Returns one or more countries.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the countries to find.</param>
+        /// <returns>The requested countries.</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Country&action=get&json={request}&sequential=1")]
+        ApiResultValues<Country> CountryGet(string apiKey, string key, CountryRequest request);
+
+        /// <summary>
+        /// Returns one country.
+        /// </summary>
+        /// <param name="apiKey">API-key of the API-user</param>
+        /// <param name="key">Key of the CiviCRM-instance</param>
+        /// <param name="request">Selection criteria for the country to find.</param>
+        /// <returns>The requested country</returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Country&action=getsingle&json={request}&sequential=1")]
+        Address CountryGetSingle(string apiKey, string key, CountryRequest request);
+
+
+        /// <summary>
         /// Returns one or more relationships.
         /// </summary>
         /// <param name="apiKey">API-key of the API-user</param>
