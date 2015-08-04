@@ -61,6 +61,7 @@
     <Compile Include="DataContracts\EmptyResult.cs" />
     <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
+    <Compile Include="DataContracts\Entities\Country.cs" />
     <Compile Include="DataContracts\Entities\Email.cs" />
     <Compile Include="DataContracts\Entities\Event.cs" />
     <Compile Include="DataContracts\Entities\Event.CustomFields.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="DataContracts\Filters\IFilter.cs" />
     <Compile Include="DataContracts\Filters\WhereOperator.cs" />
     <Compile Include="DataContracts\Requests\AddressRequest.cs" />
+    <Compile Include="DataContracts\Requests\CountryRequest.cs" />
     <Compile Include="DataContracts\Requests\EmailRequest.cs" />
     <Compile Include="DataContracts\Requests\EventRequest.cs" />
     <Compile Include="DataContracts\Enums.Custom.cs" />

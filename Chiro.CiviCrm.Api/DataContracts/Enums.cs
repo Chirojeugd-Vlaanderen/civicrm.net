@@ -31,6 +31,7 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] Membership,
         [EnumMember] Event,
         [EnumMember] LocBlock,
+        [EnumMember] Country
     }
 
     [DataContract]
