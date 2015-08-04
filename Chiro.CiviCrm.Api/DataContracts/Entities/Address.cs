@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM Address.
     /// </summary>
     [DataContract]
-    public partial class Address
+    public partial class Address : IAddress
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

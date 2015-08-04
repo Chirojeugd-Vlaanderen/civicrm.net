@@ -16,6 +16,7 @@
 
 using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -23,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// <summary>
     /// A CiviCRM address request.
     /// </summary>
-    public partial class AddressRequest: BaseRequest
+    public partial class AddressRequest: BaseRequest, IAddress
     {
         [JsonIgnore]
         public int? Id { get; set; }

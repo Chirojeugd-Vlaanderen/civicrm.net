@@ -63,6 +63,7 @@
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Email.cs" />
     <Compile Include="DataContracts\Entities\Event.cs" />
+    <Compile Include="DataContracts\IAddress.cs" />
     <Compile Include="DataContracts\Entities\Im.cs" />
     <Compile Include="DataContracts\Entities\LocBlock.cs" />
     <Compile Include="DataContracts\Entities\Membership.cs" />
