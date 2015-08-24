@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// I did not invent this :-)
     /// </remarks>
     [DataContract]
-    public partial class LocBlock
+    public partial class LocBlock: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014 Chirojeugd-Vlaanderen vzw
+   Copyright 2014, 2015 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,11 +15,12 @@
  */
 
 using System.Runtime.Serialization;
+using Chiro.CiviCrm.Api.DataContracts.Entities;
 
 namespace Chiro.CiviCrm.Api.DataContracts
 {
     [DataContract]
-    public class ApiResultValues<T>: ApiResult
+    public class ApiResultValues<T>: ApiResult where T:IEntity
     {
         [DataMember(Name="values")]
         public T[] Values { get; set; }
@@ -32,12 +33,17 @@ namespace Chiro.CiviCrm.Api.DataContracts
         {
             Values = values;
             Count = values.Length;
+            if (Count == 1)
+            {
+                Id = values[0].Id;
+            }
         }
 
         public ApiResultValues(T value) : this()
         {
             Values = new[] {value};
             Count = 1;
+            Id = value.Id;
         }
     }
 }

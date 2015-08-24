@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM e-mail address.
     /// </summary>
     [DataContract]
-    public class Email
+    public class Email: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }
