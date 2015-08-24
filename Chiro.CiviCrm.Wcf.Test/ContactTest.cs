@@ -81,6 +81,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Fetch contact again, because chaining, sequential and reload option don't play well
                 // together. See https://issues.civicrm.org/jira/browse/CRM-15904.
+                // (This will be fixed in CiviCRM 4.6.7)
 
                 var request = new ContactRequest
                 {
