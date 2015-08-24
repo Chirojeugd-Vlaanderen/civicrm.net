@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM phone number.
     /// </summary>
     [DataContract]
-    public class Phone
+    public class Phone: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

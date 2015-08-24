@@ -26,7 +26,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM membership.
     /// </summary>
     [DataContract]
-    public partial class Membership
+    public partial class Membership: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

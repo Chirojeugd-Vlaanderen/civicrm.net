@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// CiviCRM IM.
     /// </summary>
     [DataContract]
-    public class Im
+    public class Im: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

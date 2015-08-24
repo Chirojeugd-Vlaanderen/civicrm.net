@@ -22,7 +22,7 @@ using Newtonsoft.Json;
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     [DataContract]
-    public partial class Relationship
+    public partial class Relationship: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

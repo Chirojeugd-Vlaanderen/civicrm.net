@@ -21,7 +21,7 @@ using Newtonsoft.Json;
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
     [DataContract]
-    public class Country
+    public class Country: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }

@@ -14,26 +14,15 @@
    limitations under the License.
  */
 
-using System.Runtime.Serialization;
-using Chiro.CiviCrm.Api.Converters;
-using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
-    /// <summary>
-    /// A CiviCRM Website.
-    /// </summary>
-    [DataContract]
-    public class Website: IEntity
+    public interface IEntity
     {
-        [DataMember(Name = "id")]
-        public int Id { get; set; }
-        [DataMember(Name = "contact_id")]
-        public int? ContactId { get; set; }
-        [DataMember(Name = "url")]
-        public string Url { get; set; }
-        [DataMember(Name = "website_type_id")]
-        [JsonConverter(typeof(NullableEnumConverter))]
-        public WebsiteType? WebsiteType { get; set; }
+        int Id { get; set; }
     }
 }

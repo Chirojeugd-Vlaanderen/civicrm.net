@@ -27,7 +27,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     [DataContract]
     [CiviRequest]
-    public partial class Contact
+    public partial class Contact: IEntity
     {
         [DataMember(Name="id")]
         public int Id { get; set; }

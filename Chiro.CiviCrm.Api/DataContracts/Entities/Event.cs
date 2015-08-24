@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// A CiviCRM event.
     /// </summary>
     [DataContract]
-    public partial class Event
+    public partial class Event: IEntity
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }
