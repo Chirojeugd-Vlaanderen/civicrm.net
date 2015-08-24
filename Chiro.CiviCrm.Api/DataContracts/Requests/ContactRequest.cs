@@ -72,6 +72,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("organization_name", NullValueHandling = NullValueHandling.Ignore)]
         public string OrganizationName { get; set; }
 
+        [JsonProperty("legal_name", NullValueHandling = NullValueHandling.Ignore)]
+        public string LegalName { get; set; }
+
         [JsonProperty("gender_id", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof (NullableEnumConverter))]
         public Gender? Gender { get; set; }
