@@ -172,7 +172,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 ShowAddresses(contact);
 
                 // Delete the added addres
-                client.AddressDelete(ApiKey, SiteKey, new IdRequest(newAddress.Id.Value));
+                client.AddressDelete(ApiKey, SiteKey, new DeleteRequest(newAddress.Id.Value));
 
                 // Get the adresses again, to verify that the new address is gone.
                 contact = client.ContactGetSingle(ApiKey, SiteKey, new ContactRequest
@@ -311,7 +311,7 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 ShowContact(result.Values.FirstOrDefault());
 
-                client.ContactDelete(ApiKey, SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(ApiKey, SiteKey, new DeleteRequest(result.Id.Value), 1);
             }
         }
 
@@ -340,7 +340,7 @@ namespace Chiro.CiviCrm.Wcf.Example
                 Console.ReadLine();
 
                 Debug.Assert(website.Id != null);
-                client.WebsiteDelete(ApiKey, SiteKey, new IdRequest(website.Id.Value));
+                client.WebsiteDelete(ApiKey, SiteKey, new DeleteRequest(website.Id.Value));
                 
                 Console.WriteLine("Website was deleted again.");
             }
@@ -398,7 +398,7 @@ namespace Chiro.CiviCrm.Wcf.Example
 
                 // Delete contact
 
-                client.ContactDelete(ApiKey, SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(ApiKey, SiteKey, new DeleteRequest(result.Id.Value), 1);
             }
         }
 

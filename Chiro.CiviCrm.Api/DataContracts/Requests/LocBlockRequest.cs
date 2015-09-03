@@ -29,15 +29,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     public partial class LocBlockRequest: BaseRequest
     {
         [JsonIgnore]
-        public int? Id { get; set; }
-        [JsonIgnore]
-        public string IdValueExpression { get; set; }
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public string IdString
-        {
-            get { return Id.HasValue ? Id.ToString() : IdValueExpression; }
-        }
-        [JsonIgnore]
         public int? AddressId { get; set; }
         [JsonIgnore]
         public string AddressIdValueExpression { get; set; }

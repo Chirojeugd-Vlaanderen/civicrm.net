@@ -33,23 +33,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     [CiviRequest]
     public partial class ContactRequest : BaseRequest
     {
-        [JsonIgnore]
-        public int? Id { get; set; }
-
-        /// <summary>
-        /// If Id is not set, IdValueExpression is passed to the API.
-        /// Typical use case for chained call within a relationship
-        /// call: "$value.contact_id_a".
-        /// </summary>
-        [JsonIgnore]
-        public string IdValueExpression { get; set; }
-
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public string IdString
-        {
-            get { return Id.HasValue ? Id.ToString() : IdValueExpression; }
-        }
-
         [JsonProperty("external_identifier", NullValueHandling = NullValueHandling.Ignore)]
         public string ExternalIdentifier { get; set; }
 

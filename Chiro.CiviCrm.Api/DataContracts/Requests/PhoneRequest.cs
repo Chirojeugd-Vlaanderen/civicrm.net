@@ -27,8 +27,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     [CiviRequest]
     public class PhoneRequest : BaseRequest
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
         [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
         [JsonProperty("location_type_id", NullValueHandling = NullValueHandling.Ignore)]

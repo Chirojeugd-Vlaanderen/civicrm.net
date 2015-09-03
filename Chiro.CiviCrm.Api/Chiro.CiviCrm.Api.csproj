@@ -89,7 +89,7 @@
     <Compile Include="DataContracts\Enums.cs" />
     <Compile Include="DataContracts\Requests\BaseRequest.cs" />
     <Compile Include="DataContracts\Requests\ContactRequest.CustomFields.cs" />
-    <Compile Include="DataContracts\Requests\IdRequest.cs" />
+    <Compile Include="DataContracts\Requests\DeleteRequest.cs" />
     <Compile Include="DataContracts\Entities\Contact.cs" />
     <Compile Include="DataContracts\ApiResultValues.cs" />
     <Compile Include="DataContracts\Requests\PhoneRequest.cs" />

@@ -64,7 +64,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Contact&action=delete&json={request}&skip_undelete={skipUndelete}&sequential=1")]
-        ApiResult ContactDelete(string apiKey, string key, IdRequest request, int skipUndelete);
+        ApiResult ContactDelete(string apiKey, string key, DeleteRequest request, int skipUndelete);
 
         /// <summary>
         /// Saves or updates the given <paramref name="contact"/>.
@@ -138,7 +138,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Address&action=delete&json={request}&sequential=1")]
-        ApiResult AddressDelete(string apiKey, string key, IdRequest request);
+        ApiResult AddressDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Returns one or more countries.
@@ -211,7 +211,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Relationship&action=delete&json={request}&sequential=1")]
-        ApiResult RelationshipDelete(string apiKey, string key, IdRequest request);
+        ApiResult RelationshipDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Returns one or more phone numbers.
@@ -247,7 +247,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Phone&action=delete&json={request}&sequential=1")]
-        ApiResult PhoneDelete(string apiKey, string key, IdRequest request);
+        ApiResult PhoneDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Returns one or more e-mail addresses.
@@ -283,7 +283,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Email&action=delete&json={request}&sequential=1")]
-        ApiResult EmailDelete(string apiKey, string key, IdRequest request);
+        ApiResult EmailDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Returns one or more websites.
@@ -319,7 +319,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Website&action=delete&json={request}&sequential=1")]
-        ApiResult WebsiteDelete(string apiKey, string key, IdRequest request);
+        ApiResult WebsiteDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Returns one or more IM.
@@ -355,7 +355,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Im&action=delete&json={request}&sequential=1")]
-        ApiResult ImDelete(string apiKey, string key, IdRequest request);
+        ApiResult ImDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Performs a generic call to the API. Please avoid this :-)
@@ -410,7 +410,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Membership&action=delete&json={request}&sequential=1")]
-        ApiResult MembershipDelete(string apiKey, string key, IdRequest request);
+        ApiResult MembershipDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Saves or updates the membership defined by <paramref name="request"/>.
@@ -459,7 +459,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Event&action=delete&json={request}&sequential=1")]
-        ApiResult EventDelete(string apiKey, string key, IdRequest request);
+        ApiResult EventDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Saves or updates the event defined by <paramref name="request"/>.
@@ -508,7 +508,7 @@ namespace Chiro.CiviCrm.Api
         [OperationContract]
         [WebInvoke(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=LocBlock&action=delete&json={request}&sequential=1")]
-        ApiResult LocBlockDelete(string apiKey, string key, IdRequest request);
+        ApiResult LocBlockDelete(string apiKey, string key, DeleteRequest request);
 
         /// <summary>
         /// Saves or updates the locblock defined by <paramref name="request"/>.

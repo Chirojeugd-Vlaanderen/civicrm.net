@@ -27,9 +27,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// </summary>
     public partial class EventRequest: BaseRequest
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-
         [JsonIgnore]
         public int? LocBlockId { get; set; }
 

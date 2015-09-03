@@ -70,7 +70,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId),
+                    new DeleteRequest(_myContactId),
                     1);
             }
         }

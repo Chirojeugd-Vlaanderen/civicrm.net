@@ -24,9 +24,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     [CiviRequest]
     public partial class RelationshipRequest: BaseRequest
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
-
         /// <summary>
         /// If ContactIdA is set, ContactIdA will be passed to the API.
         /// </summary>
