@@ -20,8 +20,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     public class CountryRequest: BaseRequest
     {
-        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public int? Id { get; set; }
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
         [JsonProperty("iso_code", NullValueHandling = NullValueHandling.Ignore)]

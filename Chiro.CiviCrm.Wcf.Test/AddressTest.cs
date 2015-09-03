@@ -64,7 +64,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId),
+                    new DeleteRequest(_myContactId),
                     1);
             }
         }
@@ -115,7 +115,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var request = new IdRequest(_myAddressId);
+                var request = new DeleteRequest(_myAddressId);
 
                 var result = client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, request);
 

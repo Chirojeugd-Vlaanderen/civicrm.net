@@ -70,8 +70,8 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myEventId));
-                client.MembershipDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myMembershipId));
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(_myEventId));
+                client.MembershipDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(_myMembershipId));
             }
         }
 

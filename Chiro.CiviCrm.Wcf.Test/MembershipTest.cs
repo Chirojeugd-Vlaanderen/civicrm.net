@@ -66,10 +66,10 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId1),
+                    new DeleteRequest(_myContactId1),
                     1);
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId2),
+                    new DeleteRequest(_myContactId2),
                     1);
             }
         }

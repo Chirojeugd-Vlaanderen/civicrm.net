@@ -28,6 +28,25 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     public abstract class BaseRequest
     {
         /// <summary>
+        /// Id of the entity to fetch (if given)
+        /// </summary>
+        [JsonIgnore]
+        public int? Id { get; set; }
+        /// <summary>
+        /// Value expression for Id. Only for chaining.
+        /// </summary>
+        [JsonIgnore]
+        public string IdValueExpression { get; set; }
+        /// <summary>
+        /// Id if given, otherwise IdValueExpression. For the API.
+        /// </summary>
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public string IdString
+        {
+            get { return Id.HasValue ? Id.ToString() : IdValueExpression; }
+        }
+
+        /// <summary>
         /// Fields to return after the call.
         /// </summary>
         [JsonProperty("return", NullValueHandling = NullValueHandling.Ignore)]

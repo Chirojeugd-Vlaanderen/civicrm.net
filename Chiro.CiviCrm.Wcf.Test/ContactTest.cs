@@ -123,7 +123,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myContactId),
+                    new DeleteRequest(_myContactId),
                     1);
 
                 Debug.Assert(result.IsError == 0,
@@ -184,7 +184,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete first (cleanup), check afterward.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(saveResult.Id.Value), 1);
 
                 Assert.AreEqual(0, saveResult.IsError);
                 Assert.AreEqual(1, getResult.RelationshipResult.Count);
@@ -266,7 +266,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Delete contact
 
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
 
             }
         }
@@ -312,7 +312,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
                 Assert.AreEqual(1, contact.PhoneResult.Count);
@@ -361,7 +361,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
                 Assert.AreEqual(0, contact.PhoneResult.Count);
@@ -409,7 +409,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
 
                 Assert.AreEqual(result.Id, contact.Id);
                 Assert.AreEqual(2, contact.PhoneResult.Count);
@@ -457,7 +457,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(contact.Id), 1);
 
                 Assert.AreEqual(1, contact.PhoneResult.Count);
                 Assert.AreEqual(myPhone.PhoneNumber, contact.PhoneResult.Values.First().PhoneNumber);
@@ -500,7 +500,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Clean up first (delete contact), then do other assertions.
                 // (So the contact gets deleted even if the assertions fail.)
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(contact.Id), 1);
 
                 Assert.IsNotNull(contact.Id);
                 Assert.AreEqual(newContact.ExternalIdentifier, contact.ExternalIdentifier);
@@ -536,7 +536,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.BirthDate, result.Values.First().BirthDate);
                 Assert.AreEqual(contact.Gender, result.Values.First().Gender);
 
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
             }
         }
 
@@ -564,7 +564,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.OrganizationName, result.Values.First().OrganizationName);
                 Assert.AreEqual(contact.ContactSubType, result.Values.First().ContactSubType.First());
 
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(result.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
             }
         }
 
@@ -672,7 +672,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Clean up first (delete contact), then do other assertions.
                 // (So the contact gets deleted even if the assertions fail.)
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(contact.Id), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(contact.Id), 1);
 
                 Assert.IsTrue(contact.WebsiteResult.Values.All(w => w.WebsiteType == WebsiteType.Main));
                 Assert.IsTrue(contact.WebsiteResult.Values.Any(w => w.Url == my1StWebsite.Url));
@@ -712,7 +712,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(saveResult.Id.Value), 1);
 
                 Assert.AreEqual(1, contact.WebsiteResult.Count);
                 Assert.AreEqual(myWebsite2.Url, contact.WebsiteResult.Values.First().Url);
@@ -774,7 +774,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
 
                 // Delete contact before doing assertions.
-                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(saveResult.Id.Value), 1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(saveResult.Id.Value), 1);
 
                 Assert.AreEqual(1, contact.RelationshipResult.Count);
                 Assert.AreEqual(relationshipRequest2.StartDate, contact.RelationshipResult.Values.First().StartDate);

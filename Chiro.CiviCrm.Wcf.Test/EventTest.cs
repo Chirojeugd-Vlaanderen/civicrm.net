@@ -91,7 +91,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 // Delete first. Then assert.
                 var deleteResult = client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(saveResult.Id.Value));
+                    new DeleteRequest(saveResult.Id.Value));
 
                 Assert.AreEqual(0, saveResult.IsError);                
             }
@@ -103,7 +103,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new IdRequest(_myEventId));
+                    new DeleteRequest(_myEventId));
 
                 Debug.Assert(result.IsError == 0,
                     "Could not delete event. Maybe your API user needs more permissions.");
@@ -170,9 +170,9 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var savedAddress = savedEvent.LocBlockResult.Values.First().AddressResult.Values.First();
 
                 // Delete first. Then assert.
-                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(savedEvent.Id));
-                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myLocBlockId));
-                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(savedAddress.Id));
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(savedEvent.Id));
+                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(myLocBlockId));
+                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(savedAddress.Id));
 
                 Assert.AreEqual(myEventRequest.Title, savedEvent.Title);
                 Assert.AreEqual(myAddressRequest.StreetAddress, savedAddress.StreetAddress);

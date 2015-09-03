@@ -59,11 +59,11 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(_myLocBlock.Id));
+                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(_myLocBlock.Id));
                 if (_myLocBlock.AddressId != null)
                 {
                     client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey,
-                        new IdRequest(_myLocBlock.AddressId.Value));
+                        new DeleteRequest(_myLocBlock.AddressId.Value));
                 }
             }
         }
@@ -138,9 +138,9 @@ namespace Chiro.CiviCrm.Wcf.Test
                 };
                 var getResult = client.LocBlockGetSingle(TestHelper.ApiKey, TestHelper.SiteKey, locBlockGetRequest);
 
-                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(getResult.EventResult.Values.First().Id));
-                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myLocBlockId));
-                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new IdRequest(myAddressId.Value));
+                client.EventDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(getResult.EventResult.Values.First().Id));
+                client.LocBlockDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(myLocBlockId));
+                client.AddressDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(myAddressId.Value));
 
                 Assert.AreEqual(myLocBlockId, getResult.Id);
                 Assert.AreEqual(1, getResult.EventResult.Count);

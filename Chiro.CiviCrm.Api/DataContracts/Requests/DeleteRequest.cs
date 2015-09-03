@@ -14,27 +14,25 @@
    limitations under the License.
  */
 
-using Newtonsoft.Json;
+using System;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
 {
     /// <summary>
-    /// Some class that basically converts an ID to the json-part of the request url.
+    /// A request to delete any entity.
     /// </summary>
     [CiviRequest]
-    public class IdRequest: BaseRequest
+    public class DeleteRequest: BaseRequest
     {
-        [JsonProperty("id")]
-        public int Id { get; set; }
-
-        public IdRequest() : base() { }
-
-        public IdRequest(int id)
-            : this()
+        public DeleteRequest() : base() { }
+        public DeleteRequest(int id) : this()
         {
-            this.Id = id;
+            Id = id;
         }
 
+        /// <summary>
+        /// The entity type this request is referring to.
+        /// </summary>
         public override CiviEntity EntityType
         {
             get { return CiviEntity.Any; }
