@@ -82,6 +82,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("birth_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? BirthDate { get; set; }
 
+        [JsonProperty("is_opt_out", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(BoolConverter))]
+        public bool? IsOptOut { get; set; }
+
         [JsonProperty("is_deceased", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof (BoolConverter))]
         public bool IsDeceased { get; set; }
