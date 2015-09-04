@@ -88,6 +88,30 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         /// <summary>
+        /// Dit durft wel eens mislukken als de nummers van custom fields zijn veranderd.
+        /// </summary>
+        [TestMethod]
+        public void AangemaaktDoorPloegId()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var membershipGetResult = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new MembershipRequest {ApiOptions = new ApiOptions {Limit = 1} });
+                var ploegResult = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        ContactSubType = "Ploeg",
+                        ApiOptions = new ApiOptions {Sort = "id DESC", Limit = 1}
+                    });
+
+                var membershipSaveResult = client.MembershipSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new MembershipRequest {Id = membershipGetResult.Id, AangemaaktDoorPloegId = ploegResult.Id});
+
+                Assert.AreEqual(0, membershipSaveResult.IsError);
+            }
+        }
+
+        /// <summary>
         /// Controleer of mijn patch voor CRM-16036 wel goed is geapplyd.
         /// </summary>
         [TestMethod]
