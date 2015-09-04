@@ -26,14 +26,14 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     public partial class Membership
     {
         [JsonConverter(typeof(BoolConverter))]
-        [DataMember(Name="custom_62"), JsonProperty]
+        [DataMember(Name="custom_63"), JsonProperty]
         public bool VerzekeringLoonverlies { get; set; }
 
         [JsonConverter(typeof(NullableEnumConverter))]
-        [DataMember(Name="custom_63"), JsonProperty]
+        [DataMember(Name="custom_64"), JsonProperty]
         public FactuurStatus? FactuurStatus { get; set; }
 
-        [DataMember(Name="custom_64_id")]
+        [DataMember(Name="custom_65_id")]
         public int? AangemaaktDoorPloegId { get; set; }
     }
 }

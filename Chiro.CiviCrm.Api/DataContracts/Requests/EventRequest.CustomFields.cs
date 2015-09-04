@@ -23,37 +23,37 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// </summary>
     public partial class EventRequest
     {
-        [JsonProperty("custom_41", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_42", NullValueHandling = NullValueHandling.Ignore)]
         public string KipId { get; set; }
 
-        [JsonProperty("custom_43", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_44", NullValueHandling = NullValueHandling.Ignore)]
         public string AnalytischeCode { get; set; }
 
-        [JsonProperty("custom_44", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_45", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePersoon1Id { get; set; }
 
-        [JsonProperty("custom_45", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_46", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePersoon2Id { get; set; }
 
-        [JsonProperty("custom_46", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_47", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePersoon3Id { get; set; }
 
-        [JsonProperty("custom_47", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_48", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePloeg1Id { get; set; }
 
-        [JsonProperty("custom_48", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_49", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePloeg2Id { get; set; }
 
-        [JsonProperty("custom_39", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_40", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePloeg3Id { get; set; }
 
-        [JsonProperty("custom_50", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_51", NullValueHandling = NullValueHandling.Ignore)]
         public int? AantalVormingsUren { get; set; }
 
-        [JsonProperty("custom_51", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_52", NullValueHandling = NullValueHandling.Ignore)]
         public string OfficieelCursusNummer { get; set; }
 
-        [JsonProperty("custom_52", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonProperty("custom_53", NullValueHandling = NullValueHandling.Ignore)]
         public int? GapUitstapId { get; set; }
     }
 }

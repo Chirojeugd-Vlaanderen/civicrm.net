@@ -23,37 +23,37 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
     /// </summary>
     public partial class Event
     {
-        [DataMember(Name = "custom_41")]
+        [DataMember(Name = "custom_42")]
         public string KipId { get; set; }
 
-        [DataMember(Name = "custom_43")]
+        [DataMember(Name = "custom_44")]
         public string AnalytischeCode { get; set; }
 
-        [DataMember(Name = "custom_44_id")]
+        [DataMember(Name = "custom_45_id")]
         public int? OrganiserendePersoon1Id { get; set; }
 
-        [DataMember(Name = "custom_45_id")]
+        [DataMember(Name = "custom_46_id")]
         public int? OrganiserendePersoon2Id { get; set; }
 
-        [DataMember(Name = "custom_46_id")]
+        [DataMember(Name = "custom_47_id")]
         public int? OrganiserendePersoon3Id { get; set; }
 
-        [DataMember(Name = "custom_47_id")]
+        [DataMember(Name = "custom_48_id")]
         public int? OrganiserendePloeg1Id { get; set; }
 
-        [DataMember(Name = "custom_48_id")]
+        [DataMember(Name = "custom_49_id")]
         public int? OrganiserendePloeg2Id { get; set; }
 
-        [DataMember(Name = "custom_49_id")]
+        [DataMember(Name = "custom_50_id")]
         public int? OrganiserendePloeg3Id { get; set; }
 
-        [DataMember(Name = "custom_50")]
+        [DataMember(Name = "custom_51")]
         public int? AantalVormingsUren { get; set; }
 
-        [DataMember(Name = "custom_51")]
+        [DataMember(Name = "custom_52")]
         public string OfficieelCursusNummer { get; set; }
 
-        [DataMember(Name = "custom_52")]
+        [DataMember(Name = "custom_53")]
         public int? GapUitstapId { get; set; }
     }
 }
