@@ -27,7 +27,7 @@ namespace Chiro.CiviCrm.Api
     /// WCF service contract for the CiviCRM API
     /// </summary>
     [ServiceContract]
-    public interface ICiviCrmApi: IDisposable
+    public partial interface ICiviCrmApi: IDisposable
     {       
         /// <summary>
         /// Find a single contact based on the <paramref name="request"/>
