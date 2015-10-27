@@ -192,5 +192,20 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(true, myMembership.VerzekeringLoonverlies);
             }
         }
+
+        /// <summary>
+        /// Vooral eens nakijken of de lijst met actieve lidrelaties doorkomt.
+        /// </summary>
+        [TestMethod]
+        public void DiagnosticsActieveLidRelaties()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.ChiroDiagnosticsActieveLidRelaties(TestHelper.ApiKey, TestHelper.SiteKey);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(result.Count, result.Values.Count());
+            }
+        }
     }
 }
