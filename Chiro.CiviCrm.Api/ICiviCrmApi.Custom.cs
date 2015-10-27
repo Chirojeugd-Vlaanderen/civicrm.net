@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api
     {
 		[OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=actievelidrelaties&json=1&sequential=1")]
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=getactievelidrelaties&json=1&sequential=1")]
         ApiResultStrings ChiroDiagnosticsActieveLidRelaties(string apiKey, string key);
     }
 }
