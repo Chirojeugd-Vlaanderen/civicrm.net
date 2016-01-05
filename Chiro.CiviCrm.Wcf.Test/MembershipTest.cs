@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -113,6 +113,26 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
 
                 Assert.AreEqual(1, result.Count);
+            }
+        }
+
+        /// <summary>
+        /// Just a test for the MembershipPaymentRequest
+        /// </summary>
+        [TestMethod]
+        public void GetMembershipWithPayment()
+        {
+            var membershipRequest = new MembershipRequest
+            {
+                MembershipPaymentGetRequest = new MembershipPaymentRequest()
+            };
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
+
+                Assert.IsTrue(result.Count >= 1);
+                var first = result.Values.First();
+                Assert.IsNotNull(first.MembershipPaymentResult);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -64,5 +64,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [JsonConverter(typeof(BoolConverter))]
         [DataMember(Name = "is_pay_later")]
         public bool? IsPayLater { get; set; }
+
+        #region Chaining
+        [DataMember(Name = "api.MembershipPayment.get")]
+        public ApiResultValues<MembershipPayment> MembershipPaymentResult { get; set; }
+        #endregion
     }
 }

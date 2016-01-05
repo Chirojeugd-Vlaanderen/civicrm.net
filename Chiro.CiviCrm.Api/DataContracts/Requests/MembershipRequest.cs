@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// A CiviCRM membership request.
     /// </summary>
     [CiviRequest]
-    public partial class MembershipRequest: BaseRequest
+    public partial class MembershipRequest : BaseRequest
     {
         [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
@@ -50,11 +50,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// Only if IsOverride is true, the resulting membership will have the requested
         /// status. I will set this by default if Status != null.
         /// </summary>
-        [JsonConverter(typeof (BoolConverter))]
+        [JsonConverter(typeof(BoolConverter))]
         [JsonProperty("is_override", NullValueHandling = NullValueHandling.Ignore)]
         public bool? IsOverride
         {
-            get { return Status.HasValue ? true : (bool?) null; }
+            get { return Status.HasValue ? true : (bool?)null; }
         }
 
         [JsonConverter(typeof(BoolConverter))]
@@ -69,5 +69,10 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         {
             get { return CiviEntity.Membership; }
         }
+
+        #region Chaining
+        [JsonProperty("api.MembershipPayment.get", NullValueHandling = NullValueHandling.Ignore)]
+        public MembershipPaymentRequest MembershipPaymentGetRequest { get; set; }
+        #endregion
     }
 }
