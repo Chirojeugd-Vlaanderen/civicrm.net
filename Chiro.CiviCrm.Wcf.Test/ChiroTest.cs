@@ -207,5 +207,20 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(result.Count, result.Values.Count());
             }
         }
+
+        /// <summary>
+        /// Vooral eens nakijken of de lijst met verzekeringen loonverlies doorkomt.
+        /// </summary>
+        [TestMethod]
+        public void DiagnosticsMembersVerzekerdLoonVerlies()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.ChiroDiagnosticsMembersVerzekerdLoonVerlies(TestHelper.ApiKey, TestHelper.SiteKey);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.AreEqual(result.Count, result.Values.Count());
+            }
+        }
     }
 }
