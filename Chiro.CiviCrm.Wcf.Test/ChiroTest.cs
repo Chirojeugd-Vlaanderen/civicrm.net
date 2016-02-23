@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -31,6 +31,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     {
         private int _myEventId;
         private int _myMembershipId;
+        private int _myAbonnementId;
 
         [TestInitialize]
         public void InitializeTest()
@@ -62,6 +63,17 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.IsNotNull(membershipSaveResult.Id);
                 _myMembershipId = membershipSaveResult.Id.Value;
 
+                var abonnementRequest = new MembershipRequest
+                {
+                    ContactId = 2,
+                    MembershipTypeId = 2,
+                    AbonnementType = AbonnementType.Digitaal
+                };
+
+                var abonnementSaveResult = client.MembershipSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    abonnementRequest);
+                Assert.IsNotNull(abonnementSaveResult.Id);
+                _myAbonnementId = abonnementSaveResult.Id.Value;
             }
         }
 
@@ -220,6 +232,25 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 Assert.AreEqual(0, result.IsError);
                 Assert.AreEqual(result.Count, result.Values.Count());
+            }
+        }
+
+        /// <summary>
+        /// Kijkt na of het veld 'AbonnementType' op Membership werkt.
+        /// 
+        /// Zie #3970.
+        /// </summary>
+        [TestMethod]
+        public void CustomFieldAbonnementType()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new MembershipRequest { Id = _myAbonnementId });
+
+                Assert.AreEqual(1, result.Count);
+                var myMembership = result.Values.First();
+                Assert.AreEqual(AbonnementType.Digitaal, myMembership.AbonnementType);
             }
         }
     }

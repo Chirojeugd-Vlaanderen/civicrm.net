@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -34,5 +34,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
         [JsonProperty("custom_65", NullValueHandling = NullValueHandling.Ignore)]
         public int? AangemaaktDoorPloegId { get; set; }
+
+        [JsonProperty("custom_76", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof(NullableEnumConverter))]
+        public AbonnementType? AbonnementType { get; set; }
     }
 }

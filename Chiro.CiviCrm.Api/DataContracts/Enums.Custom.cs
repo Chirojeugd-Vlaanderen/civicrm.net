@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System;
 using System.Runtime.Serialization;
 
 namespace Chiro.CiviCrm.Api.DataContracts
@@ -97,5 +98,14 @@ namespace Chiro.CiviCrm.Api.DataContracts
         [EnumMember] Gewest = 4,
         [EnumMember] Verbond = 6,
         [EnumMember] NationalePloeg = 8
+    }
+
+    [DataContract]
+    [Flags]
+    public enum AbonnementType
+    {
+        [EnumMember] Digitaal = 1,
+        [EnumMember] Papier = 2,
+        [EnumMember] FullOption = Digitaal|Papier
     }
 }
