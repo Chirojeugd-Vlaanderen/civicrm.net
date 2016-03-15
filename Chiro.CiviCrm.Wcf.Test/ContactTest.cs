@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014-2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2014-2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -19,10 +19,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
-using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
@@ -30,6 +28,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class ContactTest
     {
         private int _myContactId;
+        private int _myDeceasedContactId;
         private int _myAddressId;
         private int _myPhoneId;
         private int _myEmailId;
@@ -114,6 +113,23 @@ namespace Chiro.CiviCrm.Wcf.Test
                 int? imId = result2.Values.First().ImResult.Values.First().Id;
                 Debug.Assert(imId.HasValue);
                 _myImId = imId.Value;
+
+                var deceisedContactRequest = new ContactRequest
+                {
+                    ContactType = ContactType.Individual,
+                    FirstName = "Jolly",
+                    LastName = "Jumper",
+                    BirthDate = new DateTime(1946, 3, 3),
+                    Gender = Gender.Male,
+                    ExternalIdentifier = "test_ext_id_deceised",
+                    IsDeceased = true,
+                    ApiOptions = new ApiOptions { Match = "external_identifier" }
+                };
+
+                var deceisedResult = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey, deceisedContactRequest);
+                Debug.Assert(deceisedResult.IsError == 0);
+                Debug.Assert(deceisedResult.Id.HasValue);
+                _myDeceasedContactId = deceisedResult.Id.Value;
             }
         }
 
@@ -537,6 +553,28 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(contact.Gender, result.Values.First().Gender);
 
                 client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(result.Id.Value), 1);
+            }
+        }
+
+        /// <summary>
+        /// Contact.Get should return deceased contacts as well. (#82)
+        /// </summary>
+        [TestMethod]
+        public void DeceasedContactGet()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new ContactRequest
+                {
+                    Id = _myDeceasedContactId
+                };
+
+                var result = client.ContactGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                Assert.AreEqual(0, result.IsError);
+                Assert.IsNotNull(result.Id);
+                Assert.AreEqual(result.Id, result.Values.First().Id);
+                Assert.AreEqual(_myDeceasedContactId, result.Id);
             }
         }
 
