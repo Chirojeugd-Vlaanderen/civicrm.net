@@ -71,7 +71,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
 
         [JsonProperty("is_deceased", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof (BoolConverter))]
-        public bool IsDeceased { get; set; }
+        public bool? IsDeceased { get; set; }
 
         [JsonProperty("deceased_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DeceasedDate { get; set; }
