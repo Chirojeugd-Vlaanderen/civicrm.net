@@ -9,13 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.Example",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.BehaviorExtension", "Chiro.CiviCrm.Behavior\Chiro.CiviCrm.BehaviorExtension.csproj", "{F39A9E29-95E9-4304-A42D-1266F81B5ECF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D2B03C02-695D-4A27-8DBC-05E8FD1AD414}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Chiro.CiviCrm.Wcf.Test", "Chiro.CiviCrm.Wcf.Test\Chiro.CiviCrm.Wcf.Test.csproj", "{2FCD4844-0602-4EDB-879D-2133D52FC51C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A4FF6086-502B-4D90-8A9D-4A3D40C76F43}"
