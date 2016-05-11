@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -113,6 +113,10 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test getting an event with locblock and address
         /// </summary>
+        /// <remarks>
+        /// This test may fail because of CRM-18535. You can work around it by
+        /// giving your API user the 'access deleted contacts' permission.
+        /// </remarks>
         [TestMethod]
         public void EventWithAddress()
         {
