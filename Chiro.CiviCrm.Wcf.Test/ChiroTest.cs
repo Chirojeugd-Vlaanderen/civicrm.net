@@ -213,10 +213,12 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.ChiroDiagnosticsActieveLidRelaties(TestHelper.ApiKey, TestHelper.SiteKey);
+                var request = new BaseRequest {ApiOptions = new ApiOptions {Limit = 24}};
+                var result = client.ChiroDiagnosticsActieveLidRelaties(TestHelper.ApiKey, TestHelper.SiteKey, request);
 
                 Assert.AreEqual(0, result.IsError);
                 Assert.AreEqual(result.Count, result.Values.Count());
+                Assert.IsTrue(result.Count <= 24);
             }
         }
 
