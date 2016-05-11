@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2014, 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2014, 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// CiviRequest. (See e.g. CiviExternalIdentifierRequest.)
     /// </summary>
     [CiviRequest]
-    public abstract class BaseRequest
+    public class BaseRequest
     {
         /// <summary>
         /// Id of the entity to fetch (if given)
@@ -62,6 +62,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// The entity type this request is referring to.
         /// </summary>
         [JsonIgnore]
-        public abstract CiviEntity EntityType { get; }
+        public virtual CiviEntity EntityType { get; }
     }
 }
