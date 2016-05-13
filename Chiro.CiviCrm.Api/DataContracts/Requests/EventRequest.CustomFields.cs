@@ -14,6 +14,8 @@
    limitations under the License.
  */
 
+using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -29,14 +31,17 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("custom_44", NullValueHandling = NullValueHandling.Ignore)]
         public string AnalytischeCode { get; set; }
 
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("custom_45", NullValueHandling = NullValueHandling.Ignore)]
-        public int? OrganiserendePersoon1Id { get; set; }
+        public Filter<int?> OrganiserendePersoon1Id { get; set; }
 
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("custom_46", NullValueHandling = NullValueHandling.Ignore)]
-        public int? OrganiserendePersoon2Id { get; set; }
+        public Filter<int?> OrganiserendePersoon2Id { get; set; }
 
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("custom_47", NullValueHandling = NullValueHandling.Ignore)]
-        public int? OrganiserendePersoon3Id { get; set; }
+        public Filter<int?> OrganiserendePersoon3Id { get; set; }
 
         [JsonProperty("custom_48", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePloeg1Id { get; set; }
