@@ -75,7 +75,6 @@ namespace Chiro.CiviCrm.Wcf.Test
         [TestMethod]
         public void GetEventDateFilterNotNull()
         {
-            DateTime someDate = new DateTime(2015, 3, 14);
             using (var client = TestHelper.ClientGet())
             {
                 var request = new EventRequest
@@ -85,6 +84,24 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
                 Assert.IsTrue(result.Values.All(v => v.StartDate != null));
+            }
+        }
+        
+        /// <summary>
+        /// Check NULL-filtering on loc block (see #90).
+        /// </summary>
+        [TestMethod]
+        public void GetEventLocBlockFilterNull()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new EventRequest
+                {
+                    LocBlockIdFilter = new Filter<int>(WhereOperator.IsNull)
+                };
+
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+                Assert.IsTrue(result.Values.All(v => v.LocBlockId == null));
             }
         }
 
