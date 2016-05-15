@@ -16,6 +16,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Chiro.CiviCrm.Api.Converters;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
@@ -33,10 +34,25 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonIgnore]
         public string LocBlockIdValueExpression { get; set; }
 
+        [JsonIgnore]
+        public Filter<int> LocBlockIdFilter { get; set; }
+
+        // Weird and experimental construction, rather experimental. See
+        // https://github.com/Chirojeugd-Vlaanderen/civicrm.net/issues/90
+        // https://github.com/Chirojeugd-Vlaanderen/civicrm.net/issues/91
+        [JsonConverter(typeof(FilterConverter))]
         [JsonProperty("loc_block_id", NullValueHandling = NullValueHandling.Ignore)]
-        public string LocBlockIdString
+        public Filter<string> LocBlockIdStringFilter
         {
-            get { return LocBlockId.HasValue ? LocBlockId.ToString() : LocBlockIdValueExpression; }
+            get
+            {
+                return LocBlockIdFilter != null
+                    ? new Filter<string>(LocBlockIdFilter.Operator,
+                        LocBlockIdFilter.Values.Select(v => v.ToString()).ToArray())
+                    : LocBlockId.HasValue
+                        ? new Filter<string>(LocBlockId.ToString())
+                        : LocBlockIdValueExpression != null ? new Filter<string>(LocBlockIdValueExpression) : null;
+            }
         }
 
         [JsonProperty("title", NullValueHandling = NullValueHandling.Ignore)]
