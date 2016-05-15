@@ -69,6 +69,25 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Check NOT NULL-filtering (see #89).
+        /// </summary>
+        [TestMethod]
+        public void GetEventDateFilterNotNull()
+        {
+            DateTime someDate = new DateTime(2015, 3, 14);
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new EventRequest
+                {
+                    StartDate = new Filter<DateTime?>(WhereOperator.IsNotNull)
+                };
+
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+                Assert.IsTrue(result.Values.All(v => v.StartDate != null));
+            }
+        }
+
         [TestMethod]
         public void CreateEvent()
         {
