@@ -108,10 +108,10 @@ namespace Chiro.CiviCrm.Api.Converters
                     civiOperator = "NOT BETWEEN";
                     break;
                 case WhereOperator.IsNotNull:
-                    writer.WriteRawValue("{{\"IS NOT NULL\":1}}");
+                    writer.WriteRawValue("{\"IS NOT NULL\":1}");
                     return;
                 case WhereOperator.IsNull:
-                    writer.WriteRawValue("{{\"IS NULL\":1}}");
+                    writer.WriteRawValue("{\"IS NULL\":1}");
                     return;
                 default:
                     throw new InvalidOperationException();
