@@ -28,6 +28,7 @@ namespace Chiro.CiviCrm.Wcf.Test
     {
         // Make sure that you have an event type with given ID:
         private const int MyEventTypeId = 1;
+        private const int OrganiserendePersoonId = 1;
 
         private int _myEventId;
 
@@ -42,7 +43,8 @@ namespace Chiro.CiviCrm.Wcf.Test
                     Description = "Best event ever.",
                     StartDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
                     EndDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
-                    EventTypeId = MyEventTypeId
+                    EventTypeId = MyEventTypeId,
+                    OrganiserendePersoon1Id = new Filter<int?>(OrganiserendePersoonId)
                 };
 
                 var saveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
@@ -66,6 +68,21 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
                 Assert.IsTrue(result.Values.All(v => v.StartDate > someDate));
+            }
+        }
+
+        [TestMethod]
+        public void GetEventOraniserendePersoonFilter()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new EventRequest
+                {
+                    OrganiserendePersoon1Id = new Filter<int?>(WhereOperator.IsNotNull)
+                };
+
+                var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+                Assert.IsTrue(result.Values.All(v => v.OrganiserendePersoon1Id != null));
             }
         }
 
