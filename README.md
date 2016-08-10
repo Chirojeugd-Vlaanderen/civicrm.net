@@ -3,7 +3,7 @@
 This project provides interfaces and a behavior that allow communication with the CiviCRM
 API using WCF.
 
-Please read the extended documentation in [the civicrm.net wiki](https://github.com/johanv/civicrm.net/wiki/).
+Please read the extended documentation in [the civicrm.net wiki](https://github.com/Chirojeugd-Vlaanderen/civicrm.net/wiki/).
 
 ## How to get the examples/unit tests working
 
