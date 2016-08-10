@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -26,7 +26,9 @@ namespace Chiro.CiviCrm.Wcf.Test
     public class RelationshipTest
     {
         private int _myContactId;
+        private int _myOtherContactId;
         private int _myRelationshipId;
+        private int _myOtherRelationshipId;
         private int _myCompanyId;
 
         [TestInitialize]
@@ -44,6 +46,16 @@ namespace Chiro.CiviCrm.Wcf.Test
                     });
                 _myContactId = result1.Values.First().Id;
 
+                var result0 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new ContactRequest
+                    {
+                        FirstName = "Averell",
+                        LastName = "Schmoe",
+                        BirthDate = new DateTime(1980, 2, 9),
+                        ContactType = ContactType.Individual
+                    });
+                _myOtherContactId = result0.Values.First().Id;
+
                 var result2 = client.ContactSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new ContactRequest
                     {
@@ -55,12 +67,23 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result3 = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey,
                     new RelationshipRequest
                     {
-                        RelationshipTypeId = 5,             // Works for
+                        RelationshipTypeId = 5, // Works for
                         ContactIdA = _myContactId,
                         ContactIdB = _myCompanyId,
                         IsActive = true
                     });
                 _myRelationshipId = result3.Values.First().Id;
+
+                var result4 = client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new RelationshipRequest
+                    {
+                        RelationshipTypeId = 5, // Works for
+                        ContactIdA = _myOtherContactId,
+                        ContactIdB = _myCompanyId,
+                        IsActive = false,
+                        EndDate = new DateTime(2016, 8, 8)
+                    });
+                _myOtherRelationshipId = result4.Values.First().Id;
             }
         }
 
@@ -69,18 +92,28 @@ namespace Chiro.CiviCrm.Wcf.Test
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                client.RelationshipDelete(TestHelper.ApiKey, TestHelper.SiteKey, new DeleteRequest(_myRelationshipId));
+                client.RelationshipDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new DeleteRequest(_myOtherRelationshipId));
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
                     new DeleteRequest(_myContactId),
+                    1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new DeleteRequest(_myOtherContactId),
+                    1);
+                client.ContactDelete(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new DeleteRequest(_myCompanyId),
                     1);
             }
         }
+
         [TestMethod]
         public void GetRelationship()
         {
             using (var client = TestHelper.ClientGet())
             {
                 var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey,
-                    new RelationshipRequest{Id = _myRelationshipId});
+                    new RelationshipRequest {Id = _myRelationshipId});
                 var relationship = result.Values.First();
 
                 Assert.AreEqual(_myContactId, relationship.ContactIdA);
@@ -98,7 +131,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                 {
                     RelationshipTypeId = 5, // Works for
                     ContactIdA = _myContactId,
-                    ContactIdB = 1,         // Default organization
+                    ContactIdB = 1, // Default organization
                     StartDate = DateTime.Now.Date,
                     EndDate = DateTime.Now.Date.AddYears(1),
                     IsActive = true
@@ -116,7 +149,33 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Test for resetting a relationship's end date (see #93).
+        /// </summary>
         [TestMethod]
+        public void ReactivateRelationship()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                // reactivate the inactive relationship.
+                var saveRequest = new RelationshipRequest
+                {
+                    Id = _myOtherRelationshipId,
+                    IsActive = true,
+                    // This will be the workaround to unset a date:
+                    EndDate = DateTime.MinValue
+                };
+                client.RelationshipSave(TestHelper.ApiKey, TestHelper.SiteKey, saveRequest);
+
+                var result = client.RelationshipGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new RelationshipRequest {Id = _myOtherRelationshipId});
+
+                Assert.IsNull(result.EndDate);
+                Assert.IsTrue(result.IsActive);
+            }
+        }
+
+    [TestMethod]
         public void RelationshipChainedContact()
         {
             using (var client = TestHelper.ClientGet())
