@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -30,6 +30,15 @@ namespace Chiro.CiviCrm.Api.Converters
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+            DateTime? datetime = (DateTime?) value;
+
+            // As a workaround for #92 we will remove the existing datetime if DateTime.MinValue is given.
+            if (datetime == DateTime.MinValue)
+            {
+                // The CiviCRM API will interpret this as a NULL value for a datetime.
+                writer.WriteValue(0);
+                return;
+            }
             writer.WriteValue((DateTime?) value);
         }
 
