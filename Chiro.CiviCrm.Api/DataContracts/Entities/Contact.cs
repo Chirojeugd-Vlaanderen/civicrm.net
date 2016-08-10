@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2013-2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2013-2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -88,7 +88,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
 
         [DataMember(Name="preferred_mail_format"), JsonProperty]
         [JsonConverter(typeof(StringEnumConverter))]
-        public MailFormat PreferredMailFormat { get; set; }
+        public MailFormat? PreferredMailFormat { get; set; }
 
         [DataMember(Name="first_name"), JsonProperty]
         public string FirstName { get; set; }
