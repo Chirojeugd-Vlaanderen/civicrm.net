@@ -125,6 +125,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test for chaining relationship -> relationship.create (see #93)
         /// </summary>
+        [TestMethod]
         public void RelationshipChainedSave()
         {
             using (var client = TestHelper.ClientGet())
@@ -137,11 +138,14 @@ namespace Chiro.CiviCrm.Wcf.Test
                     RelationshipTypeId = 5, // Works for
                     ContactIdB = _myCompanyId,
                     IsActive = true,
-                    RelationshipSaveRequest = new RelationshipRequest
+                    RelationshipSaveRequest = new[]
                     {
-                        IdValueExpression = "$value.id",
-                        IsActive = false,
-                        EndDate = today
+                        new RelationshipRequest
+                        {
+                            IdValueExpression = "$value.id",
+                            IsActive = false,
+                            EndDate = today
+                        }
                     }
                 };
                 // Get relationship to see if it worked.
