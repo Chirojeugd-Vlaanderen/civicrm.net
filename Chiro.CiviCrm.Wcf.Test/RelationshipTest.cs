@@ -122,6 +122,37 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
+        /// <summary>
+        /// Test for chaining relationship -> relationship.create (see #93)
+        /// </summary>
+        public void RelationshipChainedSave()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                DateTime today = DateTime.Today;
+
+                // Fire all contacts working for the company.
+                var request = new RelationshipRequest
+                {
+                    RelationshipTypeId = 5, // Works for
+                    ContactIdB = _myCompanyId,
+                    IsActive = true,
+                    RelationshipSaveRequest = new RelationshipRequest
+                    {
+                        IdValueExpression = "$value.id",
+                        IsActive = false,
+                        EndDate = today
+                    }
+                };
+                // Get relationship to see if it worked.
+                var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+                var relationship = client.RelationshipGetSingle(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new RelationshipRequest {Id = _myRelationshipId});
+                Assert.IsFalse(relationship.IsActive);
+                Assert.AreEqual(today, relationship.EndDate);
+            }
+        }
+
         [TestMethod]
         public void NewRelationship()
         {
