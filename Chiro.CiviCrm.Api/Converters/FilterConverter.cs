@@ -45,7 +45,15 @@ namespace Chiro.CiviCrm.Api.Converters
             else if (filter.Objects.Skip(1).FirstOrDefault() == null)
             {
                 // Only one object. Easy.
-                rhs = JsonConvert.SerializeObject(filter.Objects.First());
+                Object obj = filter.Objects.First();
+                if (obj is DateTime && ((DateTime) obj) == DateTime.MinValue)
+                {
+                    // Work around #92. If you use this in a create-operation, you can remove the existing
+                    // datetime by passing DateTime.MinValue.
+                    obj = 0;
+                }
+
+                rhs = JsonConvert.SerializeObject(obj);
             }
             else
             {

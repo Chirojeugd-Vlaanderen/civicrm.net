@@ -33,6 +33,7 @@ namespace Chiro.CiviCrm.Api.Converters
             DateTime? datetime = (DateTime?) value;
 
             // As a workaround for #92 we will remove the existing datetime if DateTime.MinValue is given.
+            // (Hmmm, this doesn' t have anything to do with CRM-15863)
             if (datetime == DateTime.MinValue)
             {
                 // The CiviCRM API will interpret this as a NULL value for a datetime.
