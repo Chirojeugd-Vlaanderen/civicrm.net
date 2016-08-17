@@ -131,6 +131,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("api.Relationship.create", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<RelationshipRequest> RelationshipSaveRequest { get; set; }
 
+        [JsonConverter(typeof(Crm15815Converter))]
+        [JsonProperty("api.Relationship.delete", NullValueHandling = NullValueHandling.Ignore)]
+        public IEnumerable<DeleteRequest> RelationshipDeleteRequest { get; set; }
         #endregion
 
         public override CiviEntity EntityType

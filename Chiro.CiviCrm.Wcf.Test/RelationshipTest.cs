@@ -15,6 +15,7 @@
  */
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
@@ -265,6 +266,28 @@ namespace Chiro.CiviCrm.Wcf.Test
                 var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
 
                 Assert.AreEqual(0, result.Count);
+            }
+        }
+
+        [TestMethod]
+        public void RelationshipChainedGetDelete()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new RelationshipRequest
+                {
+                    ContactIdB = _myCompanyId,
+                    EndDateFilter = new Filter<DateTime?>(WhereOperator.Gt, new DateTime(2016, 8, 7)),
+                    RelationshipDeleteRequest = new List<DeleteRequest> { new DeleteRequest { IdValueExpression = "$value.id"} }
+                };
+
+                // Find and remove relationship.
+                var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                var result2 = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey,
+                    new RelationshipRequest {Id = _myOtherRelationshipId});
+
+                Assert.AreEqual(0, result2.Count);
             }
         }
 
