@@ -17,6 +17,7 @@
 using System;
 using System.Collections.Generic;
 using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -76,13 +77,32 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("relationship_type_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? RelationshipTypeId { get; set; }
 
-        [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(Crm15863Converter))]
+        [JsonIgnore]
         public DateTime? StartDate { get; set; }
 
-        [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(Crm15863Converter))]
+        [JsonIgnore]
+        public Filter<DateTime?> StartDateFilter { get; set; }
+
+        [JsonConverter(typeof(FilterConverter))]
+        [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
+        public Filter<DateTime?> StartDateOrStartDateFilter
+        {
+            get { return StartDateFilter ?? (StartDate == null ? null : new Filter<DateTime?>(StartDate)); }
+        }
+
+        [JsonIgnore]
         public DateTime? EndDate { get; set; }
+
+        [JsonIgnore]
+        public Filter<DateTime?> EndDateFilter { get; set; }
+
+        [JsonConverter(typeof(FilterConverter))]
+        [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
+        public Filter<DateTime?> EndDateOrEndDateFilter
+        {
+            get { return EndDateFilter ?? (EndDate == null ? null : new Filter<DateTime?>(EndDate)); }
+        }
+
 
         [JsonProperty("is_active", NullValueHandling = NullValueHandling.Ignore)]
         [JsonConverter(typeof(BoolConverter))]
