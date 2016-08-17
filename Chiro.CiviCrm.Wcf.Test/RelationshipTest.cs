@@ -17,6 +17,7 @@
 using System;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -210,7 +211,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-    [TestMethod]
+        [TestMethod]
         public void RelationshipChainedContact()
         {
             using (var client = TestHelper.ClientGet())
@@ -231,5 +232,41 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.AreEqual(_myContactId, result.ContactResult.Values.First().Id);
             }
         }
+
+        [TestMethod]
+        public void RelationshipDateFilter()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new RelationshipRequest
+                {
+                    ContactIdB = _myCompanyId,
+                    EndDateFilter = new Filter<DateTime?>(WhereOperator.Gt, new DateTime(2016,8,7))
+                };
+
+                var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                Assert.AreEqual(1, result.Count);
+                Assert.AreEqual(_myOtherRelationshipId, result.Id);
+            }
+        }
+
+        [TestMethod]
+        public void RelationshipDateFilter2()
+        {
+            using (var client = TestHelper.ClientGet())
+            {
+                var request = new RelationshipRequest
+                {
+                    ContactIdB = _myCompanyId,
+                    EndDateFilter = new Filter<DateTime?>(WhereOperator.Lt, new DateTime(2016, 8, 7))
+                };
+
+                var result = client.RelationshipGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
+
+                Assert.AreEqual(0, result.Count);
+            }
+        }
+
     }
 }
