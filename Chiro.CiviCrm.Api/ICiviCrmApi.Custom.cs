@@ -34,9 +34,29 @@ namespace Chiro.CiviCrm.Api
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=getactievelidrelaties&json={request}&sequential=1")]
         ApiResultStrings ChiroDiagnosticsActieveLidRelaties(string apiKey, string key, BaseRequest request);
+
+        /// <summary>
+        /// Haalt (vermoedelijk) combinaties stamnummer-ad-nummer op voor actieve lidmaatschappen
+        /// met verzekering loonverlies.
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="key"></param>
+        /// <returns></returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=getmembersverzekerdloonverlies&json=1&sequential=1")]
         ApiResultStrings ChiroDiagnosticsMembersVerzekerdLoonVerlies(string apiKey, string key);
+
+        /// <summary>
+        /// Sluit gegeven werkjaar af.
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="key"></param>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Chirowerkjaar&action=afsluiten&json={request}&sequential=1")]
+        ApiResult ChiroWerkjaarAfsluiten(string apiKey, string key, ChiroWerkjaarRequest request);
     }
 }

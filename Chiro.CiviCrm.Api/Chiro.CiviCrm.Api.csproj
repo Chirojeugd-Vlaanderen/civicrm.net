@@ -83,6 +83,7 @@
     <Compile Include="DataContracts\Filters\IFilter.cs" />
     <Compile Include="DataContracts\Filters\WhereOperator.cs" />
     <Compile Include="DataContracts\Requests\AddressRequest.cs" />
+    <Compile Include="DataContracts\Requests\ChiroWerkjaarRequest.cs" />
     <Compile Include="DataContracts\Requests\CountryRequest.cs" />
     <Compile Include="DataContracts\Requests\EmailRequest.cs" />
     <Compile Include="DataContracts\Requests\EventRequest.cs" />
