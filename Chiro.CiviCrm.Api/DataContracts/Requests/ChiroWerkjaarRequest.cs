@@ -24,7 +24,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// </summary>
     [DataContract]
     [CiviRequest]
-    public class ChiroWerkjaarRequest
+    public class ChiroWerkjaarRequest: BaseRequest
     {
         [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
