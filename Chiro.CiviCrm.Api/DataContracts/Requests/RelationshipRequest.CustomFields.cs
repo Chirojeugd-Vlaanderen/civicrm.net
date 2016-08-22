@@ -1,5 +1,5 @@
 ﻿/*
-   Copyright 2015 Chirojeugd-Vlaanderen vzw
+   Copyright 2015, 2016 Chirojeugd-Vlaanderen vzw
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -58,6 +58,12 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// Functies van het lid.
         /// </summary>
         [JsonProperty("custom_15", NullValueHandling = NullValueHandling.Ignore)]
-        public string[] Functies { get; set; } 
+        public string[] Functies { get; set; }
+
+        /// <summary>
+        /// GAP-werkjaar van het lid.
+        /// </summary>
+        [JsonProperty("custom_78", NullValueHandling = NullValueHandling.Ignore)]
+        public int Werkjaar { get; set; }
     }
 }
