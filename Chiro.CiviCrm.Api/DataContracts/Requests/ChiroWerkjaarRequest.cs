@@ -14,6 +14,7 @@
    limitations under the License.
  */
 
+using System;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
@@ -32,5 +33,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public int Werkjaar { get; set; }
         [JsonProperty("stamnr", NullValueHandling = NullValueHandling.Ignore)]
         public string StamNummer { get; set; }
+        [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime Date { get; set; }
     }
 }

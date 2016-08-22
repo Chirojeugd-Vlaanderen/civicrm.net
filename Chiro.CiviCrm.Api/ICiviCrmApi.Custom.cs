@@ -52,11 +52,24 @@ namespace Chiro.CiviCrm.Api
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="key"></param>
-        /// <param name="request"></param>
+        /// <param name="request">Het request moet stamnummer en werkjaar bevatten.</param>
         /// <returns></returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
             UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Chirowerkjaar&action=afsluiten&json={request}&sequential=1")]
         ApiResult ChiroWerkjaarAfsluiten(string apiKey, string key, ChiroWerkjaarRequest request);
+
+        /// <summary>
+        /// Herstelt lidrelaties naar de situatie van een gegeven datum. 
+        /// </summary>
+        /// <param name="apiKey"></param>
+        /// <param name="key"></param>
+        /// <param name="request">Het request moet een stamnummer en de datum bevatten.</param>
+        /// <returns></returns>
+        /// <remarks>Dit wordt momenteel enkel gebruikt om jaarovergangen terug te draaien.</remarks>
+        [OperationContract]
+        [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=Chirowerkjaar&action=terugdraaien&json={request}&sequential=1")]
+        ApiResult ChiroWerkjaarTerugdraaien(string apiKey, string key, ChiroWerkjaarRequest request);
     }
 }
