@@ -64,6 +64,6 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         /// GAP-werkjaar van het lid.
         /// </summary>
         [JsonProperty("custom_78", NullValueHandling = NullValueHandling.Ignore)]
-        public int Werkjaar { get; set; }
+        public int? Werkjaar { get; set; }
     }
 }
