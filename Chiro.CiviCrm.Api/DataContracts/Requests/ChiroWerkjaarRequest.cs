@@ -15,7 +15,6 @@
  */
 
 using System;
-using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -23,14 +22,13 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
     /// <summary>
     /// Request for ChiroWerkjaar.
     /// </summary>
-    [DataContract]
     [CiviRequest]
     public class ChiroWerkjaarRequest: BaseRequest
     {
         [JsonProperty("contact_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ContactId { get; set; }
         [JsonProperty("werkjaar", NullValueHandling = NullValueHandling.Ignore)]
-        public int Werkjaar { get; set; }
+        public int? Werkjaar { get; set; }
         [JsonProperty("stamnr", NullValueHandling = NullValueHandling.Ignore)]
         public string StamNummer { get; set; }
         [JsonProperty("date", NullValueHandling = NullValueHandling.Ignore)]
