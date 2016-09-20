@@ -16,7 +16,9 @@
 
 
 using System;
+using System.Linq;
 using Chiro.CiviCrm.Api.Converters;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Newtonsoft.Json;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Requests
@@ -42,9 +44,28 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? EndDate { get; set; }
 
-        [JsonProperty("status_id", NullValueHandling = NullValueHandling.Ignore)]
-        [JsonConverter(typeof(NullableEnumConverter))]
+        [JsonIgnore]
         public MembershipStatus? Status { get; set; }
+
+        [JsonIgnore]
+        public Filter<MembershipStatus> StatusFilter { get; set; }
+
+        [JsonProperty("status_id", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonConverter(typeof (FilterConverter))]
+        public Filter<int> StatusOrFilter
+        {
+            get
+            {
+                if (StatusFilter != null)
+                {
+                    // I think I can't combine an enumconverter and a filterconverter,
+                    // but I'm not sure. Working around the issue:
+                    return new Filter<int>(StatusFilter.Operator,
+                        StatusFilter.Values.Select(v => (int)v).ToArray());
+                }
+                return Status.HasValue ? new Filter<int>((int)Status.Value) : null;
+            }
+        }
 
         /// <summary>
         /// Only if IsOverride is true, the resulting membership will have the requested
