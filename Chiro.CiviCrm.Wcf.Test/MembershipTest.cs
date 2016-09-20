@@ -170,8 +170,8 @@ namespace Chiro.CiviCrm.Wcf.Test
 
                 Assert.IsTrue(result.Count >= 1);
                 var first = result.Values.First();
-                Assert.IsNotNull(first.MembershipContactResult);
-                Assert.AreEqual(_myContactId2, first.MembershipContactResult.Values.First().Id);
+                Assert.IsNotNull(first.ContactResult);
+                Assert.AreEqual(_myContactId2, first.ContactResult.Values.First().Id);
             }
         }
     }

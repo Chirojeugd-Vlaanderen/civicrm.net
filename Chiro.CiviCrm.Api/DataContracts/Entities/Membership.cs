@@ -70,7 +70,7 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         public ApiResultValues<MembershipPayment> MembershipPaymentResult { get; set; }
 
         [DataMember(Name = "api.Contact.get")]
-        public ApiResultValues<Contact> MembershipContactResult { get; set; }
+        public ApiResultValues<Contact> ContactResult { get; set; }
         #endregion
     }
 }
