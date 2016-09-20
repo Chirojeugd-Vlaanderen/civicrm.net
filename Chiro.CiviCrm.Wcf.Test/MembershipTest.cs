@@ -17,6 +17,7 @@
 using System;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
+using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -53,7 +54,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                         LastName = "Schmoe",
                         BirthDate = new DateTime(1980, 2, 9),
                         ContactType = ContactType.Individual,
-                        MembershipSaveRequest = new[] {new MembershipRequest {MembershipTypeId = 1}}
+                        MembershipSaveRequest = new[] {new MembershipRequest {MembershipTypeId = 1, Status = MembershipStatus.New}}
                     });
                 _myContactId2 = result2.Values.First().Id;                
 
@@ -107,6 +108,22 @@ namespace Chiro.CiviCrm.Wcf.Test
             var membershipRequest = new MembershipRequest
             {
                 ContactId = _myContactId2
+            };
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
+
+                Assert.AreEqual(1, result.Count);
+            }
+        }
+
+        [TestMethod]
+        public void GetMembershipStatusFilter()
+        {
+            var membershipRequest = new MembershipRequest
+            {
+                ContactId = _myContactId2,
+                StatusFilter = new Filter<MembershipStatus>(WhereOperator.In, MembershipStatus.New, MembershipStatus.Current)
             };
             using (var client = TestHelper.ClientGet())
             {

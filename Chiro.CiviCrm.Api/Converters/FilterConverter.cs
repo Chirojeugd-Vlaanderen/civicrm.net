@@ -70,8 +70,7 @@ namespace Chiro.CiviCrm.Api.Converters
                 {
                     throw new InvalidOperationException();
                 }
-                // This will not work for strings:
-                rhs = JsonConvert.SerializeObject(String.Join(",", filter.Objects.Select(o => o.ToString())));
+                rhs = JsonConvert.SerializeObject(filter.Objects);
             }
 
             switch (filter.Operator)
