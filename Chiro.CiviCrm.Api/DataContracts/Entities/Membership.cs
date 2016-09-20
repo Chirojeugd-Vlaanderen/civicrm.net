@@ -68,6 +68,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         #region Chaining
         [DataMember(Name = "api.MembershipPayment.get")]
         public ApiResultValues<MembershipPayment> MembershipPaymentResult { get; set; }
+
+        [DataMember(Name = "api.Contact.get")]
+        public ApiResultValues<Contact> MembershipContactResult { get; set; }
         #endregion
     }
 }

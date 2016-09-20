@@ -152,5 +152,27 @@ namespace Chiro.CiviCrm.Wcf.Test
                 Assert.IsNotNull(first.MembershipPaymentResult);
             }
         }
+
+        /// <summary>
+        /// Test chaining ContactRequests.
+        /// </summary>
+        [TestMethod]
+        public void GetMembershipWithContact()
+        {
+            var membershipRequest = new MembershipRequest
+            {
+                ContactGetRequest = new ContactRequest(),
+                ContactId = _myContactId2
+            };
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
+
+                Assert.IsTrue(result.Count >= 1);
+                var first = result.Values.First();
+                Assert.IsNotNull(first.MembershipContactResult);
+                Assert.AreEqual(_myContactId2, first.MembershipContactResult.Values.First().Id);
+            }
+        }
     }
 }

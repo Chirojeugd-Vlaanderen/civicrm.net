@@ -94,6 +94,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         #region Chaining
         [JsonProperty("api.MembershipPayment.get", NullValueHandling = NullValueHandling.Ignore)]
         public MembershipPaymentRequest MembershipPaymentGetRequest { get; set; }
+
+        [JsonProperty("api.Contact.get", NullValueHandling = NullValueHandling.Ignore)]
+        public ContactRequest ContactGetRequest { get; set; }
         #endregion
     }
 }
