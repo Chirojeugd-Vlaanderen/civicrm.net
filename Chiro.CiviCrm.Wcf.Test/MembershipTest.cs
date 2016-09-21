@@ -54,7 +54,16 @@ namespace Chiro.CiviCrm.Wcf.Test
                         LastName = "Schmoe",
                         BirthDate = new DateTime(1980, 2, 9),
                         ContactType = ContactType.Individual,
-                        MembershipSaveRequest = new[] {new MembershipRequest {MembershipTypeId = 1, Status = MembershipStatus.New}}
+                        MembershipSaveRequest =
+                            new[]
+                            {
+                                new MembershipRequest
+                                {
+                                    MembershipTypeId = 1,
+                                    Status = MembershipStatus.New,
+                                    StartDate = new DateTime(2016, 09, 21)
+                                }
+                            }
                     });
                 _myContactId2 = result2.Values.First().Id;                
 
@@ -124,6 +133,25 @@ namespace Chiro.CiviCrm.Wcf.Test
             {
                 ContactId = _myContactId2,
                 StatusFilter = new Filter<MembershipStatus>(WhereOperator.In, MembershipStatus.New, MembershipStatus.Current)
+            };
+            using (var client = TestHelper.ClientGet())
+            {
+                var result = client.MembershipGet(TestHelper.ApiKey, TestHelper.SiteKey, membershipRequest);
+
+                Assert.AreEqual(1, result.Count);
+            }
+        }
+
+        /// <summary>
+        /// Test for filtering on relationship date.
+        /// </summary>
+        [TestMethod]
+        public void RelationshipDateFilter()
+        {
+            var membershipRequest = new MembershipRequest
+            {
+                ContactId = _myContactId2,
+                StartDateFilter = new Filter<DateTime?>(WhereOperator.Gte, new DateTime(2016, 09, 21))
             };
             using (var client = TestHelper.ClientGet())
             {
