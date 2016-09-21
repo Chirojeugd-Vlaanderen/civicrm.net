@@ -38,11 +38,31 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         [JsonProperty("join_date", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? JoinDate { get; set; }
 
-        [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
         public DateTime? StartDate { get; set; }
 
-        [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
+        [JsonIgnore]
+        public Filter<DateTime?> StartDateFilter { get; set; }
+
+        [JsonConverter(typeof(FilterConverter))]
+        [JsonProperty("start_date", NullValueHandling = NullValueHandling.Ignore)]
+        public Filter<DateTime?> StartDateOrStartDateFilter
+        {
+            get { return StartDateFilter ?? (StartDate == null ? null : new Filter<DateTime?>(StartDate)); }
+        }
+
+        [JsonIgnore]
         public DateTime? EndDate { get; set; }
+
+        [JsonIgnore]
+        public Filter<DateTime?> EndDateFilter { get; set; }
+
+        [JsonConverter(typeof(FilterConverter))]
+        [JsonProperty("end_date", NullValueHandling = NullValueHandling.Ignore)]
+        public Filter<DateTime?> EndDateOrEndDateFilter
+        {
+            get { return EndDateFilter ?? (EndDate == null ? null : new Filter<DateTime?>(EndDate)); }
+        }
 
         [JsonIgnore]
         public MembershipStatus? Status { get; set; }
