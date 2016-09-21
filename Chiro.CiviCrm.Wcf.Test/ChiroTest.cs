@@ -223,17 +223,24 @@ namespace Chiro.CiviCrm.Wcf.Test
         }
 
         /// <summary>
-        /// Vooral eens nakijken of de lijst met verzekeringen loonverlies doorkomt.
+        /// Vooral eens nakijken of die API iets doet.
         /// </summary>
         [TestMethod]
         public void DiagnosticsMembersVerzekerdLoonVerlies()
         {
             using (var client = TestHelper.ClientGet())
             {
-                var result = client.ChiroDiagnosticsMembersVerzekerdLoonVerlies(TestHelper.ApiKey, TestHelper.SiteKey);
+                var request = new MembershipRequest
+                {
+                    MembershipTypeId = 1,
+                    StatusFilter = new Filter<MembershipStatus>(WhereOperator.In, new [] {MembershipStatus.New, MembershipStatus.Current }),
+                    VerzekeringLoonverlies = true,
+                    ContactId = 2
+                };
+                var result = client.ChiroDiagnosticsMembersMetAd(TestHelper.ApiKey, TestHelper.SiteKey, request);
 
                 Assert.AreEqual(0, result.IsError);
-                Assert.AreEqual(result.Count, result.Values.Count());
+                Assert.AreNotEqual(0, result.Count);
             }
         }
 

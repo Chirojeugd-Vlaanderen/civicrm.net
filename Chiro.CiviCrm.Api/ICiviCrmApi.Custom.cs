@@ -16,6 +16,7 @@
 using Chiro.CiviCrm.Api.DataContracts;
 using System.ServiceModel;
 using System.ServiceModel.Web;
+using Chiro.CiviCrm.Api.DataContracts.Entities.Custom;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
 
 namespace Chiro.CiviCrm.Api
@@ -36,16 +37,16 @@ namespace Chiro.CiviCrm.Api
         ApiResultStrings ChiroDiagnosticsActieveLidRelaties(string apiKey, string key, BaseRequest request);
 
         /// <summary>
-        /// Haalt (vermoedelijk) combinaties stamnummer-ad-nummer op voor actieve lidmaatschappen
-        /// met verzekering loonverlies.
+        /// Haalt memberships op zoals MembershipGet, maar meteen met AD-nummer in veld external_identifier.
         /// </summary>
         /// <param name="apiKey"></param>
         /// <param name="key"></param>
+        /// <param name="request"></param>
         /// <returns></returns>
         [OperationContract]
         [WebGet(BodyStyle = WebMessageBodyStyle.Bare, ResponseFormat = WebMessageFormat.Json,
-            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=getmembersverzekerdloonverlies&json=1&sequential=1")]
-        ApiResultStrings ChiroDiagnosticsMembersVerzekerdLoonVerlies(string apiKey, string key);
+            UriTemplate = "?api_key={apiKey}&key={key}&debug=1&version=3&entity=ChiroDiagnostics&action=getmembersmetad&json={request}&sequential=1")]
+        ApiResultValues<MembershipMetAd> ChiroDiagnosticsMembersMetAd(string apiKey, string key, MembershipRequest request);
 
         /// <summary>
         /// Sluit gegeven werkjaar af.

@@ -63,6 +63,7 @@
     <Compile Include="DataContracts\Entities\Address.cs" />
     <Compile Include="DataContracts\Entities\Contact.CustomFields.cs" />
     <Compile Include="DataContracts\Entities\Country.cs" />
+    <Compile Include="DataContracts\Entities\Custom\MembershipMetAd.cs" />
     <Compile Include="DataContracts\Entities\Email.cs" />
     <Compile Include="DataContracts\Entities\Event.cs" />
     <Compile Include="DataContracts\Entities\Event.CustomFields.cs" />
