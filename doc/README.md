@@ -51,8 +51,8 @@ Aandachtspunten
 Voorbeelden
 -----------
 
--   [leiding met afdeling(en) van een groep in een bepaald werkjaar](Chaining.md#Uitgewerkt-voorbeeld)
--   [bivakken die op een bepaald moment bezig zijn, met adres](Filters.md#Uitgewerkt-voorbeeld)
--   [Alle ploegen van een gewest opvragen](Voorbeelden.md#Alle-ploegen-van-een-gewest-ophalen-op-basis-van-stamnummer)
+-   [leiding met afdeling(en) van een groep in een bepaald werkjaar](Chaining.md#uitgewerkt-voorbeeld)
+-   [bivakken die op een bepaald moment bezig zijn, met adres](Filters.md#uitgewerkt-voorbeeld)
+-   [Alle ploegen van een gewest opvragen](Voorbeelden.md#alle-ploegen-van-een-gewest-ophalen-op-basis-van-stamnummer)
 -   **TODO:** Leding van een ploeg samen met de cursussen die ze volgden (geblokkeerd door #62)
 
