@@ -15,7 +15,7 @@ The version in the 'chiro' branch supports the custom fields for
 Chirojeugd-Vlaanderen. You can check out the 'master' branch for a
 clean version.
 
-Please read the extended documentation in [the project wiki](https://gitlab.chiro.be/civi/civicrm.net/wiki/).
+Please read the extended documentation in [the project wiki](https://gitlab.chiro.be/civi/civicrm.net/wikis/home).
 
 ## How to get the examples/unit tests working
 
