@@ -51,13 +51,8 @@ Aandachtspunten
 Voorbeelden
 -----------
 
--   \[\[Chaining\#Uitgewerkt-voorbeeld|leiding met afdeling(en) van een
-    groep in een bepaald werkjaar\]\]
--   \[\[Filters\#Uitgewerkt-voorbeeld|bivakken die op een bepaald moment
-    bezig zijn, met adres\]\]
--   \[\[Voorbeelden\#Alle-ploegen-van-een-gewest-ophalen-op-basis-van-stamnummer|Alle
-    ploegen van een gewest opvragen\]\]
--   **TODO:** Leding van een ploeg samen met de cursussen die ze volgden
-    (geblokkeerd door [issue
-    62](https://github.com/johanv/civicrm.net/issues/62))
+-   [leiding met afdeling(en) van een groep in een bepaald werkjaar](Chaining.md#Uitgewerkt-voorbeeld)
+-   [bivakken die op een bepaald moment bezig zijn, met adres](Filters.md#Uitgewerkt-voorbeeld)
+-   [Alle ploegen van een gewest opvragen](Voorbeelden.md#Alle-ploegen-van-een-gewest-ophalen-op-basis-van-stamnummer)
+-   **TODO:** Leding van een ploeg samen met de cursussen die ze volgden (geblokkeerd door #62)
 
