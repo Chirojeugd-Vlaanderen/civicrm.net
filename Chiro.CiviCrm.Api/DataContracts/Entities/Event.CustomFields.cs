@@ -29,14 +29,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "custom_44")]
         public string AnalytischeCode { get; set; }
 
-        [DataMember(Name = "custom_45_id")]
-        public int? OrganiserendePersoon1Id { get; set; }
-
-        [DataMember(Name = "custom_46_id")]
-        public int? OrganiserendePersoon2Id { get; set; }
-
-        [DataMember(Name = "custom_47_id")]
-        public int? OrganiserendePersoon3Id { get; set; }
+        [DataMember(Name = "custom_83_id")]
+        public int? CourseResponsableId { get; set; }
 
         [DataMember(Name = "custom_48_id")]
         public int? OrganiserendePloeg1Id { get; set; }

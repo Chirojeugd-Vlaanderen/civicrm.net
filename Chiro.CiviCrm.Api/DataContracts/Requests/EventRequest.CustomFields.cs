@@ -32,16 +32,8 @@ namespace Chiro.CiviCrm.Api.DataContracts.Requests
         public string AnalytischeCode { get; set; }
 
         [JsonConverter(typeof(FilterConverter))]
-        [JsonProperty("custom_45", NullValueHandling = NullValueHandling.Ignore)]
-        public Filter<int?> OrganiserendePersoon1Id { get; set; }
-
-        [JsonConverter(typeof(FilterConverter))]
-        [JsonProperty("custom_46", NullValueHandling = NullValueHandling.Ignore)]
-        public Filter<int?> OrganiserendePersoon2Id { get; set; }
-
-        [JsonConverter(typeof(FilterConverter))]
-        [JsonProperty("custom_47", NullValueHandling = NullValueHandling.Ignore)]
-        public Filter<int?> OrganiserendePersoon3Id { get; set; }
+        [JsonProperty("custom_83", NullValueHandling = NullValueHandling.Ignore)]
+        public Filter<int?> CourseResponsableId { get; set; }
 
         [JsonProperty("custom_48", NullValueHandling = NullValueHandling.Ignore)]
         public int? OrganiserendePloeg1Id { get; set; }
