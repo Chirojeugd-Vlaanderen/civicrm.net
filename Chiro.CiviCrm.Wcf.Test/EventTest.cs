@@ -44,7 +44,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     StartDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
                     EndDate = new Filter<DateTime?>(new DateTime(2016, 02, 05)),
                     EventTypeId = MyEventTypeId,
-                    OrganiserendePersoon1Id = new Filter<int?>(OrganiserendePersoonId)
+                    CourseResponsableId = new Filter<int?>(OrganiserendePersoonId)
                 };
 
                 var saveResult = client.EventSave(TestHelper.ApiKey, TestHelper.SiteKey, eventRequest);
@@ -114,11 +114,11 @@ namespace Chiro.CiviCrm.Wcf.Test
             {
                 var request = new EventRequest
                 {
-                    OrganiserendePersoon1Id = new Filter<int?>(WhereOperator.IsNotNull)
+                    CourseResponsableId = new Filter<int?>(WhereOperator.IsNotNull)
                 };
 
                 var result = client.EventGet(TestHelper.ApiKey, TestHelper.SiteKey, request);
-                Assert.IsTrue(result.Values.All(v => v.OrganiserendePersoon1Id != null));
+                Assert.IsTrue(result.Values.All(v => v.CourseResponsableId != null));
             }
         }
 
