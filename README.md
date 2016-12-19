@@ -1,9 +1,21 @@
 # Chiro.CiviCrm.Wcf
 
-This project provides interfaces and a behavior that allow communication with the CiviCRM
-API using WCF.
+## De Chirobranch
 
-Please read the extended documentation in [the civicrm.net wiki](https://github.com/Chirojeugd-Vlaanderen/civicrm.net/wiki/).
+Er is [documentatie in het Nederlands](doc/README.md) voor de
+Chirospecifieke implementatie, met ondersteuning voor de custom fields
+van de Chiro.
+
+## General information
+
+This project provides interfaces and a behavior that allow communication
+with the CiviCRM API using WCF.
+
+The version in the 'chiro' branch supports the custom fields for
+Chirojeugd-Vlaanderen. You can check out the 'master' branch for a
+clean version.
+
+Please read the extended documentation in [the project wiki](https://gitlab.chiro.be/civi/civicrm.net/wikis/home).
 
 ## How to get the examples/unit tests working
 
