@@ -40,6 +40,9 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [DataMember(Name = "custom_5"), JsonProperty]
         public DateTime? StopgezetOp { get; set; }
 
+        [DataMember(Name = "custom_9"), JsonProperty]
+        public string Parochie { get; set; }
+
         [DataMember(Name = "custom_11"), JsonProperty]
         public string RedenStopzetting { get; set; }
     }
