@@ -16,6 +16,7 @@
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Chiro.CiviCrm.Api.Converters;
+using System;
 
 namespace Chiro.CiviCrm.Api.DataContracts.Entities
 {
@@ -35,5 +36,11 @@ namespace Chiro.CiviCrm.Api.DataContracts.Entities
         [JsonConverter(typeof(NullableEnumConverter))]
         [DataMember(Name = "custom_2"), JsonProperty]
         public KaderNiveau? KaderNiveau { get; set; }
+
+        [DataMember(Name = "custom_5"), JsonProperty]
+        public DateTime? StopgezetOp { get; set; }
+
+        [DataMember(Name = "custom_11"), JsonProperty]
+        public string RedenStopzetting { get; set; }
     }
 }
