@@ -19,21 +19,21 @@ using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
     /// <summary>
     /// Test Chirospecifieke zaken
     /// </summary>
-    [TestClass]
+    [TestFixture]
     public class ChiroTest
     {
         private int _myEventId;
         private int _myMembershipId;
         private int _myAbonnementId;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -77,7 +77,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -87,7 +87,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void OrganiserendePloeg()
         {
             using (var client = TestHelper.ClientGet())
@@ -102,7 +102,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Dit durft wel eens mislukken als de nummers van custom fields zijn veranderd.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void AangemaaktDoorPloegId()
         {
             using (var client = TestHelper.ClientGet())
@@ -126,7 +126,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Controleer of mijn patch voor CRM-16036 wel goed is geapplyd.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ZoekOpCustomFieldCrm16036()
         {
             using (var client = TestHelper.ClientGet())
@@ -146,7 +146,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// Combinatie zoeken op custom field en chaining lukt niet meer sinds iets
         /// dat ze upstream deden. Zie #4062.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ZoekOpCustomFieldMetChaining()
         {
             using (var client = TestHelper.ClientGet())
@@ -166,7 +166,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedCallOrganiserendePloeg()
         {
             using (var client = TestHelper.ClientGet())
@@ -191,7 +191,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// 
         /// Zie #3970.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void CustomFieldLoonverlies()
         {
             using (var client = TestHelper.ClientGet())
@@ -208,7 +208,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Vooral eens nakijken of de lijst met actieve lidrelaties doorkomt.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void DiagnosticsActieveLidRelaties()
         {
             using (var client = TestHelper.ClientGet())
@@ -225,7 +225,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Vooral eens nakijken of die API iets doet.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void DiagnosticsMembersVerzekerdLoonVerlies()
         {
             using (var client = TestHelper.ClientGet())
@@ -249,7 +249,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// 
         /// Zie #3970.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void CustomFieldAbonnementType()
         {
             using (var client = TestHelper.ClientGet())

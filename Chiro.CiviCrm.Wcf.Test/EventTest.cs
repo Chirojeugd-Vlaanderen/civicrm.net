@@ -107,7 +107,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetEventOraniserendePersoonFilter()
         {
             using (var client = TestHelper.ClientGet())
