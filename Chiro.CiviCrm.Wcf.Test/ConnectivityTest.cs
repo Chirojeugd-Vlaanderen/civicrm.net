@@ -16,17 +16,17 @@
 
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ConnectivityTest
     {
         /// <summary>
         /// Try to retrieve contact 1, which is the default organization.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void Contact1GetTest()
         {
             using (var client = TestHelper.ClientGet())

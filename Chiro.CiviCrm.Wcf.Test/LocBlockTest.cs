@@ -16,15 +16,14 @@
 
 using System;
 using System.Linq;
-using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Entities;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class LocBlockTest
     {
         // Make sure that you have an event type with given ID:
@@ -33,7 +32,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
         private LocBlock _myLocBlock;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -54,7 +53,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -75,7 +74,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// This test may fail because of CRM-18535. You can work around it by
         /// giving your API user the 'access deleted contacts' permission.
         /// </remarks>
-        [TestMethod]
+        [Test]
         public void GetAddressWithLocBlock()
         {
             using (var client = TestHelper.ClientGet())
@@ -97,7 +96,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test getting a lockblock with events.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetLocBlockWithEvents()
         {
             // Make sure that your API user has permissions

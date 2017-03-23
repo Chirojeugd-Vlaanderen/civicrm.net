@@ -18,18 +18,18 @@ using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class GenericTest
     {
         private int _myContactId;
         private const string MyFirstName = "Joe";
         private const string MyLastName = "Schmoe";
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -50,7 +50,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -64,7 +64,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChangeOnlyExternalIdentifier()
         {
             var request = new ContactRequest
@@ -89,7 +89,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void RequestEntityType()
         {
             var request = new ContactRequest();

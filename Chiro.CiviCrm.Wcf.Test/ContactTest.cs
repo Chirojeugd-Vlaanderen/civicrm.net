@@ -20,11 +20,11 @@ using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class ContactTest
     {
         private int _myContactId;
@@ -37,7 +37,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
         private const string MyExternalId = "Unit_Test_External_ID";
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -133,7 +133,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -147,7 +147,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedAddressGet()
         {
             using (var client = TestHelper.ClientGet())
@@ -167,7 +167,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CreateWithChainedRelationship()
         {
             using (var client = TestHelper.ClientGet())
@@ -212,7 +212,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedCommunicationGet()
         {
             using (var client = TestHelper.ClientGet())
@@ -233,7 +233,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChangeContact()
         {
             using (var client = TestHelper.ClientGet())
@@ -252,7 +252,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedWebsiteCreate()
         {
             using (var client = TestHelper.ClientGet())
@@ -294,7 +294,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <remarks>
         /// See also: https://github.com/johanv/civicrm.net/issues/39
         /// </remarks>
-        [TestMethod]
+        [Test]
         public void ChainedPhoneAndWebsiteCreate()
         {
             using (var client = TestHelper.ClientGet())
@@ -345,7 +345,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <remarks>
         /// See also: https://github.com/johanv/civicrm.net/issues/39
         /// </remarks>
-        [TestMethod]
+        [Test]
         public void EmptyChainedPhoneAndWebsiteCreate()
         {
             using (var client = TestHelper.ClientGet())
@@ -389,7 +389,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// Unit test for upstream issue:
         /// https://issues.civicrm.org/jira/browse/CRM-15815
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ChainedPhoneAnd2WebsitesCreate()
         {
             using (var client = TestHelper.ClientGet())
@@ -440,7 +440,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test for ContactSaveWorkaroundCrm15815
         /// </summary>
-        [TestMethod]
+        [Test]
         public void WorkaroundCrm15815()
         {
             using (var client = TestHelper.ClientGet())
@@ -483,7 +483,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedWebsiteCreateTwo()
         {
             using (var client = TestHelper.ClientGet())
@@ -526,7 +526,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CreateContact()
         {
             using (var client = TestHelper.ClientGet())
@@ -559,7 +559,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Contact.Get should return deceased contacts as well. (#82)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void DeceasedContactGet()
         {
             using (var client = TestHelper.ClientGet())
@@ -578,7 +578,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CreateWithContactSubType()
         {
             using (var client = TestHelper.ClientGet())
@@ -606,7 +606,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void SortAndLimit()
         {
             using (var client = TestHelper.ClientGet())
@@ -627,7 +627,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }            
         }
 
-        [TestMethod]
+        [Test]
         public void ApiOptions()
         {
             using (var client = TestHelper.ClientGet())
@@ -652,7 +652,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void EnumProperties()
         {
             using (var client = TestHelper.ClientGet())
@@ -677,7 +677,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedSearchRequest()
         {
             using (var client = TestHelper.ClientGet())
@@ -717,7 +717,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void ChainedOptionsWebsite()
         {
             using (var client = TestHelper.ClientGet())
@@ -761,7 +761,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// Unit test for upstream issue:
         /// https://issues.civicrm.org/jira/browse/CRM-15983
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ChainedOptionsRelationships()
         {
             using (var client = TestHelper.ClientGet())

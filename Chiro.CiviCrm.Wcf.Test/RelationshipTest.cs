@@ -20,11 +20,11 @@ using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class RelationshipTest
     {
         private int _myContactId;
@@ -33,7 +33,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         private int _myOtherRelationshipId;
         private int _myCompanyId;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -89,7 +89,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -109,7 +109,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetRelationship()
         {
             using (var client = TestHelper.ClientGet())
@@ -127,7 +127,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test for chaining relationship -> relationship.create (see #93)
         /// </summary>
-        [TestMethod]
+        [Test]
         public void RelationshipChainedSave()
         {
             using (var client = TestHelper.ClientGet())
@@ -159,7 +159,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void NewRelationship()
         {
             using (var client = TestHelper.ClientGet())
@@ -189,7 +189,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test for resetting a relationship's end date (see #93).
         /// </summary>
-        [TestMethod]
+        [Test]
         public void ReactivateRelationship()
         {
             using (var client = TestHelper.ClientGet())
@@ -212,7 +212,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void RelationshipChainedContact()
         {
             using (var client = TestHelper.ClientGet())
@@ -234,7 +234,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void RelationshipDateFilter()
         {
             using (var client = TestHelper.ClientGet())
@@ -252,7 +252,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void RelationshipDateFilter2()
         {
             using (var client = TestHelper.ClientGet())
@@ -269,7 +269,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void RelationshipChainedGetDelete()
         {
             using (var client = TestHelper.ClientGet())

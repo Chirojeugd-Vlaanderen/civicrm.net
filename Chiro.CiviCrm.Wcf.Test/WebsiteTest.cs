@@ -17,16 +17,16 @@
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class WebsiteTest
     {
         private int _myContactId;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -47,7 +47,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -57,7 +57,7 @@ namespace Chiro.CiviCrm.Wcf.Test
                     1);
             }
         }
-        [TestMethod]
+        [Test]
         public void CreateWebsite()
         {
             using (var client = TestHelper.ClientGet())
@@ -78,7 +78,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void OffsetOption()
         {
             using (var client = TestHelper.ClientGet())

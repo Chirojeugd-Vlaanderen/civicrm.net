@@ -17,11 +17,11 @@
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class AddressTest
     {
         private const string MyAddressName = "Nationaal Secretariaat";
@@ -29,7 +29,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         private int _myContactId;
         private int _myAddressId;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -58,7 +58,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -69,7 +69,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void AddAddress()
         {
             using (var client = TestHelper.ClientGet())
@@ -98,7 +98,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetAddress()
         {
             using (var client = TestHelper.ClientGet())
@@ -110,7 +110,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void DeleteAddress()
         {
             using (var client = TestHelper.ClientGet())

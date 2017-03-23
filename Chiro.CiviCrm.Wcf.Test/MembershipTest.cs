@@ -19,11 +19,11 @@ using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class MembershipTest
     {
         // We assume that the membershiptype with ID 1 exists in the CiviCRM instance.
@@ -32,7 +32,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         private int _myContactId1;
         private int _myContactId2;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTests()
         {
             using (var client = TestHelper.ClientGet())
@@ -70,7 +70,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -84,7 +84,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CreateMembership()
         {
             // If this test fails, check whether your API user has the permissions
@@ -111,7 +111,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetMembership()
         {
             var membershipRequest = new MembershipRequest
@@ -126,7 +126,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetMembershipStatusFilter()
         {
             var membershipRequest = new MembershipRequest
@@ -145,7 +145,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test for filtering on relationship date.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void RelationshipDateFilter()
         {
             var membershipRequest = new MembershipRequest
@@ -164,7 +164,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Just a test for the MembershipPaymentRequest
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetMembershipWithPayment()
         {
             var membershipRequest = new MembershipRequest
@@ -184,7 +184,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Test chaining ContactRequests.
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetMembershipWithContact()
         {
             var membershipRequest = new MembershipRequest

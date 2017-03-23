@@ -19,11 +19,11 @@ using System.Diagnostics;
 using System.Linq;
 using Chiro.CiviCrm.Api.DataContracts.Filters;
 using Chiro.CiviCrm.Api.DataContracts.Requests;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace Chiro.CiviCrm.Wcf.Test
 {
-    [TestClass]
+    [TestFixture]
     public class EventTest
     {
         // Make sure that you have an event type with given ID:
@@ -32,7 +32,7 @@ namespace Chiro.CiviCrm.Wcf.Test
 
         private int _myEventId;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -55,7 +55,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void GetEventDateFilter()
         {
             DateTime someDate = new DateTime(2015, 3, 14);
@@ -74,7 +74,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Check NOT NULL-filtering (see #89).
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetEventDateFilterNotNull()
         {
             using (var client = TestHelper.ClientGet())
@@ -92,7 +92,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// <summary>
         /// Check NULL-filtering on loc block (see #90).
         /// </summary>
-        [TestMethod]
+        [Test]
         public void GetEventLocBlockFilterNull()
         {
             using (var client = TestHelper.ClientGet())
@@ -122,7 +122,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void CreateEvent()
         {
             // Make sure that your API user has permissions
@@ -150,7 +150,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestCleanup]
+        [TearDown]
         public void CleanupTest()
         {
             using (var client = TestHelper.ClientGet())
@@ -170,7 +170,7 @@ namespace Chiro.CiviCrm.Wcf.Test
         /// This test may fail because of CRM-18535. You can work around it by
         /// giving your API user the 'access deleted contacts' permission.
         /// </remarks>
-        [TestMethod]
+        [Test]
         public void EventWithAddress()
         {
             // Make sure that your API user has permissions
@@ -236,7 +236,7 @@ namespace Chiro.CiviCrm.Wcf.Test
             }
         }
 
-        [TestMethod]
+        [Test]
         public void UpdateEvent()
         {
             // Make sure that your API user has permissions
