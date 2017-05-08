@@ -1,5 +1,8 @@
 # Chiro.CiviCrm.Wcf
 
+**Opgelet!** De issue nummers in de commit messages, verwijzen nog
+naar het [project op github](https://github.com/Chirojeugd-Vlaanderen/civicrm.net/)!
+
 ## De Chirobranch
 
 Er is [documentatie in het Nederlands](doc/README.md) voor de
